@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="author" content="Kipngeno Kirui">
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+  <title>Tutorial - ScenTrees.jl</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+  <link href="../../assets/Documenter.css" rel="stylesheet">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Tutorial";
+    var mkdocs_page_input_path = "tutorial/tutorial1.md";
+    var mkdocs_page_url = "/tutorial/tutorial1/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> ScenTrees.jl</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="../..">Introduction</a>
+	    </li>
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href="./">Tutorial</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#introduction">Introduction</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#goal">Goal</a></li>
+        
+            <li><a class="toctree-l3" href="#description-of-a-scenario-tree">Description of a scenario tree</a></li>
+        
+            <li><a class="toctree-l3" href="#description-of-a-scenario-lattice">Description of a scenario lattice</a></li>
+        
+        </ul>
+    
+
+    <li class="toctree-l2"><a href="#usage">Usage</a></li>
+    
+
+    <li class="toctree-l2"><a href="#plotting">Plotting</a></li>
+    
+
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">ScenTrees.jl</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Tutorial</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/kirui93/ScenTrees.jl/edit/master/docs/tutorial/tutorial1.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="introduction">Introduction</h1>
+<p>Multistage stochastic optimization involves approximating a stochastic process in by a finite structure.
+We call these structures a scenario tree and a scanrio lattice.
+Scenario lattices plays an important role in approximating Markovian data processes.</p>
+<p>We will look at the basic functionality of <code>ScenTrees.jl</code> just to highlight on how it works.</p>
+<h2 id="goal">Goal</h2>
+<p>The goal is to generate a valuated probability tree or a lattice which represents the stochastic process in the best way possible.</p>
+<p>To measure the quality of the approximation, we use a process distance between the stochastic process and the scanario tree or lattice.</p>
+<h2 id="description-of-a-scenario-tree">Description of a scenario tree</h2>
+<p>A scenario tree is characterized by the following:</p>
+<ol>
+<li>Name of the tree</li>
+<li>Parents of the nodes in the tree</li>
+<li>Children of the parents in the tree </li>
+<li>States of the nodes in the tree</li>
+<li>Probabilities of transition from one node to another.</li>
+</ol>
+<p>The tree is also characterized by its <em>nodes</em>, <em>stages</em>, <em>height</em>,<em>leaves</em> and the <em>root</em> of the tree or the nodes.</p>
+<p>Each tree has stages starting from <code>0</code> where the root node is. </p>
+<h2 id="description-of-a-scenario-lattice">Description of a scenario lattice</h2>
+<p>A scenario lattice differs from a scenario tree in that every node in stage <code>t</code> is a child for each node in stage <code>t-1</code>. So the nodes in stage <code>t-1</code> share the same children.</p>
+<p>Due to the above, we only describe a scenario lattice by:</p>
+<ol>
+<li>Name of the lattice </li>
+<li>States of the nodes of the lattice</li>
+<li>Probabilities of transition from one node to another in the lattice</li>
+</ol>
+<h1 id="usage">Usage</h1>
+<p>Since we have the basics of the scenario tree and the scenario lattice and since we created <code>ScenTrees.jl</code> 
+with an intention of being user-friendly, we will give an example of its usage and explain each part of it.</p>
+<div class="codehilite"><pre><span></span><span class="k">using</span> <span class="n">ScenTrees</span>
+
+<span class="n">ex1</span> <span class="o">=</span> <span class="n">Tree</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">]);</span>
+<span class="n">sol1</span> <span class="o">=</span> <span class="n">TreeApproximation!</span><span class="p">(</span><span class="n">ex1</span><span class="p">,</span> <span class="n">GaussianSamplePath</span><span class="p">,</span> <span class="mi">100000</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">);</span>
+
+<span class="n">treeplot</span><span class="p">(</span><span class="n">sol1</span><span class="p">)</span>
+</pre></div>
+
+
+<p>In the above, we are creating a scenario tree with the branching structure <code>1x3x3x3x3</code> as <code>ex1</code>. 
+We want to approximate the Gaussian random walk with this tree.
+So, the tree approximation process takes 4 inputs:</p>
+<ol>
+<li>A tree</li>
+<li>The process to be approximated</li>
+<li>Sample size</li>
+<li>Which norm (default to Euclidean norm = 2)</li>
+<li>The value of <code>r</code> for process distance ( default to <code>r=2</code>)</li>
+</ol>
+<p>Those are basically the inputs that we are giving to the function <em>TreeApproximation!</em>. 
+What we obtain as a result of this is a valuated tree which can be visualized by the function <em>treeplot</em> or <em>plotD</em> if incase you were dealing with a 2-dimensional state space.</p>
+<p><img alt="Stochastic approximation" src="../../assets/exampleTree1.png" /></p>
+<p>Just as easy as that! </p>
+<p>It is more even simple for lattice approximation as in this we only take as inputs the branching structure of the lattice and the sample size as follows:</p>
+<div class="codehilite"><pre><span></span><span class="n">sol2</span> <span class="o">=</span> <span class="n">LatticeApproximation</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">],</span> <span class="mi">500000</span><span class="p">)</span>
+
+<span class="n">PlotLattice</span><span class="p">(</span><span class="n">sol2</span><span class="p">)</span>
+</pre></div>
+
+
+<h1 id="plotting">Plotting</h1>
+<p>As shown in the above, there are three different functions for plotting. We have <em>treeplot</em>, <em>plotD</em> and <em>PlotLattice</em> functions. 
+Each of these functions is special in its own way. Both <em>treeplot</em> and <em>plotD</em> are for plotting scenario trees while <em>PlotLattice</em> is only for plotting lattice.
+In this package, we deal also with trees of 2D state space. So you can visualize them after approximation using <em>plotD</em> function. 
+So the main difference between <em>treeplot</em> and <em>plotD</em> is that  <em>treeplot</em> is for trees only in 1D state space while <em>plotD</em> can be used for trees in 1D and 2D but specifically created for trees in 2D state space.</p>
+<p>!!! info
+    You need to install the <a href="https://github.com/JuliaPy/PyPlot.jl">PyPlot.jl</a> package for this plots.</p>
+<p>You can save the plots using the the <code>Plots.jl</code> function <code>savefig</code>:</p>
+<div class="codehilite"><pre><span></span><span class="n">Plots</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s">&quot;example1.pdf&quot;</span><span class="p">)</span>
+</pre></div>
+
+
+<p>This ends the tutorial for this package.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../.." class="btn btn-neutral" title="Introduction"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+    
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/kirui93/ScenTrees.jl" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+        <span><a href="../.." style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+    </span>
+</div>
+    <script src="../../js/theme.js"></script>
+      <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+      <script src="../../assets/mathjaxhelper.js"></script>
+
+</body>
+</html>
