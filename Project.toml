@@ -1,5 +1,5 @@
 name = "ScenTrees"
-uuid = "f0909f68-ca3e-11e9-1dad-3d2e9ab7772e"
+uuid = "4ec4db44-c288-11e9-3202-272e944f779a"
 authors = ["Kipngeno Kirui <kipngenokirui1993@gmail.com>"]
 version = "0.1.0"
 
@@ -7,7 +7,6 @@ version = "0.1.0"
 Distributed = "8ba89e20-285c-5b6f-9357-94700520ee1b"
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
-Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 PyPlot = "d330b81b-6aea-500a-939a-2ce795aea3ee"
 Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 SharedArrays = "1a1011a3-84de-559e-8e89-a11a2f7dc383"

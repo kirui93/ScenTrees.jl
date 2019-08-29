@@ -3,14 +3,38 @@ language: julia
 os:
   - linux
   - osx
+  
 julia:
   - 1.0
+  - 1.1
+  - 1.2
   - nightly
-matrix:
-  allow_failures:
-    - julia: nightly
-  fast_finish: true
+  
+allow failures:
+  - julia: nightly
+  
+fast_finish: true
+
+#branches:
+#  only:
+#    - master
+jobs:
+	include:
+		- stage: "Documentation"
+		  julia: 1.0
+		  os: linux
+		  script:
+			- julia --project=docs/ -e 'using Pkg; Pkg.develop(PackageSpec(path=pwd())); Pkg.instanstiate()'
+			- julia --project=docs/ docs/make.jl
+		  after_success: skip
+    
+codecov: true
+
 notifications:
   email: false
+  
+env:
+ - PYTHON=""
+ 
 after_success:
   - julia -e 'using Pkg; Pkg.add("Coverage"); using Coverage; Codecov.submit(process_folder())'

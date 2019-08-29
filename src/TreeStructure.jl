@@ -14,25 +14,25 @@ using PyPlot
 
 mutable struct Tree                                                                               #Tree structure
     name::String                                                                                       #name of the tree
-    parent::Array{Int64,1}                                                                    # parents of nodes in the tree
-    children::Array{Array{Int64,1},1}                                             # successor nodes of each parent
-    state::Array{Float64,2}                                                                 # states of nodes in the tree
-    probability::Array{Float64,2}                                                     #probability to go from one node to another
+    parent::Vector{Int64}                                                                    # parents of nodes in the tree
+    children::Vector{Vector{Int64}}                                             # successor nodes of each parent
+    state::Matrix{Float64}                                                                 # states of nodes in the tree
+    probability::Matrix{Float64}                                                     #probability to go from one node to another
 """
 The following function will create an array for the children of each of the parent nodes.
 We need this array fo children for performance purposes in the stochastic approximation step.
 So that instead of having it as a fucntion, we rather have it as an array so that we can only access the array
 """
-    function Children(parent::Array{Int64,1})
-        allchildren = Array{Array{Int64,1},1}([])
+    function Children(parent::Vector{Int64})
+        allchildren = Vector{Vector{Int64}}([])
         for node in unique(parent)
             push!(allchildren,[i for i = 1:length(parent) if parent[i] == node])
         end
         return allchildren
     end
-    Tree(name::String,parent::Array{Int64,1},
-    children::Array{Array{Int64,1},1},
-    state::Array{Float64,2},probability::Array{Float64,2})=new(name,parent,Children(parent),state,probability)
+    Tree(name::String,parent::Vector{Int64},
+    children::Vector{Vector{Int64}},
+    state::Matrix{Float64},probability::Matrix{Float64})=new(name,parent,Children(parent),state,probability)
 """
 The following are some examples of predefined trees
 """
@@ -115,7 +115,7 @@ For example, bushiness = 1x2x3x3 means that we have 18 leaves at the end and at 
 stage 2 has 2x1 nodes, stage 3 has 3x2x1 nodes and stage 4 has 3x3x2x1 nodes.
 We generate normal random  variables for the states of the nodes of the tree.
 """
-    function Tree(spec::Array{Int64,1}, dimension=Int64[])
+    function Tree(spec::Vector{Int64}, dimension=Int64[])
         self = new()
         if isempty(dimension)
             dimension = 1
@@ -131,8 +131,7 @@ We generate normal random  variables for the states of the nodes of the tree.
                 self.probability = ones(spec[1],1)
             else
                 leaves = leaves * spec[stage-1]
-                newleaves = ones(Int64,spec[stage]) .* transpose(length(self.parent) .+ (1 .- leaves:0))
-                newleaves = vec(newleaves)
+                newleaves = vec(ones(Int64,spec[stage]) .* transpose(length(self.parent) .+ (1 .- leaves:0)))
                 self.parent =  vcat(self.parent, newleaves)
                 self.children = Children(self.parent)
                 self.state = vcat(self.state,randn(length(newleaves),dimension))
@@ -200,7 +199,7 @@ function leaves(trr::Tree, node = Int64[])
         end
         omegas = collect(omegas)
     end
-    leaves = [leaves[j] for j ∈ omegas]
+    leaves = Int64[leaves[j] for j ∈ omegas]
     prob = ones(Float64,length(leaves))
     nodes = leaves
     while any(j !=0 for j ∈ nodes)
@@ -213,8 +212,8 @@ end
 """
 This function gives the nodes in the tree, generally the range of the nodes in the tree
 """
-function nodes(trr::Tree, t = [])
-    nodes = collect(1 : length(trr.parent))
+function nodes(trr::Tree, t = Int64[])
+    nodes = 1 : length(trr.parent)
     if isempty(t) #if stage t is not given, return all nodes of the tree
         return nodes
     else # else return nodes at the given stage t
@@ -235,7 +234,7 @@ function root(trr::Tree,nodes = Int64[])
     end
     root = 1 : length(trr.parent)
     for i in nodes
-        iroot = Array{Int64,1}([])
+        iroot = Vector{Int64}([])
         tmp = i
         while tmp > 0
             push!(iroot,tmp)
@@ -290,12 +289,12 @@ function treeplot(trr::Tree, fig= 1)
     if !isempty(fig)
         figure(fig)
     end
-    suptitle(trr.name, fontsize = 14)
+    #suptitle(trr.name, fontsize = 14)
     trs = subplot2grid((1,4), (0,0), colspan=3)
-    title("States")
+    title("states")
     stg = stage(trr)
     xticks(range(1, stop = height(trr) + 1)) #Set the ticks on the x-axis
-    xlabel("Stage, Time")
+    xlabel("stage, time")
     trs.spines["top"].set_visible(false) #remove the box
     trs.spines["right"].set_visible(false)
     for i in range(1,stop = length(trr.parent))
@@ -304,13 +303,13 @@ function treeplot(trr::Tree, fig= 1)
         end
     end
     prs = subplot2grid((1,4), (0,3))
-    title("Probabilities")
+    title("probabilities")
     prs.spines["top"].set_visible(false)
     prs.spines["left"].set_visible(false)
     prs.spines["right"].set_visible(false)
 
     (Yi,_,probYi) = leaves(trr)
-    Yi = Float64[trr.state[i] for i in Yi]
+    Yi = [trr.state[i] for i in Yi]
     nY = length(Yi)
     h = 1.05*std(Yi)/ (nY^0.2) + 1e-3 #Silverman rule of thumb
     trs.set_ylim(minimum(Yi)-h, maximum(Yi)+h)
@@ -330,18 +329,21 @@ function treeplot(trr::Tree, fig= 1)
 end
 
 function plotD(newtree::Tree)
-    fig = figure(figsize= (6,8))
+    fig = figure(1)
     stg = stage(newtree)
     for rw = 1:size(newtree.state,2)
       ax = subplot(size(newtree.state,2),1,rw)
+      ax.spines["top"].set_visible(false) #remove the box top
+      ax.spines["right"].set_visible(false) #remove the box right
       for i in range(1,stop = length(newtree.parent))
           if stg[i] > 0
               ax.plot([stg[i]-1,stg[i]],[newtree.state[:,rw][newtree.parent[i]],newtree.state[:,rw][i]])
           end
-          xlabel("Stage, Time")
-          ylabel("States $rw")
+          xlabel("stage, time")
+          ylabel("states")
       end
-      title("Stochastic Approximation Tree")
+      #title("Stochastic Approximation Tree")
+      xticks(unique(stg))
       #grid(true)
     end
 end
