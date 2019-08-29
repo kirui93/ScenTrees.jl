@@ -1,0 +1,13 @@
+name = "ScenTrees"
+uuid = "f0909f68-ca3e-11e9-1dad-3d2e9ab7772e"
+authors = ["Kipngeno Kirui <kipngenokirui1993@gmail.com>"]
+version = "0.1.0"
+
+[compat]
+julia = "1"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
