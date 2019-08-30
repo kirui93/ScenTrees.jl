@@ -3,7 +3,7 @@ using Documenter, ScenTrees
 makedocs(
 	sitename =  "ScenTrees.jl",
 	authors = "Kipngeno Kirui",
-	clean = true,
+	clean = false,
 	doctest = true,
 	format = Documenter.HTML(
 		assets = ["exampleTree1.png"],
@@ -13,5 +13,5 @@ makedocs(
 )
 
 deploydocs(deps = Deps.pip("mkdocs","python-markdown-math"),
-			repo="github.com/kirui93/ScenTrees.jl.git"
+	repo="github.com/kirui93/ScenTrees.jl.git"
 )
