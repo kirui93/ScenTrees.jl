@@ -31,8 +31,8 @@ env:
 #     include:
 # 	- stage: "Documentation"
 script:
-  - julia -e 'Pkg.clone(pwd())'
-  - julia -e 'Pkg.test("ScenTrees",coverage=true)'
+  - julia -e 'using Pkg; Pkg.clone(pwd())'
+  - julia -e 'using Pkg; Pkg.test("ScenTrees",coverage=true)'
 #  - julia --project=docs/ -e 'using Pkg; Pkg.develop(PackageSpec(path=pwd())); Pkg.instantiate()'
 #  - julia --project=docs/ -e 'using Pkg; Pkg.add("Documenter"); using Documenter; include("docs/make.jl")'
       
