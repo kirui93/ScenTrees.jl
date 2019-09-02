@@ -9,6 +9,14 @@ mutable struct Lattice
     Lattice(name::String,state::Array{Array{Float64,2},1},probability::Array{Array{Float64,2},1}) = new(name,state,probability)
 end
 
+"""
+	LatticeApproximation()
+
+Returns a valuated scanario lattice. It takes as inputs a vector of branching structure and the sample size.
+
+"""
+
+
 function LatticeApproximation(states::Array{Int64,1},nScenarios::Int64)
     WassersteinDistance = 0.0
     rWasserstein = 2
