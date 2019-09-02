@@ -7,6 +7,12 @@ The function Stochastic approximation tree takes a path, newtree, samplesize, pN
 
 using LinearAlgebra: norm, transpose
 
+"""
+	TreeApproximation!()
+Returns a valuated probability scenario tree. Note that the inputs are in the following order: Tree(), path, sample size, 2,2
+
+"""
+
 function TreeApproximation!(newtree::Tree,genPath::Function,samplesize::Int64,pNorm::Int64=2,rwasserstein::Int64=2)
     leaf,omegas,probaLeaf = leaves(newtree)                      #leaves,omegas and probabilities of the leaves of the tree
     dm = size(newtree.state,2)                                   #We get the dim from the dimsention of the states we are working on.
