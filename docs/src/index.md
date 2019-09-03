@@ -4,9 +4,6 @@ CurrentModule = ScenTrees
 
 # ScenTrees.jl
 
-!!! info
-	`ScenTrees.jl` is still under development.
-
 `ScenTrees.jl` is a package for generating and improving scenario trees and scenario lattices for multistage stochastic optimization using _stochastic approximation_.
 In this explanation, we assume that the reader is quite familiar with the theory and explanation in the paper _Dynamic Genaration of Scenario Trees by Pflug and Pichler_.
 
