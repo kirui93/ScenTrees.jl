@@ -9,14 +9,6 @@ mutable struct Lattice
     Lattice(name::String,state::Array{Array{Float64,2},1},probability::Array{Array{Float64,2},1}) = new(name,state,probability)
 end
 
-"""
-	LatticeApproximation()
-
-Returns a valuated scanario lattice. It takes as inputs a vector of branching structure and the sample size.
-
-"""
-
-
 function LatticeApproximation(states::Array{Int64,1},nScenarios::Int64)
     WassersteinDistance = 0.0
     rWasserstein = 2
@@ -26,7 +18,6 @@ function LatticeApproximation(states::Array{Int64,1},nScenarios::Int64)
 
     #Stochastic approximation
     for n = 1:nScenarios
-        #Z = 300 .+ 50 * vcat(0.0,cumsum(randn(lns-1,1),dims = 1))
         Z = vcat(0.0,cumsum(randn(lns-1,1),dims = 1))                                           #draw a new sample Gaussian path
         idtm1 = 1
         dist = 0.0
@@ -39,12 +30,11 @@ function LatticeApproximation(states::Array{Int64,1},nScenarios::Int64)
             dist = dist + mindist^2                                                             #Euclidean distance for the paths
             LatProb[t][idtm1,indx] = LatProb[t][idtm1,indx] .+ 1.0                              #increase the probability
             idtm1 = indx
-            LatState[t][indx] = LatState[t][indx] - 2 / (3000 + n)^0.75 *rWasserstein * mindist^(rWasserstein-1) * (LatState[t][indx] - Z[t])
+            LatState[t][indx] = LatState[t][indx] - 2/ (3000 + n)^0.75*rWasserstein*mindist^(rWasserstein-1)*(LatState[t][indx] - Z[t])
         end
         dist = dist^(1/2)
         WassersteinDistance = (WassersteinDistance*(n-1) + dist^rWasserstein)/n
-    end
-    LatProb = LatProb ./ nScenarios                                               #scale the probabilities to 1.0
+    end                                             #scale the probabilities to 1.0
     return Lattice("Lattice Approximation of $states, \n distance=$(round(WassersteinDistance^(1/rWasserstein),digits = 4)) at $(nScenarios) scenarios",LatState,LatProb)
 end
 
