@@ -13,6 +13,6 @@ In a scenario lattice, the total number of nodes is equal to the total number of
 
 Consider the scenario lattice below with branching structure `1x2x3x4x5`:
 
-![Example of a scenario lattice](../assets/ExampleLattice2.png)
+![Example of a scenario lattice](../assets/ExampleLattice.png)
 
 In the above scenario lattice, the total number of nodes are `1+2+3+4+5 = 15` nodes and the total number of edges in the lattice are `(1x2)+(2x3)+(3x4)+(4x5) = 40` edges. A scenario tree with the same branching structure has 153 nodes and 153 links. This shows that, in a lattice, the number of variables do not grow exponentially as it does in a scenario tree. However, the number of possible paths in a scenario lattice is larger than in a scenario tree.
