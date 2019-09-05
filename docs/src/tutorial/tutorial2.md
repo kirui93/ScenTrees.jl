@@ -11,11 +11,18 @@ julia> example1 = Tree([1,2,2],1)
 Tree("Tree 1x2x2",[0,1,1,2,2,3,3],Array{Int64,1}[[1],[2,3],[4,5],[6,7]],[1.34897; 0.364954; -0.18401; 0.918859; -0.115944; 0.216302; 0.788106],[1.0; 0.3898; 0.6102; 0.4722; 0.5278; 0.4577; 0.5423])
 ```
 
+The above tree basically is not optimal as shown below:
+
+![Non optimal tree in 1D](../assets/example1.png)
+
 The above tree is in 1 dimension. To generate a tree in 2 dimension, we use the following:
 
 ```julia
 julia> Tree([1,2,2],2);
 ```
+
+![Non optimal tree in 2D](../assets/example2.png)
+
 And in general, we can generate a tree in any `d` dimension.
 
 
@@ -100,7 +107,7 @@ julia> treeplot(Tree(402))
 julia> savefig("Tree402.pdf")
 ```
 
-![Example of a tree in 1D](../assets/Tree402.pdf)
+![Example of a tree in 1D](../assets/Tree402.png)
 
 We can plot a tree in 2 dimension as follows:
 
@@ -110,4 +117,4 @@ julia> treeplot(Tree(4022))
 julia> savefig("Tree4022.pdf")
 ```
 
-![Example of a tree in 2D](../assets/Tree4022.pdf)
+![Example of a tree in 2D](../assets/Tree4022.png)
