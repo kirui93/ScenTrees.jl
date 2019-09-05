@@ -56,14 +56,14 @@ julia> using ScenTrees
 julia> ex2 = Tree([1,3,3,3,3],1)
 julia> sol1 = TreeApproximation!(ex2, GaussianSamplePath, 1000000, 2, 2)
 julia> treeplot(sol1)
-julia> savefig("treeapprox1.pdf")
+julia> savefig("treeapprox1.png")
 ```
 
 The function `GaussianSamplePath` takes the number of stages and the dimension as depicted by the tree that you want to generate. For example, in the above, `GaussianSamplePath` function will take 5 as the number of stages and 1 as the dimension and then generate  5 samples of a Gaussian distribution.
 
 The output for the above approximation, shown below, is a scenario tree that is stable and represents the stochastic process in the best possible way.
   
-![Example of a valuated tree in 1D](../assets/treeapprox1.pdf)
+![Example of a valuated tree in 1D](../assets/treeapprox1.png)
 
 We can also appoximate a stochastic process in two dimension. Consider the Gaussian random walk in 2D. Our function `GaussianSamplePath` can generate samples from the Gaussian random walk in 2 dimension, for example as follows:
 
@@ -81,10 +81,10 @@ We can therefore do approximations in 2 dimension as follows:
 julia> ex3 = Tree([1,3,3],2);
 julia> sol2 = TreeApproximation!(ex3,GaussianSamplePath,1000000,2,2);
 julia> plotD(sol2)
-julia> savefig("treeapprox2D.pdf")
+julia> savefig("treeapprox2D.png")
 ```
 
-![Example of a valuated tree in 2D](../assets/treeapprox2D.pdf)
+![Example of a valuated tree in 2D](../assets/treeapprox2D.png)
 
 ## Lattice Approximation
 
@@ -115,11 +115,11 @@ The result of the above approximation is a lattice which we can visualize it.
 
 ```julia
 julia> PlotLattice(sol4)
-julia> savefig("LatticeApprox.pdf")
+julia> savefig("LatticeApprox.png")
 ```
 
 The above approximation gives the following output:
 
-![Example of an approximated lattice](../assets/LatticeApprox.pdf)
+![Example of an approximated lattice](../assets/LatticeApprox.png)
 
 
