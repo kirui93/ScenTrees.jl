@@ -40,6 +40,9 @@ For example,
 
 ```jldoctest
 julia> nodes(example1)
+
+#output 
+1:7
 ```
 
 ## Stages of the tree
