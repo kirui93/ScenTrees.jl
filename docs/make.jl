@@ -7,12 +7,12 @@ makedocs(
 	doctest = true,
 	format = Documenter.HTML(
 		assets = ["exampleTree1.png",
-		          "Tree402.pdf",
-		          "Tree4022.pdf",
-		          "treeapprox1.pdf",
-		          "treeapprox2D.pdf",
-		          "ExampleLattice2.pdf",
-		          "LatticeApprox.pdf"
+		          "Tree402.png",
+		          "Tree4022.png",
+		          "treeapprox1.png",
+		          "treeapprox2D.png",
+		          "ExampleLattice2.png",
+		          "LatticeApprox.png"
 		          ],
 		prettyurls = get(ENV, "CI", nothing) == "true"),
 	pages = ["Home" => "index.md",
