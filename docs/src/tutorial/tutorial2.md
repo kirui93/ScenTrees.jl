@@ -6,19 +6,21 @@ CurrentModule = ScenTrees
 
 A basic scenario tree can be created using the `Tree` function in the package. This function takes the branching structure of the tree and the dimension that you are working on. For example, consider a tree with a branching structure of `1x2x2`. This is a tree with a root in stage `0`, and `2` nodes in stage 1 and each of the `2` nodes in stage one has `2` nodes in stage `2`.
 
-```julia
+```jldoctest
 julia> example1 = Tree([1,2,2],1)
-Tree("Tree 1x2x2",[0,1,1,2,2,3,3],Array{Int64,1}[[1],[2,3],[4,5],[6,7]],[1.34897; 0.364954; -0.18401; 0.918859; -0.115944; 0.216302; 0.788106],[1.0; 0.3898; 0.6102; 0.4722; 0.5278; 0.4577; 0.5423])
+julia> treeplot(example1)
 ```
 
-The above tree basically is not optimal as shown below:
+The above tree basically is not optimal. This is an example of a beginning tree in stochastic approximation process. we start with a tree like this and then we use samples from a known distribution to improve the tree for a certain number of iterations.
 
 ![Non optimal tree in 1D](../assets/example1.png)
 
-The above tree is in 1 dimension. To generate a tree in 2 dimension, we use the following:
+The above tree is in 1 dimension. 
+To generate a tree in 2 dimension, we use the following:
 
-```julia
-julia> Tree([1,2,2],2);
+```jldoctest
+julia> example2 = Tree([1,2,2],2)
+julia> plotD(example2)
 ```
 
 ![Non optimal tree in 2D](../assets/example2.png)
@@ -36,9 +38,8 @@ This are the vertices that are in the scenario tree. Each node in the tree has a
 
 For example,
 
-```julia
+```jldoctest
 julia> nodes(example1)
-1:7
 ```
 
 ## Stages of the tree
