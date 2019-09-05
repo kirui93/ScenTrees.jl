@@ -9,19 +9,27 @@ mutable struct Lattice
     Lattice(name::String,state::Array{Array{Float64,2},1},probability::Array{Array{Float64,2},1}) = new(name,state,probability)
 end
 
-function LatticeApproximation(states::Array{Int64,1},nScenarios::Int64)
+"""
+	LatticeApproximation(states::Array{Int64,1},path::Function,nScenarios::Int64,dim::Int64)
+
+Returns an approximated lattice according to the samples from the `path` provided to. The `dim` variable is the 
+dimension of the states that you are working on. The function `path` generates one sample from a known distribution with length
+equal to the length of states of the lattice and this function takes only two arguments : the number of stages and the dimension.
+"""
+
+function LatticeApproximation(states::Array{Int64,1},path::Function,nScenarios::Int64,dim::Int64)
     WassersteinDistance = 0.0
     rWasserstein = 2
     lns = length(states)
-    LatState = [zeros(states[j],1) for j = 1:lns]                                             # States of the lattice at each time t
+    LatState = [zeros(states[j],dim) for j = 1:lns]                                                                          # States of the lattice at each time t
     LatProb = vcat([zeros(states[1],1)],[zeros(states[j-1],states[j]) for j = 2:lns])          # Probabilities of the lattice at each time t
 
     #Stochastic approximation
     for n = 1:nScenarios
-        Z = vcat(0.0,cumsum(randn(lns-1,1),dims = 1))                                           #draw a new sample Gaussian path
+        Z = path(lns,dim)                                                                                                                            #draw a new sample Gaussian path
         idtm1 = 1
         dist = 0.0
-        for t = 1:length(states)                                                                #walk along the gradient
+        for t = 1:length(states)                                                                                                                  #walk along the gradient
             sumLat = sum(LatProb[t],dims = 2)
             sqStates = 1.3 * sqrt(n) / states[t]
             tmp = Int64[id for (id,ls) in enumerate(sumLat) if ls < sqStates]
@@ -37,6 +45,12 @@ function LatticeApproximation(states::Array{Int64,1},nScenarios::Int64)
     end                                             #scale the probabilities to 1.0
     return Lattice("Lattice Approximation of $states, \n distance=$(round(WassersteinDistance^(1/rWasserstein),digits = 4)) at $(nScenarios) scenarios",LatState,LatProb)
 end
+
+"""
+	PlotLattice(lt::Lattice)
+
+Returns a plot of a lattice. The arguments is only a lattice.
+"""
 
 function PlotLattice(lt::Lattice)
     pt = subplot2grid((1,length(lt.state)),(0,0),colspan = length(lt.state))

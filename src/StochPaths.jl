@@ -1,4 +1,6 @@
 """
+	GaussianSamplePath(nStages::Int64,d::Int64)
+
 The stochastic approximation process takes a simulated scenario path and updates the tree.
 We have two functions, GaussianSamplePath and RunningMaximum which helps us to generate normally distributed random variables.
 Each of them can generate random variables upto the d dimension.

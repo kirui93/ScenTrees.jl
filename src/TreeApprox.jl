@@ -8,25 +8,26 @@ The function Stochastic approximation tree takes a path, newtree, samplesize, pN
 using LinearAlgebra: norm, transpose
 
 """
-	TreeApproximation!()
-Returns a valuated probability scenario tree. Note that the inputs are in the following order: Tree(), path, sample size, 2,2
+	TreeApproximation!(newtree::Tree,genPath::Function,samplesize::Int64,pNorm::Int64=2,rwasserstein::Int64=2)
 
+Returns a valuated probability scenario tree. Note that the inputs are in the following order: Tree(), path, sample size, 2,2.
+The function `Tree()` takes the branching structure and the dimension of the tree.
 """
 
 function TreeApproximation!(newtree::Tree,genPath::Function,samplesize::Int64,pNorm::Int64=2,rwasserstein::Int64=2)
-    leaf,omegas,probaLeaf = leaves(newtree)                      #leaves,omegas and probabilities of the leaves of the tree
-    dm = size(newtree.state,2)                                   #We get the dim from the dimsention of the states we are working on.
-    T = height(newtree)                                          #height of the tree
-    n = length(leaf)                                             #number of leaves = no of omegas
+    leaf,omegas,probaLeaf = leaves(newtree)                                             #leaves,omegas and probabilities of the leaves of the tree
+    dm = size(newtree.state,2)                                                                           #We get the dim from the dimsention of the states we are working on.
+    T = height(newtree)                                                                                        #height of the tree
+    n = length(leaf)                                                                                                 #number of leaves = no of omegas
     d = zeros(Float64,dm,length(leaf))
 
     samplepath = zeros(Float64,T+1,dm)
 
     probaLeaf = zero(probaLeaf)
-    probaNode = nodes(newtree)                                  #all nodes of the tree
+    probaNode = nodes(newtree)                                                                     #all nodes of the tree
 
-    path_to_leaves = [root(newtree,i) for i in leaf]            # all the paths from root to the leaves
-    path_to_all_nodes = [root(newtree,j) for j in probaNode]    # all paths to other nodes
+    path_to_leaves = [root(newtree,i) for i in leaf]                                     # all the paths from root to the leaves
+    path_to_all_nodes = [root(newtree,j) for j in probaNode]                # all paths to other nodes
 
     @inbounds for k = 1: samplesize
         critical = max(0.0,0.2*sqrt(k) - 0.1* n)
@@ -37,6 +38,7 @@ function TreeApproximation!(newtree::Tree,genPath::Function,samplesize::Int64,pN
         """
           This part addresses the critical probabilities of the tree so that we don't loose the branches
         """
+
         if !isempty(tmp) && !iszero(tmp)
             probaNode = zero(probaNode)
             probaNode[leaf] = probaLeaf
@@ -48,14 +50,13 @@ function TreeApproximation!(newtree::Tree,genPath::Function,samplesize::Int64,pN
             end
             @inbounds for tmpi = tmp
                 rt = path_to_leaves[tmpi]
-                #rt = getindex(path_to_leaves,tmpi)
                 #tmpi = findall(pnt -> pnt <= critical, probaNode[rt])
                 tmpi = Int64[ind for (ind,pnt) in enumerate(probaNode[rt]) if pnt <= critical]
                 newtree.state[rt[tmpi],:] .= samplepath[tmpi,:]
             end
         end
 
-        #To the step STOCHASTIC COMPUTATIONS
+        #To the step  of STOCHASTIC COMPUTATIONS
                                     
         EndLeaf = 0 #start from the root
 
@@ -72,8 +73,8 @@ function TreeApproximation!(newtree::Tree,genPath::Function,samplesize::Int64,pN
         end
         #istar = findall(lf -> lf == EndLeaf, leaf)
         istar = Int64[idx for (idx,lf) in enumerate(leaf) if lf == EndLeaf]
-        probaLeaf[istar] .= probaLeaf[istar] .+ 1.0
-        StPath = path_to_leaves[EndLeaf-(leaf[1]-1)]          #counter 
+        probaLeaf[istar] .= probaLeaf[istar] .+ 1.0                                                            #counter  of probabilities
+        StPath = path_to_leaves[EndLeaf-(leaf[1]-1)]          
         delta = newtree.state[StPath,:] - samplepath
         d[:,istar] .= d[:,istar] .+ norm(delta, pNorm).^(rwasserstein)
         delta .=  rwasserstein .* norm(delta, pNorm).^(rwasserstein - pNorm) .* abs.(delta)^(pNorm - 1) .* sign.(delta)

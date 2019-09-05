@@ -21,8 +21,7 @@ using Test
     end
 
     @testset "ScenTree.jl - Lattice Approximation" begin
-        tstLat = LatticeApproximation([1,2,3,4,5],500000)
+        tstLat = LatticeApproximation([1,2,3],GaussianSamplePath,500000,1)
         @test length(tstLat.state) == length(tstLat.probability)
-        #@test sum.(tstLat.probability) .== 1.0
     end
 end
