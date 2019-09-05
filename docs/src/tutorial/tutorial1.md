@@ -14,7 +14,7 @@ The goal  of `ScenTrees.jl` is to generate a valuated probability tree or a latt
 
 For example, consider a Gaussian random walk in 5 stages. The starting value of this process is known and fixed, say at ``0`` and the other values are random. The following plot shows 10,000 sample paths of this process:
 
-![10,000 sample paths from Gaussian random walk](../assets/100000GaussianPaths.png)
+![10,000 sample paths from Gaussian random walk](../assets/10000GaussianPaths.png)
 
 Using those paths, we generate and improve a scenario tree or a scenario lattice. The number of iterations for the algorithm equals the number of sample paths that we want to generate from the stochastic process and the number of stages in the stochastic process equals the number of stages in the scenario tree or the scenario lattice. There are a lot of different branching structures that the user can choose for a tree that represents this stochastic process. The branching structure shows how many branches each node in the tree has at each stage of the tree. For example, we can use a branching structure of ``1x2x2x2x2`` for the scenario tree. This means that each node in the tree has two children. Basically, this is a `binary tree`. Using this branching structure, we obtain the following valuated probability tree that represents the above stochastic process:
 
