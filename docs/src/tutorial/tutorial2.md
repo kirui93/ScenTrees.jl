@@ -2,7 +2,9 @@
 CurrentModule = ScenTrees
 ```
 
-# Functions that describe a scenario tree
+# Scenario Trees
+
+Consider a general stochastic process ``X`` over a discrete time space ``T``, i.e., ``X = (X_0,...,X_T)`` where ``X_0`` is a deterministic starting value and the rest are random values or random vectors whose probability distribution is known. A scenario tree is a discrete time and discrete state process approximating the process `X`. We represent the scenario tree by ``\tilde{X} = (\tilde{X}_0,...,\tilde{X}_T)``. A scenario is a path from the root node to any of the leaves in the tree. The number of stages in a scenario must be equal to the number of stages in a scenario tree which is equal to the length of the sample from the stochastic process ``X``.
 
 A basic scenario tree can be created using the `Tree` function in the package. This function takes the branching structure of the tree and the dimension that you are working on. For example, consider a tree with a branching structure of `1x2x2`. This is a tree with a root in stage `0`, and `2` nodes in stage 1 and each of the `2` nodes in stage one has `2` nodes in stage `2`.
 
@@ -15,8 +17,8 @@ The above tree basically is not optimal. This is an example of a beginning tree 
 
 ![Non optimal tree in 1D](../assets/example1.png)
 
-The above tree is in 1 dimension. 
-To generate a tree in 2 dimension, we use the following:
+The above tree is in 1-state dimension. 
+To generate a tree in 2-state dimension, we use the following:
 
 ```jldoctest
 julia> example2 = Tree([1,2,2],2)
@@ -25,14 +27,15 @@ julia> plotD(example2)
 
 ![Non optimal tree in 2D](../assets/example2.png)
 
-And in general, we can generate a tree in any `d` dimension.
+And in general, we can generate a tree in any `d` state dimension.
 
+## Functions describing a scenario tree
 
 The above tree can described by the following functions: _nodes_, _stages_, _height_, _leaves_ and the _root_ of the tree.
 
 Each tree has stages starting from ``0`` where the root node is.
 
-## Nodes of the tree
+### Nodes of the tree
 
 This are the vertices that are in the scenario tree. Each node in the tree has a parent node except the root node where the tree starts from. As stated before, each scenario tree is characterized by its name, parents of the nodes , children of each parent nodes e.t.c. So therefore, we have nodes which has parents and those nodes are the children of the parent nodes.
 
@@ -45,7 +48,7 @@ julia> nodes(example1)
 1:7
 ```
 
-## Stages of the tree
+### Stages of the tree
 
 Each node in a tree is in a specific stage and nodes in the same stage have the same number of children. The stages in a tree starts from `0` where the root node is and ends at stage `T``where the leaf nodes are.
 
@@ -62,7 +65,7 @@ julia> stage(example1)
 
 The above example shows that we have 1 node in stage 0, 2 nodes in stage 1 and 4 nodes in stage 2.
 
-## Root of the tree
+### Root of the tree
 
 The root of the tree is the node in which the tree starts from. The root of the tree has no parent; more or less, is the parent of all nodes.
 
@@ -84,7 +87,7 @@ julia> root(example1,6)
 6
 ```
 
-## Leaves of the tree
+### Leaves of the tree
 
 In each tree, we have the leaves. Leaves are all those in the tree which doesn't have children nodes. They are the terminal nodes in the tree. Our function `leaves` returns the leaf nodes in the tree, their indexes and the conditional probabilities to reach each of the leaves from the root node. Consider the following:
 
@@ -95,7 +98,7 @@ julia> leaves(example1)
 
 From the above, it is clear that the sum of the conditional probabilities to reach all the leaves in the tree is `1`.
 
-## Plotting the tree
+### Plotting the tree
 
 One of the most important things in programming is visualization. In this package, we can plot a scenario tree in 1D with the `treeplot` function and with the `plotD` function for a scenario tree in D dimension.
 
@@ -108,7 +111,7 @@ For example, we can plot a default tree already in the package and then the figu
 ```julia
 julia> treeplot(Tree(402))
 
-julia> savefig("Tree402.pdf")
+julia> savefig("Tree402.png")
 ```
 
 ![Example of a tree in 1D](../assets/Tree402.png)
@@ -118,7 +121,7 @@ We can plot a tree in 2 dimension as follows:
 ```julia
 julia> treeplot(Tree(4022))
 
-julia> savefig("Tree4022.pdf")
+julia> savefig("Tree4022.png")
 ```
 
 ![Example of a tree in 2D](../assets/Tree4022.png)
