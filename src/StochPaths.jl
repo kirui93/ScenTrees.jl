@@ -73,12 +73,3 @@ end
 function path(nStages::Int64,dim::Int64)
     return  100 .+ 50 * vcat(0.0,cumsum(randn(nStages-1,dim),dims = 1))
 end
-
-function simulate(nStages::Int64,dim::Int64)
-    # Generate nStages random steps with mean=0 and standard deviation=1
-    steps = rand(Normal(0,1),nStages,dim)
-    # Set first element to 0 so that the first price will be the starting stock price
-    steps[1,:] .= 0.0
-    # Simulate stock prices, P with a starting price of 100
-    return 100.0 .+ 50 * cumsum(steps,dims=2)
-end
