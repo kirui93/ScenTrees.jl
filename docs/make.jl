@@ -12,14 +12,16 @@ makedocs(
 		          "treeapprox1.png",
 		          "treeapprox2D.png",
 		          "ExampleLattice2.png",
-		          "LatticeApprox.png"
+		          "LatticeApprox.png",
+			  "diffHeights.png"
 		          ],
 		prettyurls = get(ENV, "CI", nothing) == "true"),
 	pages = ["Home" => "index.md",
 			"Tutorials" => Any["tutorial/tutorial1.md",
 			                    "tutorial/tutorial2.md",
 			                    "tutorial/tutorial3.md",
-			                    "tutorial/tutorial4.md"]
+			                    "tutorial/tutorial4.md",
+					    "tutorial/tutorial5.md"]
 			                    ]
 )
 
