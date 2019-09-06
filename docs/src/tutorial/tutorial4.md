@@ -5,17 +5,17 @@ CurrentModule = ScenTrees
 
 # Stochastic Approximation Process
 
-This package was made for this purpose. Given a stochastic process, we want to approximate the process using either a scenario tree or a scanario lattice.
+This package was made for this purpose. Given a stochastic process, we want to approximate the process using either a scenario tree or a scenario lattice.
 
-Every stochastic approximation iteraion modifies one path within the tree towards the new sequence. In this way the approximating quality of the tree is improved each time a new sample is observed. The tree is not stable in the beginiing but with more and more iterations, the scenario tree converges in probabilitiy. The resulting tree can be used for decision making process.
+Every stochastic approximation iteration modifies one path within the tree towards the new sequence. In this way the approximating quality of the tree is improved each time a new sample is observed. The tree is not stable in the beginning but with more and more iterations, the scenario tree converges in probability. The resulting tree can be used for decision making process.
 
 The stochastic approximation process is outlined as follows:
 
 1. Decide on the branching structure of the tree/ lattice,
 
-2. Start with a tree/lattice (which is more of a qualified quess) with the stated branching structure,
+2. Start with a tree/lattice (which is more of a qualified guess) with the stated branching structure,
 
-3. Genarate one sample from a particular known distribution with the same length and dimension as the states of the nodes of the tree/lattice.
+3. Generate one sample from a particular known distribution with the same length and dimension as the states of the nodes of the tree/lattice.
 
 4. The algorithm finds a sequence of nodes in the tree where the distance between the states of those nodes and the generated sample is minimal. The algorithm then updates the states of those nodes with the values in the generated sample. The states of other nodes remains unchanged.
 
@@ -25,28 +25,28 @@ The stochastic approximation process is outlined as follows:
 
 7. The algorithm stops when all the number of iterations have been performed.
 
-!!! info
+!!! tip
     The most important function in this approximation process is the function that user wants to approximate. This is the function that generates samples that improves the tree in each iteration. _The function must take the number of stages and the dimension as inputs._
-    
+
 ## Tree Approximation
 
 In this package, we have the function `TreeApproximation!` which does the stochastic approximation process for scenario trees. This function takes the following inputs:
 
   - Tree (which takes the branching structure and dimension and inputs)
-  
+
   - Name of the function that generates samples
-  
+
   - Number of iterations
-  
+
   - Value `d` for distance (2 is the default for we use the Euclidean distance, 1 would be for the normal distance)
-  
+
   - Value `r` for the Wasserstein distance (2 is the default for Wasserstein distance)
-  
+
 Given the following inputs, the function does the stochastic approximation process and returns a valuated scenario tree.
 
 !!! info
     The user must provide the above inputs to the function. The user also dictates where the tree starts from in the script that generates samples from a stochastic process that the user wants to approximate.
-    
+
 ### Example
 
 Consider the following. We want to approximate the Gaussian random walk in 5 stages with a tree with a branching structure of `1x3x3x3x3` using the usual Euclidean distance and `r=2` for the Wasserstein distance.
@@ -62,7 +62,7 @@ julia> savefig("treeapprox1.png")
 The function `GaussianSamplePath` takes the number of stages and the dimension as depicted by the tree that you want to generate. For example, in the above, `GaussianSamplePath` function will take 5 as the number of stages and 1 as the dimension and then generate  5 samples of a Gaussian distribution.
 
 The output for the above approximation, shown below, is a scenario tree that is stable and represents the stochastic process in the best possible way.
-  
+
 ![Example of a valuated tree in 1D](../assets/treeapprox1.png)
 
 We can also appoximate a stochastic process in two dimension. Consider the Gaussian random walk in 2D. Our function `GaussianSamplePath` can generate samples from the Gaussian random walk in 2 dimension, for example as follows:
@@ -88,22 +88,22 @@ julia> savefig("treeapprox2D.png")
 
 ## Lattice Approximation
 
-As mentioned before, some of the process that you may want to approximate are Markovian data processes. These processes can only be approximated by a scenario lattice. All the nodes in the same stage in a lattice have the same children nodes. 
+As mentioned before, some of the process that you may want to approximate are Markovian data processes. These processes can only be approximated by a scenario lattice. All the nodes in the same stage in a lattice have the same children nodes.
 
 To approximate a Markovian data process, we use the function `LatticeApproximation`. This function takes the following inputs:
 
   - Branching structure,
   - Name of the function that generates samples,
-  - Number of iterations to be performed, and 
+  - Number of iterations to be performed, and
   - Dimension of the states of the nodes in the lattice.
-  
+
 Lattice Approximation follows the same stochastic approximation process as for the scenario tree. The only difference is that, in each stage of a lattice, we find the closest lattice entry and use the sample generated to improve it. At the beginning, the lattice is not stable but with more and more iterations, the scenario lattice converges in probability and the resulting lattice can then be used for decision making process.
 
 All the probabilities in each stage of the lattice must sum up to 1.
 
 ### Example
 
-Consider the following example. We want to approximate a Gaussian random walk of 12 stages in 1 dimension with a scanario lattice with the branching structure of `1x3x4x5x6x7x8x9x10x11x12x13` and 1000000 iterations.
+Consider the following example. We want to approximate a Gaussian random walk of 12 stages in 1 dimension with a scenario lattice with the branching structure of `1x3x4x5x6x7x8x9x10x11x12x13` and 1000000 iterations.
 
 ```julia
 julia> sol4 = LatticeApproximation([1,3,4,5,6,7,8,9,10,11,12,13],GaussianSamplePath,1000000,1);
@@ -122,4 +122,4 @@ The above approximation gives the following output:
 
 ![Example of an approximated lattice](../assets/LatticeApprox.png)
 
-
+You can see that in the scenario lattice, we have many possibilities than in a scenario tree. Hence, some people prefer a scenario lattice than a scenario tree.

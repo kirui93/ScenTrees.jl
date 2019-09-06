@@ -43,7 +43,7 @@ So that instead of having it as a fucntion, we rather have it as an array so tha
 """
 	Tree(identifier::Int64)
 
-This returns some examples of predefirned trees. 
+This returns some examples of predefirned trees.
 These are (0,302,303,304,305,306,307,402,404,405).
 You can call any of the above tree and plot to see the properties of the tree.
 """
@@ -104,6 +104,13 @@ You can call any of the above tree and plot to see the properties of the tree.
             #self.state= [10.0 11.0 8.0 12.0 9.0 6.0 10.0 13.0 10.01 8.01 12.01 9.01 4.0 11.0 12.99]'
             self.state = [10.0 12.0 8.0 15.0 11.0 9.0 5.0 18.0 16.0 13.0 11.0 10.0 7.0 6.0 3.0]'
             self.probability = [1.0 0.8 0.7 0.3 0.2 0.8 0.4 0.6 0.2 0.5 0.5 0.4 0.6 0.7 0.3]'
+        elseif identifier == 4022
+            self.name = "Tree 1x2x2x2"
+            self.parent = [0,1,1,2,2,3,3,4,4,5,5,6,6,7,7]
+            self.children = Children(self.parent)
+            #self.state= [10.0 11.0 8.0 12.0 9.0 6.0 10.0 13.0 10.01 8.01 12.01 9.01 4.0 11.0 12.99]'
+            self.state = [10.0 0.0; 12.0 1.0; 8.0 -1.0; 15.0 2.0; 11.0 1.0; 9.0 -0.5; 5.0 -2.0; 18.0 3.0; 16.0 1.8; 13.0 0.9; 11.0 0.2; 10.0 0.0; 7.0 -1.2; 6.0 -2.0; 3.0 -3.2]
+            self.probability = [1.0 0.8 0.7 0.3 0.2 0.8 0.4 0.6 0.2 0.5 0.5 0.4 0.6 0.7 0.3]'
         elseif identifier ==404
             self.name = "Tree 1x2x2x2"
             self.parent = [0,1,1,2,2,3,3,4,4,5,5,6,6,7,7]
@@ -124,7 +131,7 @@ You can call any of the above tree and plot to see the properties of the tree.
 
 Instead of having a predefined tree, we can just provide the topology of the tree and then using it, we produce the tree.
 Given the bushiness of the tree, the following function produces the tree.
-For example, bushiness = 1x2x3x3 means that we have 18 leaves at the end and at stage 1, we have 1 node, 
+For example, bushiness = 1x2x3x3 means that we have 18 leaves at the end and at stage 1, we have 1 node,
 stage 2 has 2x1 nodes, stage 3 has 3x2x1 nodes and stage 4 has 3x3x2x1 nodes.
 We generate normal random  variables for the states of the nodes of the tree.
 """
@@ -196,8 +203,8 @@ end
 """
 	leaves(trr::Tree,node=Int64[])
 
-This function produces the terminal nodes of the tree. 
-The terminal nodes or the leaves are all those nodes which doesn't have children nodes. 
+This function produces the terminal nodes of the tree.
+The terminal nodes or the leaves are all those nodes which doesn't have children nodes.
 They are the nodes which are not parents.
 The function also returns the indexes (omegas) of these nodes as well as the conditional probabilities (prob) of reaching of the leaves from the root node
 """
@@ -292,7 +299,7 @@ end
 """
 	buildProb!(trr::Tree,probabilities::Array{Float64,2})
 
-In the stochastic approximation step, we only iterate over the probabilities of the leaves. The length of the array of probabilities we get at the 
+In the stochastic approximation step, we only iterate over the probabilities of the leaves. The length of the array of probabilities we get at the
 end is smaller than the length of the parents. So we have to build the probabilites for the remaining nodes.
 """
 function buildProb!(trr::Tree,probabilities::Array{Float64,2})
@@ -373,10 +380,10 @@ It returns a plot with two trees with differet states but the same parents, chil
 """
 
 function plotD(newtree::Tree)
-    fig = figure(1)
+    fig = figure(figsize = (10,6))
     stg = stage(newtree)
     for rw = 1:size(newtree.state,2)
-      ax = subplot(size(newtree.state,2),1,rw)
+      ax = subplot(1,size(newtree.state,2),rw)
       ax.spines["top"].set_visible(false)                                                  #remove the box top
       ax.spines["right"].set_visible(false)                                               #remove the box right
       for i in range(1,stop = length(newtree.parent))
@@ -391,4 +398,3 @@ function plotD(newtree::Tree)
       #grid(true)
     end
 end
-

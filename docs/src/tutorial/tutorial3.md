@@ -6,7 +6,7 @@ CurrentModule = ScenTrees
 
 If the data process is Markovian, we approximate the process with a _scenario lattice_ instead of a scenario tree. Scenario lattices are natural discretizations of the Markov processes.
 
-A scanrio lattice is similar to a scenario tree but has an added requirement that all nodes in stage `t` have the same children. This makes the description of a scanrio lattice less than for a scenario tree as a scenario lattice can only be described by its name, states of the nodes in the lattice and the probabilities of treansition in the lattice. 
+A scenario lattice is similar to a scenario tree but has an added requirement that all nodes in stage `t` have the same children. This makes the description of a scenario lattice less than for a scenario tree as a scenario lattice can only be described by its name, states of the nodes in the lattice and the probabilities of transition in the lattice. 
 
 In a scenario lattice, the total number of nodes is equal to the total number of states which is equal to the sum of the elements in the branching vector.
 

@@ -17,7 +17,7 @@ The above tree basically is not optimal. This is an example of a beginning tree 
 
 ![Non optimal tree in 1D](../assets/example1.png)
 
-The above tree is in 1-state dimension. 
+The above tree is in 1-state dimension.
 To generate a tree in 2-state dimension, we use the following:
 
 ```jldoctest
@@ -44,7 +44,7 @@ For example,
 ```jldoctest
 julia> nodes(example1)
 
-#output 
+#output
 1:7
 ```
 
@@ -77,7 +77,7 @@ julia> root(example1)
 
 The function `root` can also give us a sequence of nodes to reach a particular node of the tree. It turns out that this function will be very important in stochastic approximation as it will give us a path that we can improve with samples from a stochastic process.
 
-If we want a sequece of nodes to reach, for example, node 6 in the above tree, we just call out the `root``function as follows:
+If we want a sequence of nodes to reach, for example, node 6 in the above tree, we just call out the `root``function as follows:
 
 ```julia
 julia> root(example1,6)
@@ -104,7 +104,7 @@ One of the most important things in programming is visualization. In this packag
 
 !!! info
 	You need to install the [PyPlot.jl](https://github.com/JuliaPy/PyPlot.jl) package for this plots.
-	
+
 
 For example, we can plot a default tree already in the package and then the figure can be saved with the function `savefig`.
 
