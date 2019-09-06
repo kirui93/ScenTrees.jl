@@ -4,7 +4,7 @@ CurrentModule = ScenTrees
 
 # Performance of `ScenTrees.jl`
 
-`ScenTrees.jl` was built with a goal of employing the speed of Julia. This package's design allows us to obtain a fast code with high flexibity and excellent computational efficiency. The design choices are highly motivated by the properties of the Julia language.
+`ScenTrees.jl` was built with a goal of employing the speed of Julia. This package's design allows us to obtain a fast code with high flexibility and excellent computational efficiency. The design choices are highly motivated by the properties of the Julia language.
 
 The most important concept in Julia is multiple dispatch i.e., the ability to dispatch function calls to different methods depending on the type of all function arguments. Julia arrays are first class objects and linear algebra functions have been integrated into the language standard library hence making it easier for the development of this library.
 
@@ -29,6 +29,8 @@ The above table can be represented in a plot as follows:
 
 ![Multistage distance for trees of different heights](../assets/diffHeights.png)
 
+The above plot can be obtained by calling the function `bushinessNesDistance()` from the package.
+
 Generally, the approximating quality of a scenario tree increases with increasing height of the tree and increasing bushiness of the tree.
 
 ## Comparison with MATLAB's algorithm
@@ -52,7 +54,7 @@ What is clear is that `ScenTrees.jl` library outperforms MATLAB for all the scen
 
 The crucial factor that leads to such high speed of computation in Julia is:
 
-  - Julia is a multiple dispatch language. Its core design, _type-stability through specialization via multiple dispatch_ is what allows Julia to be very easy for a compiler to make into efficient code, but also allows the code to be very concise and "look like a scripting language". This will lead to some very clear performance gain. Type stability is the idead that there is only one possible type that can be outputted from a method. If a function is type-stable, then the compiler can know what type will be at all points in the function and smartly optimize it to the same assembly as C/Fortran.
+  - Julia is a multiple dispatch language. Its core design, _type-stability through specialization via multiple dispatch_ is what allows Julia to be very easy for a compiler to make into efficient code, but also allows the code to be very concise and "look like a scripting language". This will lead to some very clear performance gain. Type stability is the idea that there is only one possible type that can be outputted from a method. If a function is type-stable, then the compiler can know what type will be at all points in the function and smartly optimize it to the same assembly as C/Fortran.
 
 Our library totally relies on the above feature. That is why we were able to attain a speed of approximately 80 times than MATLAB.
 
@@ -60,6 +62,6 @@ Our library totally relies on the above feature. That is why we were able to att
 
 `ScenTrees.jl` was developed in Julia 1.0.4 and tested using the standard Julia framework. It was tested for Julia versions 1.0,1.1,1.2 and nightly for the latest release of Julia in Linux and OSX distributions.
 
-The comparison done for this library in Julia 1.0.4 and MATLAB R2019a was done on Linux(x86_64-pc-linux-gnu) with CPU(TM) i5-4670 CPU @ 3.40GHz.
+The comparison done for this library in Julia 1.0.4 and MATLAB R2019a was done on Linux(x86_64-pc-Linux-gnu) with CPU(TM) i5-4670 CPU @ 3.40GHz.
 
 What is more important for testing and development is the processor speed for your machine. Machines with low processors will take longer time to execute the functions than machines with high processors. Hence, depending on the type of processor you have, you may or may not or even pass the computational speed that we achieved for this library.

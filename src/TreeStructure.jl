@@ -393,8 +393,6 @@ function plotD(newtree::Tree)
           xlabel("stage, time")
           ylabel("states")
       end
-      #title("Stochastic Approximation Tree")
       xticks(unique(stg))
-      #grid(true)
     end
 end

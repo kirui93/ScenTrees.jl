@@ -9,6 +9,8 @@ nPaths - number of paths we want to generate, defaulted to 1.
 d - dimension that we are working on; only possible for 1 and 2D, for now.
 """
 
+using Distributions
+
 function GaussianSamplePath(nStages::Int64,d::Int64)
     if d == 1
         return vcat(0.0,cumsum(randn(nStages-1,d),dims = 1))
@@ -71,8 +73,6 @@ end
 function path(nStages::Int64,dim::Int64)
     return  100 .+ 50 * vcat(0.0,cumsum(randn(nStages-1,dim),dims = 1))
 end
-
-using Distributions
 
 function simulate(nStages::Int64,dim::Int64)
     # Generate nStages random steps with mean=0 and standard deviation=1
