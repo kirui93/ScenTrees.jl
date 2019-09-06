@@ -6,5 +6,5 @@ include("LatticeApprox.jl")
 include("bushinessNesDistance.jl")
 export TreeApproximation!,LatticeApproximation,Tree,Lattice,stage,height,leaves,nodes,root,
         partTree,buildProb!,treeplot,plotD,PlotLattice,GaussianSamplePath,RunningMaximum,
-        path,simulate,bushinessNesDistance
+        path,bushinessNesDistance
 end
