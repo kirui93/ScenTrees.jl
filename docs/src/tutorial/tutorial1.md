@@ -28,7 +28,7 @@ To measure the quality of the approximation, we use the concept of multistage di
 
 To measure the distance of stochastic processes, it is not sufficient to only consider the distance between thier laws. It is also important to consider the information accumulated over time i.e., what the filtrations has to tell us over time. The Wasserstein distance do not correctly separate stochastic processes having different filtrations. It ignores filtrations and hence does not distinguish stochastic processes.
 
-Multistage distance was introduced by [Prof. George Pflug (2009)](https://doi.org/10.1137/080718401) . It turns out that this distance is very important to measure the distence between multistage stochastic processes as it incorporates filtrations introduced by the processes. We use this distance in our algorithm to measure the quality of approximation of the scenario tree. Generally, a scenario tree with a minimal distance to the stochastic process is consider to have a better quality approximation.
+Multistage distance was introduced by [George Ch. Pflug (2009)](https://doi.org/10.1137/080718401) . It turns out that this distance is very important to measure the distence between multistage stochastic processes as it incorporates filtrations introduced by the processes. We use this distance in our algorithm to measure the quality of approximation of the scenario tree. Generally, a scenario tree with a minimal distance to the stochastic process is consider to have a better quality approximation.
 
 ## Description of a scenario tree
 
