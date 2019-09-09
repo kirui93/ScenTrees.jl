@@ -40,36 +40,6 @@ function RunningMaximum(nStages::Int64,d::Int64)
     end
 end
 
-# #In the following, we simulate 1000 paths of each of above processes for 4 stages and d=1
-# using PyPlot
-# using Random
-# Random.seed!(05092019)
-#
-# t = LinRange(1,5,5)
-# pt = subplot2grid((1,5), (0,0), colspan=5)
-# pt.spines["top"].set_visible(false) #remove the box
-# pt.spines["right"].set_visible(false)
-# for i = 1:10000
-#     pt = plot(t,GaussianSamplePath(5,1))
-# end
-# xlabel("stages")
-# xticks([1,2,3,4,5])
-# ylabel("random values")
-
-#title("Gaussian Random Walk")
-
-# sleep(5)
-# clf()
-#
-# for i = 1:1000
-#     pt = plot(t,RunningMaximum(5,1))
-# end
-# xlabel("stages")
-# xticks([1,2,3,4,5])
-# ylabel("random values")
-#title("Running maximum processes")
-
-
 function path(nStages::Int64,dim::Int64)
     return  100 .+ 50 * vcat(0.0,cumsum(randn(nStages-1,dim),dims = 1))
 end
