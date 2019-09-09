@@ -9,7 +9,7 @@ CurrentModule = ScenTrees
 
 `ScenTrees.jl` is a package for generating and improving scenario trees and scenario lattices for multistage stochastic optimization problems using _stochastic approximation_. In this library, we approximate trajectories of a stochastic process using a scanario tree or a scenario lattice. The quality of approximation between the stochastic process and the scenario tree/ the scenario lattice is measure using a multistage distance. 
 
-In these tutorials, we assume that the reader is quite familiar with the theory and explanation in the paper [Dynamic Genaration of Scenario Trees by Prof. George Pflug and Prof. Alois Pichler](https://doi.org/10.1007/s10589-015-9758-0)
+In these tutorials, we assume that the reader is quite familiar with the theory and explanation in the paper [Dynamic Genaration of Scenario Trees by George Ch. Pflug and Alois Pichler](https://doi.org/10.1007/s10589-015-9758-0)
 
 ## Installation
 
