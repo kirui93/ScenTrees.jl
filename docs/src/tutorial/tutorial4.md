@@ -94,7 +94,8 @@ To approximate a Markovian data process, we use the function `LatticeApproximati
 
   - Branching structure,
   - Name of the function that generates samples and,
-  - Number of iterations to be performed
+  - Number of iterations to be performed, and
+  - The dimension of states of the lattice
 
 Lattice Approximation follows the same stochastic approximation process as for the scenario tree. The only difference is that, in each stage of a lattice, we find the closest lattice entry and use the sample generated to improve it. At the beginning, the lattice is not stable but with more and more iterations, the scenario lattice converges in probability and the resulting lattice can then be used for decision making process.
 
@@ -102,10 +103,10 @@ All the probabilities in each stage of the lattice must sum up to 1.
 
 ### Example
 
-Consider the following example. We want to approximate a Gaussian random walk of 12 stages with a scenario lattice with the branching structure of `1x3x4x5x6x7x8x9x10x11x12x13` and 1000000 iterations.
+Consider the following example. We want to approximate a Gaussian random walk of 12 stages in one dimension with a scenario lattice with the branching structure of `1x3x4x5x6x7x8x9x10x11x12x13` and 1,000,000 iterations.
 
 ```julia
-julia> sol4 = LatticeApproximation([1,3,4,5,6,7,8,9,10,11,12,13],GaussianSamplePath,1000000);
+julia> sol4 = LatticeApproximation([1,3,4,5,6,7,8,9,10,11,12,13],GaussianSamplePath,1000000,1);
 ```
 The result of the above approximation is a lattice which we can visualize it.
 
@@ -122,3 +123,6 @@ The above approximation gives the following output:
 ![Example of an approximated lattice](../assets/LatticeApprox.png)
 
 You can see that in the scenario lattice, we have many possibilities than in a scenario tree. Hence, some people prefer a scenario lattice than a scenario tree.
+
+!!! info
+    Currently, lattice approximation can only work for 1 dimension. It is in our workin plan to generalize and extend this lattice approximation to any dimension of the states of the scenario lattice.
