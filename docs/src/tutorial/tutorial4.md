@@ -125,4 +125,4 @@ The above approximation gives the following output:
 You can see that in the scenario lattice, we have many possibilities than in a scenario tree. Hence, some people prefer a scenario lattice than a scenario tree.
 
 !!! info
-    Currently, lattice approximation can only work for 1 dimension. It is in our workin plan to generalize and extend this lattice approximation to any dimension of the states of the scenario lattice.
+    Currently, lattice approximation can only work for 1 dimension. It is in our working plan to generalize and extend this lattice approximation to any dimension of the states of the scenario lattice.
