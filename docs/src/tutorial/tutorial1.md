@@ -28,7 +28,7 @@ To measure the quality of the approximation, we use the concept of multistage di
 
 To measure the distance of stochastic processes, it is not sufficient to only consider the distance between thier laws. It is also important to consider the information accumulated over time i.e., what the filtrations has to tell us over time. The Wasserstein distance do not correctly separate stochastic processes having different filtrations. It ignores filtrations and hence does not distinguish stochastic processes.
 
-Multistage distance was introduced by [George Ch. Pflug (2009)](https://doi.org/10.1137/080718401) . It turns out that this distance is very important to measure the distence between multistage stochastic processes as it incorporates filtrations introduced by the processes. We use this distance in our algorithm to measure the quality of approximation of the scenario tree. Generally, a scenario tree with a minimal distance to the stochastic process is consider to have a better quality approximation.
+Multistage distance was introduced by [Georg Ch. Pflug (2009)](https://doi.org/10.1137/080718401) . It turns out that this distance is very important to measure the distence between multistage stochastic processes as it incorporates filtrations introduced by the processes. We use this distance in our algorithm to measure the quality of approximation of the scenario tree. Generally, a scenario tree with a minimal distance to the stochastic process is consider to have a better quality approximation.
 
 ## Description of a scenario tree
 
@@ -40,6 +40,17 @@ A scenario tree is described by the following:
 4. States of the nodes in the tree
 5. Probabilities of transition from one node to another.
 
+A scenario tree is a mutable struct of type ``Tree()``. To create a non-optimal scenario tree, we need to fix the branching structure and the dimension of the states of nodes you are wroking on. This typs ``Tree()`` has different methods:
+```julia
+julia> methods(Tree)
+# 4 methods for generic function "(::Type)":
+[1] Tree(name::String, parent::Array{Int64,1}, children::Array{Array{Int64,1},1}, state::Array{Float64,2}, probability::Array{Float64,2}) 
+[2] Tree(identifier::Int64) 
+[3] Tree(spec::Array{Int64,1}) 
+[4] Tree(spec::Array{Int64,1}, dimension) 
+```
+All the methods correspond to the way you can create a scenario tree. For the first method, the length of states must be equal to the length of the probabilities. In the 2nd method, you can call any of our predefined trees by just calling on the identifier (these identifiers are `0,301,302,303,304,305,306,307,401,402,4022,404,405`). And finaly the most important methods are the 3rd and 4th method. If you know the branching structure of your scenario tree, then you can create an non-optimal starting tree using it. If you don't state the dimension you ae working on, then it is defaulted into `1`. For example, `Tree([1,2,2])` creates a binary tree with states of dimension one.
+
 ## Description of a scenario lattice
 
 A scenario lattice differs from a scenario tree in that every node in stage `t` is a child for each node in stage `t-1`. So the nodes in stage `t-1` share the same children.
@@ -49,6 +60,14 @@ Due to the above, we only describe a scenario lattice by:
 1. Name of the lattice
 2. States of the nodes of the lattice
 3. Probabilities of transition from one node to another in the lattice
+
+A scenario lattice has only one method.
+```julia
+julia> methods(Lattice)
+ 1 method for generic function "(::Type)":
+[1] Lattice(name::String, state::Array{Array{Float64,2},1}, probability::Array{Array{Float64,2},1})
+```
+This method is not very important becasue we only need it to produce the results of the lattice approximation process. We will see later that for lattice approximation, we need the branching structure and so the structure of the lattice is not very important as in the case of a scenario tree.
 
 ## Usage
 
