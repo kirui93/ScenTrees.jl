@@ -10,7 +10,7 @@ A scenario tree/lattice is organized in levels which corresponds to stages ``1,\
 
 ## Goal
 
-The goal  of ``ScenTrees.jl`` is to generate a valuated probability tree or a lattice which represents the stochastic process in the best way possible. 
+The goal  of `ScenTrees.jl` is to generate a valuated probability tree or a lattice which represents the stochastic process in the best way possible. 
 
 For example, consider a Gaussian random walk in 5 stages. The starting value of this process is known and fixed, say at ``0`` and the other values are random. The following plot shows 100 sample paths of this process:
 
@@ -40,7 +40,7 @@ A scenario tree is described by the following:
 4. States of the nodes in the tree
 5. Probabilities of transition from one node to another.
 
-A scenario tree is a mutable struct of type ``Tree()``. To create a non-optimal scenario tree, we need to fix the branching structure and the dimension of the states of nodes you are wroking on. This typs ``Tree()`` has different methods:
+A scenario tree is a mutable struct of type `Tree()`. To create a non-optimal scenario tree, we need to fix the branching structure and the dimension of the states of nodes you are wroking on. This typs `Tree()` has different methods:
 ```julia
 julia> methods(Tree)
 # 4 methods for generic function "(::Type)":
@@ -70,10 +70,8 @@ julia> methods(Lattice)
 This method is not very important becasue we only need it to produce the results of the lattice approximation process. We will see later that for lattice approximation, we need the branching structure and so the structure of the lattice is not very important as in the case of a scenario tree.
 
 ## Usage
-
-Since we have the basics of the scenario tree and the scenario lattice and since we created ``ScenTrees.jl`` 
-with an intention of being user-friendly, we will give an example of its usage and explain each part of it. 
-In the module of ``ScenTrees.jl``, we have all the exported functions that are visible to the user i.e, that are public, and the user can call these functions depending on what he/she wants to achieve with this library
+Since we have the basics of the scenario tree and the scenario lattice and since we created `ScenTrees.jl` with an intention of being user-friendly, we will give an example of its usage and explain each part of it. 
+In the module of `ScenTrees.jl`, we have all the exported functions that are visible to the user i.e, that are public, and the user can call these functions depending on what he/she wants to achieve with this library
 
 ```julia
 module ScenTrees
@@ -86,8 +84,8 @@ module ScenTrees
         GaussianSamplePath,RunningMaximum
 end
 ```
-The most important functions in this module are ``TreeApproximation!()`` and ``LatticeApproximation()`` since these are the tow functions which are used to approximate scenario trees and scenario lattices respectively. The other important function is the ``Tree()`` function which gives the basic structure of the scenario tree.
+The most important functions in this module are `TreeApproximation!()` and `LatticeApproximation()` since these are the tow functions which are used to approximate scenario trees and scenario lattices respectively. The other important function is the `Tree()` function which gives the basic structure of the scenario tree.
 
 All of the above functions have been documented in their respective scripts and the user can find out what each function does by putting a `?` before the function. For example, `?leaves` will give an explanation of what the function `leaves` does. 
 
-In the tutorials to come, we will have a look in detail on the functionalities of the main functions of this library.
+In the upcoming tutorials, we will have a look in detail on the functionalities of the main functions of this library.
