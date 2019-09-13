@@ -4,13 +4,13 @@ CurrentModule = ScenTrees
 
 # Introduction
 
-In multistage stochastic optimization, we are interested in approximations of  stochastic processes in by a finite structures. These processes are random and they have uncertain scenarios and a decision maker needs to make decisions at different stages. It is useful to depict the possible sequences of data for this processes in form of a `scenario tree` in the case of a discrete time stochastic process and a `scenario lattice` for Markovian data processes.
+In multistage stochastic optimization, we are interested in approximations of stochastic processes by finite structures. These processes are random and they have uncertain scenarios and a decision maker needs to make decisions at different stages of the process. It is useful to depict the possible sequences of data for this processes in form of a `scenario tree` in the case of a discrete time stochastic process and a `scenario lattice` for Markovian data processes.
 
-A scenario tree/lattice is organized in levels which corresponds to stages ``1,\ldots,T``. Each node in a stage has a specified number of predecessors as defined by the branching structure.
+A scenario tree/lattice is organized in levels which corresponds to stages ``1,\ldots,T``. Each node in a stage has a specified number of predecessors as defined by the branching structure. A node represents a possible state of the stochastic process and the vertices represents the possibility of transition between the two connected nodes. A scenario tree differs from a scenario lattice by the condition that each node in stage ``t`` must have one predecessor in stage ``t-1``. For a lattice, that is not the case; all the nodes in stage ``t-1`` share the same children in stage ``t``.
 
 ## Goal
 
-The goal  of `ScenTrees.jl` is to generate a valuated probability tree or a lattice which represents the stochastic process in the best way possible. 
+The goal  of ``ScenTrees.jl`` is to generate a valuated probability tree or a lattice which represents the stochastic process in the best way possible. 
 
 For example, consider a Gaussian random walk in 5 stages. The starting value of this process is known and fixed, say at ``0`` and the other values are random. The following plot shows 100 sample paths of this process:
 
@@ -52,9 +52,9 @@ Due to the above, we only describe a scenario lattice by:
 
 ## Usage
 
-Since we have the basics of the scenario tree and the scenario lattice and since we created `ScenTrees.jl` 
+Since we have the basics of the scenario tree and the scenario lattice and since we created ``ScenTrees.jl`` 
 with an intention of being user-friendly, we will give an example of its usage and explain each part of it. 
-In the module of `ScenTrees.jl`, we have all the exported functions that are visible to the user i.e, that are public, and the user can call these functions depending on what he/she wants to achieve with this library
+In the module of ``ScenTrees.jl``, we have all the exported functions that are visible to the user i.e, that are public, and the user can call these functions depending on what he/she wants to achieve with this library
 
 ```julia
 module ScenTrees
@@ -65,9 +65,9 @@ module ScenTrees
   export TreeApproximation!, LatticeApproximation, Tree, nodes, stage, height, leaves,
         root,partTree, buildProb!, treeplot, plotD, PlotLattice,
         GaussianSamplePath,RunningMaximum
-  ........
 end
 ```
+The most important functions in this module are ``TreeApproximation!()`` and ``LatticeApproximation()`` since these are the tow functions which are used to approximate scenario trees and scenario lattices respectively. The other important function is the ``Tree()`` function which gives the basic structure of the scenario tree.
 
 All of the above functions have been documented in their respective scripts and the user can find out what each function does by putting a `?` before the function. For example, `?leaves` will give an explanation of what the function `leaves` does. 
 
