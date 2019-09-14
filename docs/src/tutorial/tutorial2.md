@@ -101,7 +101,7 @@ From the above, it is clear that the sum of the conditional probabilities to rea
 One of the most important things in programming is visualization. In this package, we can plot a scenario tree in 1D with the `treeplot` function and with the `plotD` function for a scenario tree in D dimension.
 
 !!! info
-	You need to install the <a href="https://github.com/JuliaPy/PyPlot.jl">PyPlot.jl</a> package for this plots.
+	You need to install the [PyPlot.jl](https://github.com/JuliaPy/PyPlot.jl) package for this plots.
 
 For example, we can plot a default tree already in the package and then the figure can be saved with the function `savefig`. These trees can be accessed through an identifier which is just a number. These identifiers are `0,301,302,303,304,305,306,307,401,402,4022,404,405`. Therefore, for these examples, you can just access them through their identifie. For example, `Tree(402)` returns tree with the identifier 402.
 
