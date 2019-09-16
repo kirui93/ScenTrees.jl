@@ -3,7 +3,7 @@ using Documenter, ScenTrees
 makedocs(
 	sitename =  "ScenTrees.jl",
 	authors = "Kipngeno Kirui",
-	clean = false,
+	clean = true,
 	doctest = true,
 	format = Documenter.HTML(
 		assets = ["exampleTree1.png",
