@@ -15,25 +15,25 @@ The function `Tree()` takes the branching structure and the dimension of the tre
 """
 
 function TreeApproximation!(newtree::Tree,genPath::Function,samplesize::Int64,pNorm::Int64=2,rwasserstein::Int64=2)
-    leaf,omegas,probaLeaf = leaves(newtree)                                             #leaves,omegas and probabilities of the leaves of the tree
-    dm = size(newtree.state,2)                                                                           #We get the dim from the dimsention of the states we are working on.
-    T = height(newtree)                                                                                        #height of the tree
-    n = length(leaf)                                                                                                 #number of leaves = no of omegas
+    leaf,omegas,probaLeaf = leaves(newtree)                               #leaves,omegas and probabilities of the leaves of the tree
+    dm = size(newtree.state,2)                                            #We get the dim from the dimsention of the states we are working on.
+    T = height(newtree)                                                   #height of the tree
+    n = length(leaf)                                                      #number of leaves = no of omegas
     d = zeros(Float64,dm,length(leaf))
 
     samplepath = zeros(Float64,T+1,dm)
 
     probaLeaf = zero(probaLeaf)
-    probaNode = nodes(newtree)                                                                     #all nodes of the tree
+    probaNode = nodes(newtree)                                             #all nodes of the tree
 
-    path_to_leaves = [root(newtree,i) for i in leaf]                                     # all the paths from root to the leaves
-    path_to_all_nodes = [root(newtree,j) for j in probaNode]                # all paths to other nodes
+    path_to_leaves = [root(newtree,i) for i in leaf]                       # all the paths from root to the leaves
+    path_to_all_nodes = [root(newtree,j) for j in probaNode]               # all paths to other nodes
 
     @inbounds for k = 1: samplesize
         critical = max(0.0,0.2*sqrt(k) - 0.1* n)
         #tmp = findall(xi -> xi <= critical, probaLeaf)
         tmp = Int64[inx for (inx,ppf) in enumerate(probaLeaf) if ppf <= critical]
-        samplepath .= genPath(T+1,dm)                          #sample path (nStages,nPaths) i.e a new scenario path
+        samplepath .= map(genPath,T+1,dm)                                   #sample path (nStages,nPaths) i.e a new scenario path
 
         """
           This part addresses the critical probabilities of the tree so that we don't loose the branches
@@ -55,11 +55,8 @@ function TreeApproximation!(newtree::Tree,genPath::Function,samplesize::Int64,pN
                 newtree.state[rt[tmpi],:] .= samplepath[tmpi,:]
             end
         end
-
-        #To the step  of STOCHASTIC COMPUTATIONS
-                                    
+        #To the step  of STOCHASTIC COMPUTATIONS                                
         EndLeaf = 0 #start from the root
-
         for t = 1:T+1
             tmpleaves = newtree.children[EndLeaf+1]
             disttemp = Inf #or fill(Inf,dm)
