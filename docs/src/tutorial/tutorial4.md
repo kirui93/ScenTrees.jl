@@ -106,7 +106,7 @@ All the probabilities in each stage of the lattice must sum up to 1.
 Consider the following example. We want to approximate a Gaussian random walk of 12 stages in one dimension with a scenario lattice with the branching structure of `1x3x4x5x6x7x8x9x10x11x12x13` and 1,000,000 iterations.
 
 ```julia
-julia> sol4 = LatticeApproximation([1,3,4,5,6,7,8,9,10,11,12,13],GaussianSamplePath,1000000,1);
+julia> sol4 = LatticeApproximation([1,3,4,5,6,7,8,9,10,11,12,13],GaussianSamplePath,1000000);
 ```
 The result of the above approximation is a lattice which we can visualize it.
 
