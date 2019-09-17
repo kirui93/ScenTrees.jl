@@ -22,7 +22,7 @@ using Test
     end
 
     @testset "ScenTree.jl - Lattice Approximation" begin
-        tstLat = LatticeApproximation([1,2,3],GaussianSamplePath,500000,1)
+        tstLat = LatticeApproximation([1,2,3],GaussianSamplePath,500000)
         @test length(tstLat.state) == length(tstLat.probability)
         @test round.([sum(tstLat.probability[i]) for i=1:length(tstLat.probability)], digits = 1)  == Bool[1,1,1] #sum of probs at every stage
     end
