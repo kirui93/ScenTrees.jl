@@ -1,5 +1,6 @@
+
 """
-	GaussianSamplePath(nStages::Int64,d::Int64)
+	GaussianSamplePath()
 
 The stochastic approximation process takes a simulated scenario path and updates the tree.
 We have two functions, GaussianSamplePath and RunningMaximum which helps us to generate normally distributed random variables.
@@ -9,37 +10,43 @@ nPaths - number of paths we want to generate, defaulted to 1.
 d - dimension that we are working on; only possible for 1 and 2D, for now.
 """
 
+#All these examples of path are in 4 stages
+
 using Distributions
 
-function GaussianSamplePath(nStages::Int64,d::Int64)
-    if d == 1
-        return vcat(0.0,cumsum(randn(nStages-1,d),dims = 1))
-    else
-        gsmatrix = randn(nStages,d) * [1.0 0.0; 0.9 0.3] #will create an (dimension x nstages) matrix
-        gsmatrix[1,:] .= 0.0
-        return cumsum(gsmatrix .+ [1.0 0.0], dims = 1)
-    end
+function GaussianSamplePath1D()
+    return vcat(0.0,cumsum(randn(3,1),dims = 1)) #4 stages
 end
 
-function RunningMaximum(nStages::Int64,d::Int64)
-    rmatrix = vcat(0.0,cumsum(randn(nStages-1,1),dims = 1))
-    if d == 1
-        for i = 2:nStages
-            rmatrix[i] = max(rmatrix[i-1], rmatrix[i])
-        end
-        return rmatrix
-    else
-        rmatrix2D = zeros(nStages,d)
-        rmatrix2D[:,1] = rmatrix
-        for j=2:d
-            for i=2:nStages
-                rmatrix2D[i,j] = max(rmatrix[i-1],rmatrix[i])
-            end
-        end
-        return rmatrix2D
-    end
+function GaussianSamplePath2D()
+    gsmatrix = randn(4,2) * [1.0 0.0; 0.9 0.3] #will create an (dimension x nstages) matrix
+    gsmatrix[1,:] .= 0.0
+    return cumsum(gsmatrix .+ [1.0 0.0], dims = 1)
 end
 
-function path(nStages::Int64,dim::Int64)
-    return  100 .+ 50 * vcat(0.0,cumsum(randn(nStages-1,dim),dims = 1))
+function RunningMaximum1D()
+    rmatrix = vcat(0.0,cumsum(randn(3,1),dims = 1))
+    rmatrix1d = zeros(4,1)
+    rmatrix1d .= vec(rmatrix)
+    for i = 2:4
+        rmatrix1d[i] = max.(rmatrix1d[i-1], rmatrix1d[i])
+    end
+    return rmatrix1d
 end
+
+function RunningMaximum2D()
+    rmatrix = vcat(0.0,cumsum(randn(3,1),dims = 1))
+    rmatrix2D = zeros(4,2)
+    rmatrix2D[:,1] .= vec(rmatrix)
+    for j=2:2
+        for i=2:4
+            rmatrix2D[i,j] = max.(rmatrix[i-1],rmatrix[i])
+        end
+    end
+    return rmatrix2D * [1.0 0.0; 0.9 0.3]
+end
+
+function path()
+    return  100 .+ 50 * vcat(0.0,cumsum(randn(3,1),dims = 1))
+end
+
