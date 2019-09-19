@@ -12,7 +12,7 @@ The following shows an example of approximating a Gaussian random walk process u
 
 <p float="center">
   <img src="docs/src/assets/100GaussianPaths.png" width="380" />
-  <img src="docs/src/assets/treeapprox1.png" width="380" /> 
+  <img src="docs/src/assets/treeapprox1.pdf" width="380" /> 
 </p>
 
 If you need help or any questions regarding the library and any suggestions, file a Github issue on https://github.com/kirui93/ScenTrees.jl/issues/new.
