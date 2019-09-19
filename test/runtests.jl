@@ -22,7 +22,7 @@ using Test
     end
     @testset "ScenTrees.jl - Tree Approximation 2D" begin
         twoD= TreeApproximation!(Tree([1,3,3,3],2),GaussianSamplePath2D,100000,2,2)
-        @test size(twoD.state) == 2
+        @test size(twoD.state,2) == 2
         @test size(twoD.state,1) == length(twoD.parent) == length(twoD.probability)
     end
 
