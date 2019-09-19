@@ -71,7 +71,7 @@ This method is not very important becasue we only need it to produce the results
 
 ## Usage
 Since we have the basics of the scenario tree and the scenario lattice and since we created `ScenTrees.jl` with an intention of being user-friendly, we will give an example of its usage and explain each part of it. 
-In the module of `ScenTrees.jl`, we have all the exported functions that are visible to the user i.e, that are public, and the user can call these functions depending on what he/she wants to achieve with this library
+In the module of `ScenTrees.jl`, we have all the exported functions that are visible to the user i.e., that are public, and the user can call these functions depending on what he/she wants to achieve with this library
 
 ```julia
 module ScenTrees
@@ -79,12 +79,13 @@ module ScenTrees
   include("TreeApprox.jl")
   include("StochPaths.jl")
   include("LatticeApprox.jl")
-  export TreeApproximation!, LatticeApproximation, Tree, nodes, stage, height, leaves,
-        root,partTree, buildProb!, treeplot, plotD, PlotLattice,
-        GaussianSamplePath,RunningMaximum
+  include("bushinessNesDistance.jl")
+  export TreeApproximation!, LatticeApproximation,Tree,Lattice,nodes,stage,height,leaves,
+        root,partTree,buildProb!,treeplot,plotD,PlotLattice,bushinessNesDistance,
+        GaussianSamplePath1D,GaussianSamplePath2D,RunningMaximum1D,RunningMaximum2D,path
 end
 ```
-The most important functions in this module are `TreeApproximation!()` and `LatticeApproximation()` since these are the tow functions which are used to approximate scenario trees and scenario lattices respectively. The other important function is the `Tree()` function which gives the basic structure of the scenario tree.
+The most important functions in this module are `TreeApproximation!()` and `LatticeApproximation()` since these are the two functions which are used to approximate scenario trees and scenario lattices respectively. The other important function is the `Tree(BranchingStructure,dimension)` function which gives the basic starting structure of a scenario tree.
 
 All of the above functions have been documented in their respective scripts and the user can find out what each function does by putting a `?` before the function. For example, `?leaves` will give an explanation of what the function `leaves` does. 
 
