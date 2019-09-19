@@ -33,7 +33,7 @@ function TreeApproximation!(newtree::Tree,genPath::Function,samplesize::Int64,pN
         critical = max(0.0,0.2*sqrt(k) - 0.1* n)
         #tmp = findall(xi -> xi <= critical, probaLeaf)
         tmp = Int64[inx for (inx,ppf) in enumerate(probaLeaf) if ppf <= critical]
-        samplepath .= map(genPath,T+1,dm)                                   #sample path (nStages,nPaths) i.e a new scenario path
+        samplepath .= genPath()                                           #sample path (nStages,nPaths) i.e a new scenario path
 
         """
           This part addresses the critical probabilities of the tree so that we don't loose the branches
