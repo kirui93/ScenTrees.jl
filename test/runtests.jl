@@ -2,10 +2,10 @@ using ScenTrees
 using Test
 
 @testset "ScenTrees.jl" begin
-    @testset "ScenTrees.jl - Stochastic Approximation" begin
-        paths = [GaussianSamplePath,RunningMaximum]
-        trees = [Tree([1,2,2]),Tree([1,3,3])]
-        samplesize = 10000
+    @testset "ScenTrees.jl - Tree Approximation 1D" begin
+        paths = [GaussianSamplePath1D,RunningMaximum1D]
+        trees = [Tree([1,2,2,2]),Tree([1,3,3,3])]
+        samplesize = 100000
         pNorm = 2
         rWasserstein = 2
 
@@ -20,9 +20,14 @@ using Test
             end
         end
     end
+    @testset "ScenTrees.jl - Tree Approximation 2D" begin
+        twoD= TreeApproximation!(Tree([1,3,3,3],2),GaussianSamplePath2D,100000,2,2)
+        @test size(twoD.state) == 2
+        @test size(twoD.state,1) == length(twoD.parent) == length(twoD.probability)
+    end
 
     @testset "ScenTree.jl - Lattice Approximation" begin
-        tstLat = LatticeApproximation([1,2,3],GaussianSamplePath,500000)
+        tstLat = LatticeApproximation([1,2,3,4],GaussianSamplePath1D,500000)
         @test length(tstLat.state) == length(tstLat.probability)
         @test round.([sum(tstLat.probability[i]) for i=1:length(tstLat.probability)], digits = 1)  == Bool[1,1,1] #sum of probs at every stage
     end
