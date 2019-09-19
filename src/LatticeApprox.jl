@@ -20,7 +20,7 @@ function LatticeApproximation(states::Array{Int64,1},path::Function,nScenarios::
     WassersteinDistance = 0.0
     rWasserstein = 2	
     lns = length(states)
-    LatState = [zeros(states[j],dim) for j = 1:lns]                                            # States of the lattice at each time t
+    LatState = [zeros(states[j],1) for j = 1:lns]                                              # States of the lattice at each time t
     LatProb = vcat([zeros(states[1],1)],[zeros(states[j-1],states[j]) for j = 2:lns])          # Probabilities of the lattice at each time t
 
     #Stochastic approximation
