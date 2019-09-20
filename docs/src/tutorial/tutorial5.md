@@ -38,7 +38,7 @@ Generally, the approximating quality of a scenario tree increases with increasin
 Inorder to see how fast Julia is, we compared the performance of different trees with different heights with the same algorithm written in MATLAB programming language. We run the same trees and saved the time it takes to produce results. The following table shows the results (N/B: The time shown is in seconds):
 (1 minute = 60 seconds)
 | Tree           | Number of Iterations | Time (Julia) | Time (MATLAB) | Speed of Julia |
-|:----------------:|:----------------------:|:--------------:|:---------------:|:-------------------:|
+|----------------|----------------------|--------------|---------------|-------------------|
 |1x2x2| 10,000| 0.17 | 6.75 | 38.9 times |
 |1x2x2x2| 10,000 | 0.16 | 9.74 | 59.8 times |
 |1x2x2x2| 100,000 | 1.77 | 111.73 | 63.1 times |
