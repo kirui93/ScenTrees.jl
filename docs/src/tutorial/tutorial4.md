@@ -76,8 +76,8 @@ The output for the above approximation, shown below, is a scenario tree that is 
 We can also appoximate a stochastic process in two dimension. Consider the Gaussian random walk in 2D. Our function `GaussianSamplePath2D` can generate samples from the Gaussian random walk in 2 dimension, for example as follows:
 
 ```julia
-julia> GaussianSamplePath() # 4 stages, 2 dimension
-3x2 Array{Float64,2}
+julia> GaussianSamplePath2D() # 4 stages, 2 dimension
+4x2 Array{Float64,2}
 1.0000        0.0000
 0.76636      -0.44216
 3.65296      -0.14275
