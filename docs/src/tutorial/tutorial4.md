@@ -25,12 +25,12 @@ The stochastic approximation process is outlined as follows:
 
 7. The algorithm stops when all the number of iterations have been performed.
 
-!!! Warning
+!!! warning
     The most important function in this approximation process is the function that user wants to approximate. This is the function that generates samples that improves the tree in each iteration. _The function must be designed in a way that it doesn't take any inputs. It must be a hardcoded function in that and the length of an array that it produces must match the number of stages of the tree and the dimension of the states of the tree._
 
 ## Tree Approximation
 
-In this package, we have the function `TreeApproximation!(Tree(BranchingStructure,dimension),Function,NumberOfIterations,p=2,r=2)` which does the stochastic approximation process for scenario trees. This function takes the following inputs:
+In this package, we have the function `TreeApproximation!(Tree(BranchingStructure,dimension),Function,NumberOfIterations,2,2)` which does the stochastic approximation process for scenario trees. This function takes the following inputs:
 
   - Tree (which takes the branching structure and dimension and inputs)
 
@@ -49,7 +49,7 @@ Given the above inputs, the function does the stochastic approximation process a
 
 ### Example
 
-Consider the following. We want to approximate the Gaussian random walk in 4 stages with a tree with a branching structure of `1x3x3x3` in 1 dimension using the usual Euclidean distance ,`p=2` and `r=2` for the Wasserstein distance.
+Consider the following. We want to approximate the Gaussian random walk in 4 stages with a tree with a branching structure of `1x3x3x3` in 1 dimension using the usual Euclidean distance ,`pNorm=2` and `rWasserstein=2` for the Wasserstein distance.
 
 ```julia
 julia> using ScenTrees
