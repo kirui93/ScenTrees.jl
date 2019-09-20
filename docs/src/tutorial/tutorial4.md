@@ -61,7 +61,7 @@ julia> savefig("treeapprox1.png")
 
 The function `GaussianSamplePath1D()` takes no inputs and generates one trajectory of the Gaussian random walk in 4 stages. For each iteration of the process, this process function generates a trajectory that will help improve the states of the nodes in the scenario tree.
 ```julia
-julia> GaussianSamplePath()   # 4 stages, 1 dimension
+julia> GaussianSamplePath1D()   # 4 stages, 1 dimension
 4x1 Array{Float64,2}:
 0.0
 1.49765
