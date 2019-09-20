@@ -33,21 +33,21 @@ The above plot can be obtained by calling the function `bushinessNesDistance()` 
 
 Generally, the approximating quality of a scenario tree increases with increasing height of the tree and increasing bushiness of the tree.
 
-## Comparison with MATLAB's algorithm
+## Comparison with implementation in MATLAB
 
-Inorder to see how fast Julia is, we compared the performance of different trees with different heights with the same algorithm written in MATLAB programming language. We run the same trees and saved the time it takes to produce results. The following table shows the results (N/B: The time shown is in seconds. (1 minute = 60 seconds)):
-
-| Tree           | Number of Iterations | Time (Julia) | Time (MATLAB) | How fast Julia is |
-|----------------|----------------------|--------------|---------------|-------------------|
-|1x2x2| 10,000| 0.1734 | 6.7532 | 39|
-|1x2x2x2| 10,000 | 0.163 | 9.74 | 60|
-|1x2x2x2| 100,000 | 1.77 | 111.727 | 63|
-|1x2x4x8| 100,000 | 2.3093 | 184.1082 | 80 |
-|1x2x3x4x5| 1,000,000| 23.145 | 1955.66 | 84|
-|1x3x3x3x2| 1,000,000| 20.121 | 1652.916 | 82|
-|1x3x3x3x3| 1,000,000| 21.443 | 1752.40  | 82|
-|1x10x5x2 | 1,000,000| 23.955 | 2046.877 | 85|
-|1x3x4x4x2x2| 1,000,000 | 27.357 | 2211.537 | 81|
+Inorder to see how fast Julia is, we compared the performance of different trees with different heights with the same algorithm written in MATLAB programming language. We run the same trees and saved the time it takes to produce results. The following table shows the results (N/B: The time shown is in seconds):
+(1 minute = 60 seconds)
+| Tree           | Number of Iterations | Time (Julia) | Time (MATLAB) | Speed of Julia |
+|:----------------:|:----------------------:|:--------------:|:---------------:|:-------------------:|
+|1x2x2| 10,000| 0.17 | 6.75 | 38.9 times |
+|1x2x2x2| 10,000 | 0.16 | 9.74 | 59.8 times |
+|1x2x2x2| 100,000 | 1.77 | 111.73 | 63.1 times |
+|1x2x4x8| 100,000 | 2.31 | 184.11 | 79.7 times |
+|1x2x3x4x5| 1,000,000| 23.15 | 1955.66 | 84.5 times |
+|1x3x3x3x2| 1,000,000| 20.12 | 1652.92 | 82.2 times |
+|1x3x3x3x3| 1,000,000| 21.44 | 1752.40  | 81.7 times |
+|1x10x5x2 | 1,000,000| 23.96 | 2046.88 | 85.4 times |
+|1x3x4x4x2x2| 1,000,000 | 27.36 | 2211.54 | 80.8 times |
 
 
 What is clear is that `ScenTrees.jl` library outperforms MATLAB for all the scenario trees. Also, it is important to see that `ScenTrees.jl` performs pretty faster for scenario trees which are bushy and has different heights.
