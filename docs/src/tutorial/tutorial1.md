@@ -18,7 +18,9 @@ For example, consider a Gaussian random walk in 5 stages. The starting value of 
 
 Using those paths, we generate and improve a scenario tree or a scenario lattice. The number of iterations for the algorithm equals the number of sample paths that we want to generate from the stochastic process and the number of stages in the stochastic process equals the number of stages in the scenario tree or the scenario lattice. There are a lot of different branching structures that the user can choose for a tree that represents this stochastic process. The branching structure shows how many branches each node in the tree has at each stage of the tree. For example, we can use a branching structure of `1x2x2x2x2` for the scenario tree. This means that each node in the tree has two children. Basically, this is a `binary tree`. Using this branching structure, we obtain the following valuated probability tree that represents the above stochastic process:
 
-![Scenario Tree 1x2x2x2x2 \label{example1}](../assets/TreeExample.png)
+![Scenario Tree 1x2x2x2x2](../assets/TreeExample.png)
+
+*Figure 1: Scenario Tree 1x2x2x2x2*
 
 The above tree is optimal and therefore can be used by a decision maker for a decision making process depending on the type of problem he/she is handling.
 
@@ -52,7 +54,7 @@ julia> methods(Tree)
 [3] Tree(spec::Array{Int64,1}) 
 [4] Tree(spec::Array{Int64,1}, dimension) 
 ```
-All the methods correspond to the way you can create a scenario tree. For the first method, the length of states must be equal to the length of the probabilities. In the 2nd method, you can call any of our predefined trees by just calling on the identifier (these identifiers are `0,301,302,303,304,305,306,307,401,402,4022,404,405`). And finaly the most important methods are the 3rd and 4th method. If you know the branching structure of your scenario tree, then you can create an non-optimal starting tree using it. If you don't state the dimension you ae working on, then it is defaulted into `1`. For example, `Tree([1,2,2,2,2])` creates a binary tree with states of dimension one as in Figure \ref{example1}.
+All the methods correspond to the way you can create a scenario tree. For the first method, the length of states must be equal to the length of the probabilities. In the 2nd method, you can call any of our predefined trees by just calling on the identifier (these identifiers are `0,301,302,303,304,305,306,307,401,402,4022,404,405`). And finaly the most important methods are the 3rd and 4th method. If you know the branching structure of your scenario tree, then you can create an non-optimal starting tree using it. If you don't state the dimension you ae working on, then it is defaulted into `1`. For example, `Tree([1,2,2,2,2])` creates a binary tree with states of dimension one as in Figure 1 above
 
 ## Description of a scenario lattice
 
