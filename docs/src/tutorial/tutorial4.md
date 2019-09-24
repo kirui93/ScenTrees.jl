@@ -27,6 +27,9 @@ The stochastic approximation process is outlined as follows:
 
 !!! warning
     The most important function in this approximation process is the function that user wants to approximate. This is the function that generates samples that improves the tree in each iteration. _The function must be designed in a way that it doesn't take any inputs. It must be a hardcoded function in that and the length of an array that it produces must match the number of stages of the tree and the dimension of the states of the tree._
+    
+!!! tip
+    The branching structure of the scenario tree and the scenario lattice must start with `1`. This indicates the root of the tree. It also fix the deterministic state of the tree. The rest of the values in the branchig vector of the scenario tree or the scenario lattice generally depends on the user. For example, a binary tree in 4 stages would have a branching structure of `[1,2,2,2]`. 
 
 ## Tree Approximation
 
