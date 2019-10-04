@@ -26,12 +26,10 @@ end
 
 function RunningMaximum1D()
     rmatrix = vcat(0.0,cumsum(randn(3,1),dims = 1))
-    rmatrix1d = zeros(4,1)
-    rmatrix1d .= vec(rmatrix)
     for i = 2:4
-        rmatrix1d[i] = max.(rmatrix1d[i-1], rmatrix1d[i])
+        rmatrix[i] = max.(rmatrix[i-1], rmatrix[i])
     end
-    return rmatrix1d
+    return rmatrix
 end
 
 function RunningMaximum2D()
