@@ -2,6 +2,23 @@ using ScenTrees
 using Test
 
 @testset "ScenTrees.jl" begin
+    @testset "A sample of a Scenario Tree 1D" begin
+        x = Tree([1,3,3,3,3],1)
+        @test typeof(x) == Tree
+        @test length(x.parent) == 121
+        @test length(x.state) == length(x.probability) == length(x.parent) == 121
+        @test sum(x.probability) \approx 41.0
+        @test length(x.children) == 41
+    end
+    @testset "A sample of a Scenario Tree 2D" begin
+        y = Tree([1,3,3,3,3],2)
+        @test typeof(y) == Tree
+        @test length(y.parent) == 121
+        @test length(y.probability) == length(y.parent) == 121
+        @test length(y.state) == length(y.parent)*2 == 242
+        @test sum(y.probability) \approx 41.0
+        @test length(y.children) == 41
+    end
     @testset "ScenTrees.jl - Tree Approximation 1D" begin
         paths = [GaussianSamplePath1D,RunningMaximum1D]
         trees = [Tree([1,2,2,2]),Tree([1,3,3,3])]
