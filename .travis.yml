@@ -25,7 +25,7 @@ notifications:
   email: false
   
 env:
-  - PYTHON=python
+  - PYTHON = ""
  
 script:
   - julia -e 'using Pkg; Pkg.test("ScenTrees",coverage=true)'
