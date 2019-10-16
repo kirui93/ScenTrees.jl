@@ -24,15 +24,8 @@ codecov: true
 notifications:
   email: false
   
-# addons:
-#   apt:
-#     packages:
-#       - python-matplotlib
-#       - python3-matplotlib
 env:
-  matrix:
-    - PYTHON=python  # python 2.7
-    - PYTHON=python3 # python 3.5
+  - PYTHON=python
  
 script:
   - julia -e 'using Pkg; Pkg.test("ScenTrees",coverage=true)'
