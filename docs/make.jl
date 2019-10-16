@@ -26,6 +26,4 @@ makedocs(
 			                    ]
 )
 
-deploydocs(deps = Deps.pip("mkdocs","python-markdown-math"),
-	repo="github.com/kirui93/ScenTrees.jl.git"
-)
+deploydocs(repo="github.com/kirui93/ScenTrees.jl.git")
