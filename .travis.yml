@@ -24,8 +24,7 @@ codecov: true
 notifications:
   email: false
   
-env:
- - PYTHON=""
+env["PYTHON"] = "python3"
  
 script:
   - julia -e 'using Pkg; Pkg.test("ScenTrees",coverage=true)'
