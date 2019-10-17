@@ -1,8 +1,10 @@
 # Documentation: http://docs.travis-ci.com/user/languages/julia/
 language: julia
+env:
+ - CONDA_JL_VERSION=2
 os:
   - linux
-  - osx
+#  - osx
   
 julia:
   - 1.0
@@ -18,21 +20,24 @@ fast_finish: true
 branches:
  only:
    - master
-    
+   
+coveralls: true    
 codecov: true
 
 notifications:
   email: false
   
-env:
-  - PYTHON = ""
+matrix:
+  #- PYTHON=python  # python 2.7
+  #- PYTHON=python3 # python 3.5
+  - PYTHON=Conda-python
  
-script:
-  - julia -e 'using Pkg; Pkg.test("ScenTrees",coverage=true)'
-      
-after_success:
-  - julia -e 'using Pkg; Pkg.add("Coverage"); using Coverage; Codecov.submit(Codecov.process_folder())'
-  - julia -e 'using Pkg; Pkg.add("Coverage"); using Coverage; Coveralls.submit(process_folder())'
+script: # the default script is equivalent to the following
+ - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
+ - travis_wait 30 julia --project --color=yes --check-bounds=yes -e 'using Pkg; Pkg.instantiate(); Pkg.build(); Pkg.test( ; coverage=true)';
+
+#script:
+#  - julia -e 'using Pkg; Pkg.test("ScenTrees",coverage=true)'
 
 jobs:
   include:
@@ -42,4 +47,8 @@ jobs:
       script:
         - julia --project=docs/ -e 'using Pkg; Pkg.develop(PackageSpec(path=pwd())); Pkg.instantiate()'
         - julia --project=docs/ -e 'using Pkg; Pkg.add("Documenter"); include("docs/make.jl")'
-      #after_success: skip
+      after_success: skip
+
+after_success:
+  - julia -e 'using Pkg; Pkg.add("Coverage"); using Coverage; Codecov.submit(Codecov.process_folder())'
+  - julia -e 'using Pkg; Pkg.add("Coverage"); using Coverage; Coveralls.submit(process_folder())'
