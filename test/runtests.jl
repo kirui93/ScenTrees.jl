@@ -46,6 +46,35 @@ using Test
     @testset "ScenTree.jl - Lattice Approximation" begin
         tstLat = LatticeApproximation([1,2,3,4],GaussianSamplePath1D,500000)
         @test length(tstLat.state) == length(tstLat.probability)
-        @test round.([sum(tstLat.probability[i]) for i=1:length(tstLat.probability)], digits = 1)  == [1.0,1.0,1.0,1.0] #sum of probs at every stage
+        @test round.(sum.(tstLat.probability), digits = 1)  == [1.0, 1.0, 1.0, 1.0] #sum of probs at every stage
+    end
+    @testset "ScenTrees.jl - Test Example Data" begin
+        @test size(gsData) ==(100,5)
+        @test size(df1) == (1500,7)
+        @test size(df22) == (1500,5)
+        @test size(RWData) == (1000,5)
+    end
+    @testset "ScenTrees.jl - Test Standard deviations" begin
+        sd1 = zeros(5)
+        sd2 = zeros(7)
+        for t = 1:size(RWData,2)
+            sd1[t] = std(RwData[:,t])
+        end
+        for t = 1:size(df1,2)
+            sd2[t] = std(df1[:,t])
+        end
+        @test (sd1 .< 2) == Bool[true, true, true, true, true]
+        @test (sd2 .< 10) == Bool[true, true, true, true, true, true, true]
+    end
+    @testset "ScenTrees.jl - Test Kernel trajectory creation" begin
+        @test length(KernelScenarios(gsData)()) == length(gsData,2)
+        @test length(KernelScenarios(df1)()) == length(df1,2)
+        @test length(KernelScenarios(df22)()) == length(df22,2)
+        @test length(KernelScenarios(RWData)()) == length(RWData,2)
+    end
+    @testset "ScenTrees.jl - Test Kernel Lattice creation" begin
+        LatFromKernel = LatticeApproximation([1,3,4,5,6],KernelScenarios(RWData),100000)
+        @test round.(sum.(LatFromKernel.probability),digits=1) == [1.0, 1.0, 1.0, 1.0, 1.0]
+        @test length(LatFromKernel.state) == length(LatFromKernel.probability)
     end
 end
