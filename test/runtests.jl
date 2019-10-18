@@ -1,5 +1,6 @@
 using ScenTrees
 using Test
+using Statistics: std
 
 @testset "ScenTrees.jl" begin
     @testset "A sample of a Scenario Tree 1D" begin
@@ -63,18 +64,18 @@ using Test
         for t = 1:size(df1,2)
             sd2[t] = std(df1[:,t])
         end
-        @test (sd1 .< 2) == Bool[true, true, true, true, true]
+        @test (sd1 .< 5) == Bool[true, true, true, true, true]
         @test (sd2 .< 10) == Bool[true, true, true, true, true, true, true]
     end
     @testset "ScenTrees.jl - Test Kernel trajectory creation" begin
-        a = KernelScenarios(gsData)()
-        b = KernelScenarios(df1)()
-        c = KernelScenarios(df22)()
-        d = KernelScenarios(RWData)()
-        @test length(a) == length(gsData,2)
-        @test length(b) == length(df1,2)
-        @test length(c) == length(df22,2)
-        @test length(d) == length(RWData,2)
+        a = KernelScenarios(gsData)
+        b = KernelScenarios(df1)
+        c = KernelScenarios(df22)
+        d = KernelScenarios(RWData)
+        @test length(a()) == length(gsData,2)
+        @test length(b()) == length(df1,2)
+        @test length(c()) == length(df22,2)
+        @test length(d()) == length(RWData,2)
     end
     @testset "ScenTrees.jl - Test Kernel Lattice creation" begin
         LatFromKernel = LatticeApproximation([1,3,4,5,6],KernelScenarios(RWData),100000)
