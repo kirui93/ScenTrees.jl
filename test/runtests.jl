@@ -67,16 +67,16 @@ using Statistics: std
         @test (sd1 .< 5) == Bool[true, true, true, true, true]
         @test (sd2 .< 10) == Bool[true, true, true, true, true, true, true]
     end
-    @testset "ScenTrees.jl - Test Kernel trajectory creation" begin
-        a = KernelScenarios(gsData)
-        b = KernelScenarios(df1)
-        c = KernelScenarios(df22)
-        d = KernelScenarios(RWData)
-        @test length(a()) == length(gsData,2)
-        @test length(b()) == length(df1,2)
-        @test length(c()) == length(df22,2)
-        @test length(d()) == length(RWData,2)
-    end
+#     @testset "ScenTrees.jl - Test Kernel trajectory creation" begin
+#         a = KernelScenarios(gsData)
+#         b = KernelScenarios(df1)
+#         c = KernelScenarios(df22)
+#         d = KernelScenarios(RWData)
+#         @test length(a()) == length(gsData,2)
+#         @test length(b()) == length(df1,2)
+#         @test length(c()) == length(df22,2)
+#         @test length(d()) == length(RWData,2)
+#     end
     @testset "ScenTrees.jl - Test Kernel Lattice creation" begin
         LatFromKernel = LatticeApproximation([1,3,4,5,6],KernelScenarios(RWData),100000)
         @test round.(sum.(LatFromKernel.probability),digits=1) == [1.0, 1.0, 1.0, 1.0, 1.0]
