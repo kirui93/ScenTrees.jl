@@ -5,7 +5,7 @@ using CSV, DataFrames, XLSX
 data = CSV.read("../data/data5.csv")
 gsData = Matrix(data)
 
-df = DataFrame(XLSX.readtable(".-/data/Mappe1.xlsx", "Sheet1")...)
+df = DataFrame(XLSX.readtable("../data/Mappe1.xlsx", "Sheet1")...)
 df1 = Matrix(df)
 df1 = convert(Array{Float64,2},df1)
 
