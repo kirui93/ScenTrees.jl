@@ -27,5 +27,6 @@ makedocs(
 )
 
 deploydocs(
-	repo="github.com/kirui93/ScenTrees.jl.git",
-	versions = ["stable" => "v^", "v#.#", "dev" => "master"])
+	repo="github.com/kirui93/ScenTrees.jl.git"
+	#versions = ["stable" => "v^", "v#.#", "dev" => "master"]
+)
