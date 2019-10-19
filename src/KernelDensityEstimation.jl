@@ -32,7 +32,7 @@ function KernelScenarios(data::Union{Array{Int64,2},Array{Float64,2}})
                 w_j[j] = (1/N) * prod(LogisticKernel(ξ[t] - data[j,t],hN[t])) / sum(prod(LogisticKernel(ξ[t] - data[j,t],hN[t])))
             end
         end
-        ξ[1] = mean(data[1,:])           # Fix a common starting value for each trajectory created. This is the root.
+        ξ[1] = mean(data[:,1])           # Fix a common starting value for each trajectory created. This is the root.
         return ξ                         # The length of ξ is equal to the number stages = T
     end
 end
