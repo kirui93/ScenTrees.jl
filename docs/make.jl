@@ -1,5 +1,7 @@
 using Documenter, ScenTrees
 
+include(joinpath(@__DIR__, "src", "SomeData.jl"))
+
 makedocs(
 	sitename =  "ScenTrees.jl",
 	authors = "Kipngeno Kirui",
