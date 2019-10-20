@@ -23,6 +23,7 @@ makedocs(
 			                    "tutorial/tutorial3.md",
 					    "tutorial/tutorial31.md",
 			                    "tutorial/tutorial4.md",
+					    "tutorial/tutorial41.md",
 					    "tutorial/tutorial5.md"]
 			                    ]
 )
