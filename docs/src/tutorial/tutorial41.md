@@ -17,21 +17,15 @@ For the density estimation step, we have an `(N x T)` data from some observed tr
     (b) Composition method
 
 We estimate the distribution of transition densities given the history of the process. This distribution can be estimated by the non-parametric kernel density estimation. The density at stage $t+1$ conditional on the history $\mathbf{x_{t}} = (x_0,x_{i_{1}},x_{i_{2}},\ldots,x_{i_{t}})$ is estimated by 
-\begin{equation}\label{eqdens}
-\hat{f}_{t+1}(x_{t+1}|\mathbf{x_{t}}) = \sum_{j=1}^{N} \omega_j(\mathbf{x_{t}}) \cdot k_{h_N}(x_{t+1} - \xi_{j,t+1})
-\end{equation}
+$$\hat{f}_{t+1}(x_{t+1}|\mathbf{x_{t}}) = \sum_{j=1}^{N} \omega_j(\mathbf{x_{t}}) \cdot k_{h_N}(x_{t+1} - \xi_{j,t+1})$$
 where $k(.)$ is a kernel function, $h_N$ is the bandwidth and $k_{h_N}$ is the weighted kernel function.
 
 The weights are given by
-\begin{equation}
-\omega_j(\mathbf{x_{t}}) = \frac{k\big(\frac{x_{i_1} - \xi_{j,1}}{h_N}\big)\cdot \ldots \cdot k\big(\frac{x_{i_t} - \xi_{j,t}}{h_N}\big)}{\sum_{\ell=1}^{N}k\big(\frac{x_{i_1} - \xi_{l,1}}{h_N}\big)\cdot \ldots \cdot k\big(\frac{x_{i_t} - \xi_{l,t}}{h_N}\big)}.
-\end{equation}
+$$\omega_j(\mathbf{x_{t}}) = \frac{k\big(\frac{x_{i_1} - \xi_{j,1}}{h_N}\big)\cdot \ldots \cdot k\big(\frac{x_{i_t} - \xi_{j,t}}{h_N}\big)}{\sum_{\ell=1}^{N}k\big(\frac{x_{i_1} - \xi_{l,1}}{h_N}\big)\cdot \ldots \cdot k\big(\frac{x_{i_t} - \xi_{l,t}}{h_N}\big)}.$$
 Notice from above that the weights depend on the history $\mathbf{x_{t}}$ upto stage $t$ only. Also, the weights sum up to 1 for every $\mathbf{x_{t}}$, i.e., $\sum_{j=1}^{N} \omega_j(\mathbf{x_{t}}) = 1$.
 
 We use the composition method to generate samples from the conditional distribution $\hat{f}_{t+1}(.|\mathbf{x_{t}})$ as follows. Pick a random number $U \in (0,1)$ where $U$ is uniformly distributed then find a summation index $j^{\star} \in {1,2,\ldots,N}$ such that 
-\begin{equation}
-\sum_{j=1}^{j^{\star}-1} \omega_j(\mathbf{x_{t}}) < U \leq \sum_{j=1}^{j^{\star}} \omega_j(\mathbf{x_{t}}).
-\end{equation}
+$$\sum_{j=1}^{j^{\star}-1} \omega_j(\mathbf{x_{t}}) < U \leq \sum_{j=1}^{j^{\star}} \omega_j(\mathbf{x_{t}}).$$
 The cumulative sum of weights leads to a high probability of picking a data path near the observation.
 
 The value of the data $\xi_t$ is obtained by setting the value at stage $t$ to $$\xi_t = X_{j^{\star,t}} + \text{rand}_{k_{h_N}}$$ where $\text{rand}_{k_{h_N}}$ is a random value sampled from the kernel estimator using the composition method.
@@ -39,9 +33,7 @@ The value of the data $\xi_t$ is obtained by setting the value at stage $t$ to $
 The generated data point is according to the distribution of the density at the current stage and dependent on the history of all the data points. It has been shown that the choice of the kernel does not have an important effect on density estimation. Hence, we employ the following logistic kernel in this paper $$k(x) = \frac{1}{(e^x + e^{-x})^2}.$$
 
 One of the most important factor to consider in density estimation is the bandwidth. We use the Silverman's rule of thumb to obtain the bandwidths for each of the data columns as follows 
-\begin{equation}
-h_N = \sigma(X_t)\cdot N^{\frac{-1}{N+4}}
-\end{equation}
+$$h_N = \sigma(X_t)\cdot N^{\frac{-1}{N+4}}$$
 where $N$ is the number of available trajectories and $\sigma(X_t)$ is the standard deviation of data in stage $t$.
 
 Using the above procedure, every new sample path starts with $\mathbf{\tilde{\xi_1}} := (x_1)$. Using Equation \ref{eqdens} and the composition method, we find a new sample $\tilde{\xi_2}$ from $\hat{f}_1(.|\mathbf{\tilde{\xi_1}})$ at the first stage. Next, we set $\mathbf{\tilde{\xi_2}} = (\tilde{\xi_1},\tilde{\xi_2})$ and generate a new data point $\tilde{\xi_2}$ from $\hat{f}_2(.|\mathbf{\tilde{\xi_1}})$  at the second stage. The process continues in that manner until the final stage $T$ where we get the final new sample path $\mathbf{\tilde{\xi_T}} = (\tilde{\xi_0},\tilde{\xi_1},\ldots,\tilde{\xi_T})$ which is generated form the initial data $\xi = (\xi_1,\xi_2,\ldots,\xi_T)$. The new sample path $\mathbf{\tilde{\xi_T}}$ is what we will feed in the stochastic approximation algorithm to generate a scenario tree or a scenario lattice.
