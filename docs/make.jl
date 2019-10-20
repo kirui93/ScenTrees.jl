@@ -4,7 +4,7 @@ makedocs(
 	sitename =  "ScenTrees.jl",
 	authors = "Kipngeno Kirui",
 	clean = true,
-	doctest = false,
+	doctest = true,
 	format = Documenter.HTML(
 		assets = ["exampleTree1.png",
 		          "Tree402.png",
@@ -13,7 +13,8 @@ makedocs(
 		          "treeapprox2D.png",
 		          "ExampleLattice2.png",
 		          "LatticeApprox.png",
-			  "diffHeights.png"
+			  "diffHeights.png",
+			  "KernLattice.png"
 		          ],
 		prettyurls = get(ENV, "CI", nothing) == "true"),
 	pages = ["Home" => "index.md",
@@ -26,7 +27,4 @@ makedocs(
 			                    ]
 )
 
-deploydocs(
-	repo="github.com/kirui93/ScenTrees.jl.git"
-	#versions = ["stable" => "v^", "v#.#", "dev" => "master"]
-)
+deploydocs(repo="github.com/kirui93/ScenTrees.jl.git")
