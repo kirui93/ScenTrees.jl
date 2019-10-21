@@ -14,10 +14,10 @@ authors:
     email: kipngenokirui@s2019.tu-chemnitz.de
   - name: Alois Pichler
     affiliation: 1
-    email: email:alois.pichler@math.tu-chemnitz.de
+    email: alois.pichler@math.tu-chemnitz.de
   - name: Georg Ch. Pflug
     affiliation: 2
-    email: email:georg.pflug@univie.ac.at
+    email: georg.pflug@univie.ac.at
 affiliations:
   - name: Technical University of Chemnitz
     index: 1
