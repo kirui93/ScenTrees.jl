@@ -11,7 +11,7 @@ authors:
   - name: Kipngeno Kirui, 
     orcid: 0000-0002-3679-4442
     affiliation: 1
-    email: kipngenokirui@s2019.tu-chemnitz.de]
+    email: kipngenokirui@s2019.tu-chemnitz.de
   - name: Alois Pichler
     affiliation: 1
     email: email:alois.pichler@math.tu-chemnitz.de
