@@ -50,9 +50,11 @@ Using the above procedure, every new sample path starts with $\mathbf{\tilde{\xi
 
 ## Implementation of the above process
 
-The above process is implemented in our library in `KernelDensityEstimation.jl`.In this script, we use the concept of function closures which wehope that the user is aware of. The user of this function is required to provide a data in 2 dimension to this function. In the procedure below, we use the function `Matrix` to convert the loaded dataframe into a matrix which is an array in two dimension.
+The above process is implemented in our library in `KernelDensityEstimation.jl`.In this script, we use the concept of function closures which we assume that the user of this library is aware of. The user is required to provide a data in 2 dimension, i.e., a matrix of Float64 or Int64, to this function and also the distribution of the kernel that he/she wants to use. The default kernel distribution is the `Logistic` one. The kernel distribution should conform to the distributions stated in [Distributions.jl](https://github.com/JuliaStats/Distributions.jl) package. 
 
-The function `KernelScenarios(data::Union{Array{Int64,2},Array{Float64,2}})` takes a $(N \times T)$ dimensional data. The $N$ rows of the data are the number of trajectories in the initial data and the $T$ columns is the number of stages in in each trajectory of the data. Since `TreeApproximation!` and `LatticeApproximation` function needs a process function for generating samples that doesn't take any inputs, we employ the concept of function closures inside the above function. The function `KernelScenarios(data)` is a getfield type of a function closure and so is sufficient to be a function required for stochastic approximation process.
+Most of the times when you load the data into Julia, it recognizes it as a `DataFrame` type. But we have programmed the function in such a way that the user should provide a matrix of Float64 or Int64. In the following procedure, we use the function `Matrix` to convert the loaded dataframe into a matrix which is the right type of input into the function.
+
+The function `KernelScenarios(data::Union{Array{Int64,2},Array{Float64,2}}, kernelDistribution = Logistic)` takes a $(N \times T)$ dimensional data and the distribution of the kernel you want to employ. The $N$ rows of the data are the number of trajectories in the initial data and the $T$ columns is the number of stages in in each trajectory of the data. Since `TreeApproximation!` and `LatticeApproximation` function needs a process function for generating samples that doesn't take any inputs, we employ the concept of function closures inside the above function. The function `KernelScenarios(data,kernelDistribution)` is a getfield type of a function closure and so is sufficient to be a function required for stochastic approximation process.
 
 To confirm the above statement, consider a `1000x5` dimsneional data from random walk. What is important to be said is that we use the package `CSV`^[https://github.com/JuliaData/CSV.jl] to read the data into julia and since we need the data in matrix form, we use the function `Matrix` from the package `DataFrames`^[https://github.com/JuliaData/DataFrames.jl] to convert the dataframe into an array in two dimension which is then the input of our function.
 
@@ -60,9 +62,9 @@ To confirm the above statement, consider a `1000x5` dimsneional data from random
 julia> using ScenTrees, CSV
 julia> data = CSV.read(".../RandomDataWalk.csv")
 julia> Rdw = Matrix(data)
-julia> Kdt = KernelScenarios(Rwd)
+julia> Kdt = KernelScenarios(Rwd,Logistic)
 (::getfield(ScenTrees, Symbol("#closure#52")){Array{Float64,2},Int64,Int64,Array{Float64,1},Array{Float64,1},Array{Float64,1}}) (generic function with 1 method)
-julia> ExampleTraj = KernelScenarios(Rwd)()
+julia> ExampleTraj = KernelScenarios(Rwd,Logistic)()
 5-element Array{Float64,1}:
   2.9313349319144413
  -2.096361853760116 
@@ -76,7 +78,7 @@ As in `ExampleTraj`, this function returns is a new sample according to the dist
 We use the above data to approximate a scenario lattice in 5 stages with a braching structure of $(1\times 3\times 4\times 5\times6)$  and $100,000$ number of iterations as follows:
 
 ```julia
-julia> KernExample = LatticeApproximation([1,3,4,5,6],KernelScenarios(Rwd),100000);
+julia> KernExample = LatticeApproximation([1,3,4,5,6],KernelScenarios(Rwd,Logistic),100000);
 julia> PlotLattice(KernExample)
 ```
 
