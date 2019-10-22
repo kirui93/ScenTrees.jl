@@ -202,12 +202,12 @@ Notice that the new sample $\mathbf{\tilde{\xi_T}}$ is Markovian and thus we can
 
 The above process is implemented in our library in `KernelDensityEstimation.jl`. The input of the function is a data in two dimension, in other words, the function takes a matrix of `Float64` or a matrix of `Int64`. We hope that the reader is well aware of the function closures because we use a closure in this script to implement the above procedure. 
 
-The function `KernelScenarios(data::Union{Array{Int64,2},Array{Float64,2}})` takes a $(N \times T)$ dimensional data. The $N$ rows of the data are the number of trajectories in the initial data and the $T$ columns is the number of stages in in each trajectory of the data. What this function returns is a function closure of the data given. To get a sample from this function, we use the normal way of calling function closures. The new sample according to the distribution of the density at the current stage and dependent on the history of all the data points as we shall see in the example below.
+The function `KernelScenarios(data::Union{Array{Int64,2},Array{Float64,2}},kernelDistribution = Logistic)` takes a $(N \times T)$ dimensional data and a kernel distribution which is Logistic distribution in default. The user should provide this two inputs. If the user provides only the data the the function uses the Logistic distribution in default. The $N$ rows of the data are the number of trajectories in the initial data and the $T$ columns is the number of stages in in each trajectory of the data. What this function returns is a function closure of the data given. To get a sample from this function, we use the normal way of calling function closures. The new sample according to the distribution of the density at the current stage and dependent on the history of all the data points as we shall see in the example below.
 
 
 ### Example
 
-Consider the following data in CSV format. The data has `1000` trajectories in `5` stages (i.e., it is a $(1000\times 5)$ domensional data). As shown below, we use the package `CSV.jl`^[https://github.com/JuliaData/CSV.jl] to read the data into julia and since we need the data in matrix form, we use the function `Matrix` from the package `DataFrames.jl`^[https://github.com/JuliaData/DataFrames.jl] to convert the dataframe into an array in two dimension which is then fed into our function.
+Consider the following data in CSV format. The data has `1000` trajectories in `5` stages (i.e., it is a $(1000\times 5)$ domensional data). As shown below, we use the package `CSV.jl`^[https://github.com/JuliaData/CSV.jl] to load the data into julia and since we need the data in matrix form, we use the function `Matrix` from the package `DataFrames.jl`^[https://github.com/JuliaData/DataFrames.jl] to convert the dataframe into an array in two dimension which is then fed into our function.
 
 ```julia
 julia> using ScenTrees                           # Load the package
