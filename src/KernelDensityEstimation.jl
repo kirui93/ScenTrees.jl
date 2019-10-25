@@ -30,14 +30,14 @@ function KernelScenarios(data::Union{Array{Int64,2},Array{Float64,2}},kernelDist
             u = rand(Uniform(0,1))
             _,jstar = findmin(cumsum(w) .< u * sum(w))
             # The cumulative sum of weights leads to a high probability of picking a data path near an observation (Sequin && Pichler 2017)
-            ξ[t] = rand(kernelDistribution(data[jstar,t],hN[t]))
+            ξ[t] = rand(kernelDistribution(data[jstar,t],ht))
             # The new generated value is according to the distribution of density of the current stage and dependent on the history of all the data paths.
             # All the rows in the column are associated with a certain weight as follows:
             # Each weight is a product of the kernels of the data at that point.
             if t<T
                 for j = 1:N
                     # The choice of the kernel does not have any important effect on density estimation (Jones (1990)).
-                    w[j] *= pdf(kernelDistribution(data[j,t],hN[t]),ξ[t]) 
+                    w[j] *= pdf(kernelDistribution(data[j,t],ht),ξ[t]) 
                 end
             end
         end
