@@ -6,23 +6,24 @@ CurrentModule = ScenTrees
 
 Consider a general stochastic process ``X`` over a discrete time space ``T``, i.e., ``X = (X_0,...,X_T)`` where ``X_0`` is a deterministic starting value and the rest are random values or random vectors whose probability distribution is known. A scenario tree is a discrete time and discrete state process approximating the process `X`. We represent the scenario tree by ``\tilde{X} = (\tilde{X}_0,...,\tilde{X}_T)``. A scenario is a path from the root node to any of the leaves in the tree. The number of stages in a scenario must be equal to the number of stages in a scenario tree which is equal to the length of the sample from the stochastic process ``X``.
 
-A basic scenario tree can be created using the `Tree` function in the package. This function takes the branching structure of the tree and the dimension that you are working on. For example, consider a tree with a branching structure of `1x2x2`. This is a tree with a root in stage `0`, and `2` nodes in stage 1 and each of the `2` nodes in stage one has `2` nodes in stage `2`.
+A basic scenario tree can be created using the `Tree(bStructure::Array{Int64,1},dimension::Int64)` function in the package. This function takes the branching structure of the tree and the dimension of the states that you are working on. For example, consider a tree with a branching structure of `1x2x2`. This is a tree with a root in stage `0`, and `2` nodes in stage 1 and each of the `2` nodes in stage one has `2` nodes in stage `2` and each node has only one state and so `dimension = 1`.
 
-```jldoctest
-julia> example1 = Tree([1,2,2],1)
-julia> treeplot(example1)
+```julia
+julia> example1 = Tree([1,2,2],1);
+julia> treeplot(example1);
 ```
 
-The above tree basically is not optimal. This is an example of a beginning tree in stochastic approximation process. we start with a tree like this and then we use samples from a known distribution to improve the tree for a certain number of iterations.
+The above tree basically is not optimal since we just randomly fill the states of the nodes of a tree with random values. This is an example of a scenario tree to begin with in stochastic approximation process. We start with a tree like this and then we use samples from a known distribution to improve the tree for a certain specified number of iterations as we shall see in the tutorials to follow.
 
 ![Non optimal tree in 1D](../assets/example1.png)
 
-The above tree is in 1-state dimension.
+The above tree is in 1-state dimension. 
+
 To generate a tree in 2-state dimension, we use the following:
 
-```jldoctest
-julia> example2 = Tree([1,2,2],2)
-julia> plotD(example2)
+```julia
+julia> example2 = Tree([1,2,2],2);
+julia> plotD(example2);
 ```
 
 ![Non optimal tree in 2D](../assets/example2.png)
@@ -103,11 +104,11 @@ One of the most important things in programming is visualization. In this packag
 !!! info
 	You need to install the [PyPlot.jl](https://github.com/JuliaPy/PyPlot.jl) package for this plots.
 
-For example, we can plot a default tree already in the package and then the figure can be saved with the function `savefig`. These trees can be accessed through an identifier which is just a number. These identifiers are `0,301,302,303,304,305,306,307,401,402,4022,404,405`. Therefore, for these examples, you can just access them through their identifie. For example, `Tree(402)` returns tree with the identifier 402.
+For example, we can plot a default tree already in the package and then the figure can be saved with the function `savefig`. These trees can be accessed through an identifier which is just a number. These identifiers are `0,301,302,303,304,305,306,307,401,402,4022,404,405`. Therefore, for these examples, you can just access them through their identifier. For example, `Tree(402)` returns tree with the identifier 402 in our examples. You can have a look at these trees and plot them just to get a glimpse on how scenario trees are and then you can also have a look at their characteristics as explained in the above example.
 
 ```julia
-julia> treeplot(Tree(402))
-julia> savefig("Tree402.png")
+julia> treeplot(Tree(402));
+julia> savefig("Tree402.png");
 ```
 
 ![Example of a tree in 1D](../assets/Tree402.png)
@@ -115,8 +116,8 @@ julia> savefig("Tree402.png")
 We can plot a tree in 2 dimension as follows:
 
 ```julia
-julia> treeplot(Tree(4022))
-julia> savefig("Tree4022.png")
+julia> treeplot(Tree(4022));
+julia> savefig("Tree4022.png"):
 ```
 
 ![Example of a tree in 2D](../assets/Tree4022.png)
