@@ -20,6 +20,5 @@ extra_javascript:
 docs_dir: 'src'
 
 pages:
-- Introduction: index.md
-- Tutorial: tutorial/tutorial1.md
+- Home: index.md
 
