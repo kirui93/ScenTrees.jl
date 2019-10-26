@@ -26,10 +26,10 @@ function LatticeApproximation(states::Array{Int64,1},path::Function,nScenarios::
         LatState[t] .= BegPath[t]
     end
     LatProb = vcat([zeros(states[1],1)],[zeros(states[j-1],states[j]) for j = 2:lns])          # Probabilities of the lattice at each time t
-    Z = Array{Float64}(undef,lns)                   # initialize a 1D vector to hold the states' values
+    #Z = Array{Float64}(undef,lns)                   # initialize a 1D vector to hold the states' values
     #Stochastic approximation step comes in here
     for n = 1:nScenarios
-        Z .= path()                                                                                                                            #draw a new sample Gaussian path
+        Z = path()                                                                                                                            #draw a new sample Gaussian path
         idtm1 = 1
         dist = 0.0
         for t = 1:length(states)                                                                                                                  #walk along the gradient
