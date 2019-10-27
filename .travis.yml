@@ -19,11 +19,10 @@ branches:
  only:
    - master
    
-coveralls: true    
 codecov: true
 
-notifications:
-  email: false
+#notifications:
+#  email: false
   
 env:
   - PYTHON=""
@@ -31,18 +30,18 @@ env:
 script:
   - julia -e 'using Pkg; Pkg.test("ScenTrees",coverage=true)'
 
-# jobs:
-#   include:
-#     - stage: "Documentation"
-#       julia: 1.1
-#       os: linux
-#       script:
-#         - julia --project=docs/ -e 'using Pkg; Pkg.develop(PackageSpec(path=pwd())); Pkg.instantiate()'
-#         - julia --project=docs/ -e 'using Pkg; Pkg.add("Documenter"); using Documenter; include("docs/make.jl")'
+jobs:
+  include:
+    - stage: "Documentation"
+      julia: 1.1
+      os: linux
+      script:
+        - julia --project=docs/ -e 'using Pkg; Pkg.develop(PackageSpec(path=pwd())); Pkg.instantiate()'
+        - julia --project=docs/ -e 'using Pkg; Pkg.add("Documenter"); using Documenter; include("docs/make.jl")'
 #       after_success: skip
        
 after_success:
   - julia -e 'using Pkg; Pkg.add("Coverage"); using Coverage; Codecov.submit(Codecov.process_folder())'
   - julia -e 'using Pkg; Pkg.add("Coverage"); using Coverage; Coveralls.submit(Coveralls.process_folder())'
-  - julia -e 'using Pkg; Pkg.add("Documenter")'
-  - julia -e 'using Pkg; cd(Pkg.dir("ScenTrees")); include(joinpath("docs", "make.jl"))'
+#  - julia -e 'using Pkg; Pkg.add("Documenter")'
+#  - julia -e 'using Pkg; cd(Pkg.dir("ScenTrees")); include(joinpath("docs", "make.jl"))'
