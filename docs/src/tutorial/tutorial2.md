@@ -19,14 +19,21 @@ The above tree basically is not optimal since we just randomly fill the states o
 
 The above tree is in 1-state dimension. 
 
-To generate a tree in 2-state dimension, we use the following:
+The foloowing shows the procedure to plot trees in 2 or higher dimension. We will employ the use of the function `partTree()` which partitions the main tree into subtrees of different states. For example, if the main tree is in 2 dimension, this function will return an array with two trees where the only difference is the states of the nodes of the trees. Then, we can plot each of this trees and display. Alternatively, you can use the function `plotD` which plots the trees in any dimension without partition.
 
 ```julia
 julia> example2 = Tree([1,2,2],2);
-julia> plotD(example2);
+julia> example2Trees = partTree(example2);
+julia> treeplot(example2Trees[1])
+julia> savefig("example21.png")
+julia> treeplot(example2Trees[2])
+julia> savefig("example21.png")
 ```
 
-![Non optimal tree in 2D](../assets/example2.png)
+<p float="left">
+  <img src="../assets/example21.png" alt="Tree of state 1" width="420" height="500" />
+  <img src="../assets/example22.png" alt="Tree of state 2" width="420" height="500" /> 
+</p>
 
 And in general, we can generate a tree in any `d` state dimension.
 
@@ -116,8 +123,14 @@ julia> savefig("Tree402.png");
 We can plot a tree in 2 dimension as follows:
 
 ```julia
-julia> treeplot(Tree(4022));
-julia> savefig("Tree4022.png"):
+julia> pt = partTree(Tree4022));
+julia> treeplot(pt[1])
+julia> savefig("Tree40221.png")
+julia> treeplot(pt[2])
+julia> savefig("Tree40222.png")
 ```
 
-![Example of a tree in 2D](../assets/Tree4022.png)
+<p float="center">
+  <img src="../assets/Tree40221.png" alt="Tree of state 1" width="420" height="500") />
+  <img src="../assets/Tree40222.png" alt="Tree of state 2" width="420" height="500" /> 
+</p>
