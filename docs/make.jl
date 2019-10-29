@@ -33,4 +33,5 @@ makedocs(
 			                    ]
 )
 
-deploydocs(repo   = "github.com/kirui93/ScenTrees.jl.git")
+deploydocs(repo   = "github.com/kirui93/ScenTrees.jl.git",
+	   target = "build")
