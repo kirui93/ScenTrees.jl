@@ -21,26 +21,34 @@ The data estimated in (2) above can be used in (1) to generate scenario trees an
 
 The stochastic approximation procedure in `ScenTrees.jl` library follows from the framework provided by [Pflug and Pichler(2015)](https://doi.org/10.1007/s10589-015-9758-0).
 
-This package is actively developed and therefore new improvements and new features are continuously added.
+*N/B* - _This package is actively developed and therefore new improvements and new features are continuously added._
+
 ## Installation
-To use `ScenTrees.jl`, you need to have Julia 1.0 and above.
 
-    1. From Julia REPL, enter the pkg mode by pressing ```]``` 
-    2. Run the command ```add "https://github.com/kirui93/ScenTrees.jl.git"```.
-    
-Having done the above procedure, you can now just load the library using the normal procedure.
+The following is the standard procedure to add `ScenTrees.jl` and load it available for usage:
 
-This library was developed in Julia 1.0.4 and tested using the Julia standard framework. It has been tested for Julia versions 1.0 and above and nightly for the latest release of Julia in Linux and OSX distributions.
+```julia
+julia> using Pkg
+julia> Pkg.add("https://github.com/kirui93/ScenTrees.jl.git")
+julia> using ScenTrees
+```
+
+Having followed the above procedure the various functions in the library will be available for usage.
+
+To use `ScenTrees.jl`, you need to have Julia 1.0 and above. This library was developed in Julia 1.0.4 and tested using the Julia standard framework. It has been tested for Julia versions 1.0 and above and nightly for the latest release of Julia in Linux and OSX distributions.
 
 ## Documentation 
-If you have installed ScenTrees.jl using the above procedure then you will have the latest release of this library. To access the documentation just click on this link https://kirui93.github.io/ScenTrees.jl/latest/. Here you can get the description of the various functions in the package and also different examples for the different features in the library. We advise the user to read the documentation to get a general knowledge of how the package works and the various functions that this package provides. 
+
+If you have installed ScenTrees.jl using the above procedure then you will have the latest release of this library. To access the documentation just click on this link [Documentation](https://kirui93.github.io/ScenTrees.jl/latest/). Here you can get the description of the various functions in the package and also different examples for the different features in the library. We advise the user to read the documentation to get a general knowledge of how the package works and the various functions that this package provides. 
 
 ## Contributing to ScenTrees.jl
-If you believe that you have found any bugs or if you need help or any questions regarding the library and any suggestions, please feel free to file a new Github issue at https://github.com/kirui93/ScenTrees.jl/issues/new. You can also raise an issue and issue a pull request which fixes the issue as long as it doesn't affect the performance of this library.
+
+If you believe that you have found any bugs or if you need help or any questions regarding the library and any suggestions, please feel free to file a new Github issue at [New issue](https://github.com/kirui93/ScenTrees.jl/issues/new). You can also raise an issue and issue a pull request which fixes the issue as long as it doesn't affect the performance of this library.
 
 ## References
-+ Pflug, Georg Ch., and Alois Pichler, 2012. *A distance for Multistage Stochastic Optimization Models*. SIAM Journal on Optimization 22(1) doi: https://doi.org/10.1137/110825054
 
-+ Pflug, Georg Ch., and Alois Pichler,2015. *Dynamic Generation of Scenario Trees*. Computational Optimizatio and Applications 62(3): doi: https://doi.org/10.1007/s10589-015-9758-0
++ Pflug, Georg Ch., and Alois Pichler, 2012. *A distance for Multistage Stochastic Optimization Models*. SIAM Journal on Optimization 22(1) Doi: https://doi.org/10.1137/110825054
 
-+ Pflug, Georg Ch., and Alois Pichler,2016. *From Empirical Observations to Tree Models for Stochastic Optimization : Convergence Properties : Convergence of the Smoothed Empirical Process in Nested Distnce.* SIAM Journal on Optimization 26(3). Society for Industrial and Applied Mathematics (SIAM). doi: https://doi.org/10.1137/15M1043376.
++ Pflug, Georg Ch., and Alois Pichler,2015. *Dynamic Generation of Scenario Trees*. Computational Optimizatio and Applications 62(3): Doi: https://doi.org/10.1007/s10589-015-9758-0
+
++ Pflug, Georg Ch., and Alois Pichler,2016. *From Empirical Observations to Tree Models for Stochastic Optimization : Convergence Properties : Convergence of the Smoothed Empirical Process in Nested Distnce.* SIAM Journal on Optimization 26(3). Society for Industrial and Applied Mathematics (SIAM). Doi: https://doi.org/10.1137/15M1043376.
