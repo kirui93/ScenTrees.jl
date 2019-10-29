@@ -10,12 +10,15 @@ using Distributions, Statistics
     User specifies both data and the distribution of the kernel he/she wants to use. The default kernel is the Logistic kernel.
 """
 
-function KernelScenarios(data::Union{Array{Int64,2},Array{Float64,2}},kernelDistribution = Logistic)
+function KernelScenarios(data::Union{Array{Int64,2},Array{Float64,2}},kernelDistribution = Logistic; Markovian::Bool = true)
     # We use the function closure here because we want to use this function in the stochastic approximation process.
     # That is, we wwant to follow the specifications of the TreeApproximation and Latticeapproximation inputs.
     # The way we have created the stochastic approximation functions is that it takes a function which does not take any inputs.
     # And so the outer function takes the data and the distribution of the kernel while the inner function takes no inputs.
     # To obtain the result then, call "KernelScenarios(data,Logistic)()".
+    # Notice we have an input of whether you are creating Markovian trajectories or not.
+    # This is important for generating either scenario trees or scenario lattices. 
+    # The default for Markovian is true hence the trajectory created is Markovian which is used for scenario lattices.
     function closure()
         N,T = size(data)                                                  # Dimensions of the data
         d = 1
@@ -37,7 +40,13 @@ function KernelScenarios(data::Union{Array{Int64,2},Array{Float64,2}},kernelDist
             if t<T
                 for j = 1:N
                     # The choice of the kernel does not have any important effect on density estimation (Jones (1990)).
-                    w[j] *= pdf(kernelDistribution(data[j,t],ht),ξ[t]) 
+                    if Markovian   
+                        # Markovian is used for scenario lattices
+                        w[j] = pdf(kernelDistribution(data[j,t],ht),ξ[t])
+                    else
+                        # Non-Markovian is used for scenario lattices
+                        w[j] *= pdf(kernelDistribution(data[j,t],ht),ξ[t]) 
+                    end
                 end
             end
         end
