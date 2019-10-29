@@ -1,7 +1,12 @@
+<a name="logo"/>
+<div align="center">
+<img src="docs/src/assets/logo.png" height="130"></img>
+</a>
+</div>
 
-[![Build and Test Status](https://travis-ci.com/kirui93/ScenTrees.jl.svg?branch=master)](https://travis-ci.com/kirui93/ScenTrees.jl)
-[![Coverage](https://codecov.io/gh/kirui93/ScenTrees.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/kirui93/ScenTrees.jl)
-[![Documentation](https://img.shields.io/badge/dos-latest-blue.svg)](https://kirui93.github.io/ScenTrees.jl/latest/)
+| **Build and Test Status**         | **Coverage**                          | **Documentation**             |
+|:---------------------------------:|:-------------------------------------:|:-----------------------------:|
+|[![Build and Test Status](https://travis-ci.com/kirui93/ScenTrees.jl.svg?branch=master)](https://travis-ci.com/kirui93/ScenTrees.jl) | [![Coverage](https://codecov.io/gh/kirui93/ScenTrees.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/kirui93/ScenTrees.jl) | [![Documentation](https://img.shields.io/badge/dos-latest-blue.svg)](https://kirui93.github.io/ScenTrees.jl/latest/)| 
 
 # ScenTrees.jl
 
