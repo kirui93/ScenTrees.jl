@@ -104,8 +104,6 @@ Each of these scenario trees have a multistage distance of `0.25142` from the or
 |:-----------:|:--------------:|
 | Tree for state 1 | Tree for state 2 |
 
-![Example of a valuated tree in 2D](../assets/treeapprox2D.png)
-
 ## Lattice Approximation
 
 As mentioned before, some of the process that you may want to approximate are Markovian data processes. These processes can only be approximated by a scenario lattice. All the nodes in the same stage in a lattice have the same children nodes.
