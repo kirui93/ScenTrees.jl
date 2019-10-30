@@ -30,10 +30,9 @@ julia> treeplot(example2Trees[2])
 julia> savefig("example21.png")
 ```
 
-<p float="left">
-  <img src="../assets/example21.png" alt="Tree of state 1" width="420" height="500" />
-  <img src="../assets/example22.png" alt="Tree of state 2" width="420" height="500" /> 
-</p>
+| [![Tree of state 1 ](../assets/example21.png)](../assets/example21.png)  | [![Tree of state 2](../assets/example22.png)](../assets/example22.png) |
+|:---:|:---:|
+| Tree of state 1 | Tree of state 2 |
 
 And in general, we can generate a tree in any `d` state dimension.
 
@@ -129,8 +128,6 @@ julia> savefig("Tree40221.png")
 julia> treeplot(pt[2])
 julia> savefig("Tree40222.png")
 ```
-
-<p float="center">
-  <img src="../assets/Tree40221.png" alt="Tree of state 1" width="420" height="500") />
-  <img src="../assets/Tree40222.png" alt="Tree of state 2" width="420" height="500" /> 
-</p>
+| [![Tree of state 1 ](../assets/Tree40221.png)](../assets/Tree40221.png)  | [![Tree of state 2](../assets/Tree40222.png)](../assets/Tree40222.png) |
+|:---:|:---:|
+| Predeined tree of state 1 | Predefined tree of state 2 |
