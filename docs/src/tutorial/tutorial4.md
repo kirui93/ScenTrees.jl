@@ -3,9 +3,9 @@
 CurrentModule = ScenTrees
 ```
 
-# Stochastic Approximation Process
+# Stochastic approximation process
 
-This package was made for this purpose. Given a stochastic process, we want to approximate the process using either a scenario tree or a scenario lattice.
+This package follows the stochastic approximation procedure in [Pflug and Pichler (2015)](https://doi.org/10.1007/s10589-015-9758-0). Given a stochastic process, we want to approximate the process using either a scenario tree or a scenario lattice.
 
 Every stochastic approximation iteration modifies one path within the tree towards the new sequence. In this way the approximating quality of the tree is improved each time a new sample is observed. The tree is not stable in the beginning but with more and more iterations, the scenario tree converges in probability. The resulting tree can be used for decision making process.
 
@@ -57,7 +57,7 @@ Consider the following. We want to approximate the Gaussian random walk in 4 sta
 ```julia
 julia> using ScenTrees
 julia> ex2 = Tree([1,3,3,3],1)
-julia> sol1 = TreeApproximation!(ex2, GaussianSamplePath1D,1000000,2,2)
+julia> sol1 = TreeApproximation!(ex2, GaussianSamplePath1D,100000,2,2)
 julia> treeplot(sol1)
 julia> savefig("treeapprox1.png")
 ```
@@ -92,9 +92,17 @@ We can therefore do approximations in 2 dimension as follows:
 ```julia
 julia> ex3 = Tree([1,3,3,3],2);
 julia> sol2 = TreeApproximation!(ex3,GaussianSamplePath2D,1000000,2,2);
-julia> plotD(sol2)
-julia> savefig("treeapprox2D.png")
+julia> trees = partTree(sol2)
+julia> treeplot(trees[1])
+julia> savefig("trees1.png")
+julia> treeplot(trees[2])
+julia> savefig("trees2.png")
 ```
+Each of these scenario trees have a multistage distance of `0.25142` from the original stochastic process.
+
+|[![Tree for state 1](../assets/trees1.png)](../assets/trees1.png)| [![Tree for state 2](../assets/trees2.png)](../assets/trees2.png) |
+|:-----------:|:--------------:|
+| Tree for state 1 | Tree for state 2 |
 
 ![Example of a valuated tree in 2D](../assets/treeapprox2D.png)
 
