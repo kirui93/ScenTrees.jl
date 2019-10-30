@@ -4,19 +4,27 @@ CurrentModule = ScenTrees
 
 # Introduction
 
+A stochastic program is a mathematical program that involves some uncertain data. These parameters may be mostly accurately described by random variables. In most cases, it is difficult to optimize directly in terms of the distributions of these random variabls. Hence, in most cases, these distributions are approximated by discrete distributions with a finite number of scenarios for the random variables. This discretization procedure is what is oftedn called `scenario generation`. Uncertainty in long-term capacity planning is inescapable. The random parameters can be concieved to follow a multistage stochastic process over some time space so that the discrete scenarios represent sample paths. The approach we take is to form an approximation of the original stochastic process by discretization. 
+
 In multistage stochastic optimization, we are interested in approximations of stochastic processes by finite structures. These processes are random and they have uncertain scenarios and a decision maker needs to make decisions at different stages of the process. It is useful to depict the possible sequences of data for this processes in form of a `scenario tree` in the case of a discrete time stochastic process and a `scenario lattice` for Markovian data processes.
+
+A scenario tree is a set of nodes and branches used in models of decision making under uncertainty. Every node in the tree represents a possible state of the world at a particular point in time and a position where a decision can be made. Each tree node has a single predecessor and multiple successors whereas a lattice can have many predecessor.
 
 A scenario tree/lattice is organized in levels which corresponds to stages ``1,\ldots,T``. Each node in a stage has a specified number of predecessors as defined by the branching structure. A node represents a possible state of the stochastic process and the vertices represents the possibility of transition between the two connected nodes. A scenario tree differs from a scenario lattice by the condition that each node in stage ``t`` must have one predecessor in stage ``t-1``. For a lattice, that is not the case; all the nodes in stage ``t-1`` share the same children in stage ``t``.
 
 ## Goal
 
-The goal  of `ScenTrees.jl` is to generate a valuated probability tree or a lattice which represents the stochastic process in the best way possible. 
+The goal  of `ScenTrees.jl` is to generate a valuated probability scenario tree or a scenario lattice which represents the stochastic process in the best way possible using the stochastic approximation algorithm. These processes are random and represent uncertainty at a particular state and at a certain point in time.   
 
-For example, consider a Gaussian random walk in 5 stages. The starting value of this process is known and fixed, say at ``0`` and the other values are random. The following plot shows 100 sample paths of this process:
+### Example
+
+Consider a Gaussian random walk in 5 stages. The starting value of this process is known and fixed, say at ``0`` and the other values are random. The following plot shows 100 sample paths of this process:
 
 ![100 sample paths from Gaussian random walk](../assets/100GaussianPaths.png)
 
-Using those paths, we generate and improve a scenario tree or a scenario lattice. The number of iterations for the algorithm equals the number of sample paths that we want to generate from the stochastic process and the number of stages in the stochastic process equals the number of stages in the scenario tree or the scenario lattice. There are a lot of different branching structures that the user can choose for a tree that represents this stochastic process. The branching structure shows how many branches each node in the tree has at each stage of the tree. For example, we can use a branching structure of `1x2x2x2x2` for the scenario tree. This means that each node in the tree has two children. Basically, this is a `binary tree`. Using this branching structure, we obtain the following valuated probability tree that represents the above stochastic process:
+Using those paths, we generate and improve a scenario tree or a scenario lattice. The number of iterations for the algorithm equals the number of sample paths that we want to generate from the stochastic process and the number of stages in the stochastic process equals the number of stages in the scenario tree or the scenario lattice. 
+
+There are a lot of different branching structures that the user can choose for a tree that represents this stochastic process. The branching structure shows how many branches each node in the tree has at each stage of the tree. For example, we can use a branching structure of `1x2x2x2x2` for the scenario tree. This means that each node in the tree has two children. Basically, this is a `binary tree`. Using this branching structure, we obtain the following valuated probability tree that represents the above stochastic process:
 
 ![Scenario Tree 1x2x2x2x2](../assets/TreeExample.png)
 
@@ -31,6 +39,8 @@ To measure the quality of the approximation, we use the concept of multistage di
 To measure the distance of stochastic processes, it is not sufficient to only consider the distance between thier laws. It is also important to consider the information accumulated over time i.e., what the filtrations has to tell us over time. The Wasserstein distance do not correctly separate stochastic processes having different filtrations. It ignores filtrations and hence does not distinguish stochastic processes.
 
 Multistage distance was introduced by [Georg Ch. Pflug (2009)](https://doi.org/10.1137/080718401). It turns out that this distance is very important to measure the distence between multistage stochastic processes as it incorporates filtrations introduced by the processes. We use this distance in our algorithm to measure the quality of approximation of the scenario tree. Generally, a scenario tree with a minimal distance to the stochastic process is consider to have a better quality approximation.
+
+The distance between the above scenario tree and the original process is `0.0894`. This shows that the scenario tree above approximates the stochastic process well. This tree can therefore be used for decision making under uncertainty.
 
 ## Description of a scenario tree
 
@@ -80,14 +90,12 @@ In the module of `ScenTrees.jl`, we have all the exported functions that are vis
 
 ```julia
 module ScenTrees
-  include("TreeStructure.jl")
-  include("TreeApprox.jl")
-  include("StochPaths.jl")
-  include("LatticeApprox.jl")
-  include("bushinessNesDistance.jl")
+.......... # scripts here
+  
   export TreeApproximation!, LatticeApproximation,Tree,Lattice,nodes,stage,height,leaves,
         root,partTree,buildProb!,treeplot,plotD,PlotLattice,bushinessNesDistance,
-        GaussianSamplePath1D,GaussianSamplePath2D,RunningMaximum1D,RunningMaximum2D,path
+        GaussianSamplePath1D,GaussianSamplePath2D,RunningMaximum1D,RunningMaximum2D,path,
+        LogisticKernel,KernelScenarios
 end
 ```
 The most important functions in this module are `TreeApproximation!()` and `LatticeApproximation()` since these are the two functions which are used to approximate scenario trees and scenario lattices respectively. The other important function is the `Tree(BranchingStructure,dimension)` function which gives the basic starting structure of a scenario tree.
