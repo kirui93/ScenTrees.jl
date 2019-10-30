@@ -125,7 +125,17 @@ Consider the following example. We want to approximate a Gaussian random walk of
 ```julia
 julia> sol4 = LatticeApproximation([1,3,4,5],GaussianSamplePath1D,1000000);
 ```
-The result of the above approximation is a scenario lattice which represents the stochastic process in the best way. This scenario lattice can be used for decision making process under uncertainty 
+The result of the above approximation is a scenario lattice which represents the stochastic process in the best way. The distance between the scenario tree and the original process is `0.8388`. This scenario lattice can thus be used for decision making process under uncertainty.
+
+Notice that the sum of probabilities of the scenario lattice at each stage is equal to 1.
+```julia
+julia> sum.(sol4.probability)
+4-element Array{Float64,1}:
+1.0
+1.0
+0.999999999
+1.0
+```
 
 !!! info
     To visualize a scenario lattice, we use the `PlotLattice` function.
@@ -139,7 +149,7 @@ The above approximation gives the following output:
 
 ![Example of an approximated lattice](../assets/LatticeApprox.png)
 
-You can see that in the scenario lattice, we have many possibilities than in a scenario tree. Hence, some people prefer a scenario lattice than a scenario tree.
+You can see that in the scenario lattice, we have many possibilities than in a scenario tree. This shows generally that scenario lattices with half the number of nodes of a scenario tree have more number of scenarios or trajectories. A scenario lattice does not aloow to trace back the history of a given scenario based on its ending node as there are many possible paths at that node. This is the main reason why we consider scenario lattices for Markovian processes
 
 !!! info
     Currently, lattice approximation can only work for 1 dimension. It is in our working plan to generalize and extend this lattice approximation to any dimension of the states of the scenario lattice.
