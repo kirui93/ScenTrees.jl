@@ -14,12 +14,14 @@
 
 We provide two important features at the moment:
 
-- Stochastic approximation of stochastic processes by scenario trees and scenario lattices
+- Stochastic approximation of stochastic processes by scenario trees and scenario lattices.
+    + Scenario trees are used in the case of discrete time and discrete state stochastic processes.
+    + Scenario lattices are natural discretization of Markov processes and so if the stochastic process is Markovian, scenario lattices would approximate the process well.
 - Estimating trajectories from stochastic data using kernel density estimation.
-    
-The data estimated in (2) above can be used in (1) to generate scenario trees and scenario lattices.
+    + This is a non-parametric technique for generating trajectories from a given observed data whose distribution is unknown.
+    + The new trajectories estimated here can thus be used in stochastic approximation process to generate scenario trees and scenario lattices.
 
-The stochastic approximation procedure in `ScenTrees.jl` library follows from the framework provided by [Pflug and Pichler(2015)](https://doi.org/10.1007/s10589-015-9758-0).
+Stochastic approximation procedure in `ScenTrees.jl` library follows from the framework provided by [Pflug and Pichler(2015)](https://doi.org/10.1007/s10589-015-9758-0).
 
 *N/B* - _This package is actively developed and therefore new improvements and new features are continuously added._
 
@@ -39,7 +41,7 @@ To use `ScenTrees.jl`, you need to have Julia 1.0 and above. This library was de
 
 ## Documentation 
 
-If you have installed ScenTrees.jl using the above procedure then you will have the latest release of this library. To access the documentation just click on this link [Documentation](https://kirui93.github.io/ScenTrees.jl/latest/). Here you can get the description of the various functions in the package and also different examples for the different features in the library. We advise the user to read the documentation to get a general knowledge of how the package works and the various functions that this package provides.
+If you have installed ScenTrees.jl using the above procedure then you will have the latest release of this library. To access the documentation just click on this [link](https://kirui93.github.io/ScenTrees.jl/latest/). Here you can get the description of the various functions in the package and also different examples for the different features in the library. We advise the user to read through the documentation to get a general knowledge of how the package works and the various functions that this package provides.
 
 ## Example of Usage
 
