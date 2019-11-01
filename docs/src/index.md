@@ -5,13 +5,13 @@ CurrentModule = ScenTrees
 # ScenTrees.jl
 
 !!! info
-	`ScenTrees.jl` is an actively developed library and new features and improvements are continuously added.
+	**`ScenTrees.jl` is an actively developed library and new features and improvements are continually added.**
 	
 ## Features
 
-1). `ScenTrees.jl` is a package for generating and improving scenario trees and scenario lattices for multistage stochastic optimization problems using _stochastic approximation_. In this library, we use a fixed number of trajectories of a stochastic process to generate and improve a scenario tree or a scenario lattice. The quality of approximation between the stochastic process and the scenario tree/ scenario lattice is measured using a multistage distance. The multistage distance suits well to measure the distance between stochastic processes because it takes notice of the effect of evolution of the process over time (Have a look on [Georg Ch. Pflug and Alois Pichler(2012)](https://doi.org/10.1137/110825054) for more on distances for multistage stochastic optimization models). The resulting scenario tree/lattice from the stochastic approximation process is optimal and represents the stochastic process in the best possible way and so can be used for decision making process under uncertainty.
+1. `ScenTrees.jl` is a package for generating and improving scenario trees and scenario lattices for multistage stochastic optimization problems using _stochastic approximation_. In this library, we use a fixed number of trajectories of a stochastic process to generate and improve a scenario tree or a scenario lattice. The quality of approximation between the stochastic process and the scenario tree/ scenario lattice is measured using a multistage distance. The multistage distance suits well to measure the distance between stochastic processes because it takes notice of the effect of evolution of the process over time (Have a look on [Georg Ch. Pflug and Alois Pichler(2012)](https://doi.org/10.1137/110825054) for more on distances for multistage stochastic optimization models). The resulting scenario tree/lattice from the stochastic approximation process is optimal and represents the stochastic process in the best possible way and so can be used for decision making process under uncertainty.
 
-2). We also provide the user with one of the methods of generating trajectories from an array of data. This method takes two steps: First, we use the conditional density estimation to genrate new but different samples based on the data given. Here we estimate the distribution of transitional densities given the history of the process via the non-parametric kernel distribution. Finally, we use the composition method to sample from the above distribution. The trajectory created in this process can then ne used in the stochastic approximation algorithm to generate a scenario lattice for multistage stochastic approximation. We urge the reader to have a look at [Georg Ch. Pflug and Alois Pichler(2016)](https://doi.org/10.1137/15M1043376), [Georg Ch. Pflug and Alois Pichler(2015)](https://doi.org/10.1007/s10589-015-9758-0) and [Seguin Sara et.al(2017)](https://doi.org/10.1016/j.ejor.2016.11.028) to get a glimpse of how this method works.
+2. We also provide the user with one of the methods of generating trajectories from an array of data. This method takes two steps: First, we use the conditional density estimation to genrate new but different samples based on the data given. Here we estimate the distribution of transitional densities given the history of the process via the non-parametric kernel distribution. Finally, we use the composition method to sample from the above distribution. The trajectory created in this process can then ne used in the stochastic approximation algorithm to generate a scenario lattice for multistage stochastic approximation. We urge the reader to have a look at [Georg Ch. Pflug and Alois Pichler(2016)](https://doi.org/10.1137/15M1043376), [Georg Ch. Pflug and Alois Pichler(2015)](https://doi.org/10.1007/s10589-015-9758-0) and [Seguin Sara et.al(2017)](https://doi.org/10.1016/j.ejor.2016.11.028) to get a glimpse of how this method works.
 
 In these tutorials, we assume that the reader is quite familiar with the theory and explanation of the stochastic approximation algorithm in this paper [Georg Ch. Pflug and Alois Pichler(2015)](https://doi.org/10.1007/s10589-015-9758-0). 
 
@@ -27,9 +27,37 @@ julia> using ScenTrees
 
 Once you have ScenTrees.jl installed, we recommend that you have a look on the tutorials from the beginning to the end to understand on how you can use the package to do scenario tree/lattice generation by the stochastic approximation process.
 
+## Important functions in the library
+
+The following are the most important functions that ScenTrees.jl library provides. This functio are explained in detail in the upcoming tutorials.
+
+1. `Process function`: This is a user-specified function that generates trajectories of a stochastic process that the user wants to approximate via a scenario tree or a scenario lattice. Scenario lattices are natural discretization of the Markovian processes. This function should return an array in 2 dimension. It should not take any inputs else the user should consider using wrappers or function closures. This function depends on the number of stages in  the tree and the dimension of states of nodes in the tree. The user provides this function to the stochastic approximation process. Examples of inbiult process functions are `GaussiansamplePath1D(),GaussianSamplePath2D(),RunningMaximum1D(),RunningMaximum2D(),path()`.
+
+2. `Tree`: This provides the structure of a scenario tree. It stores all the information about a tree. Thes informaation are the name of the tree, the parent of each node, the state of each node and the probabilities from one node to another. A starting tree can be generated by `Tree([BStructure],dimenison)` where `Bstructure` is a branching vector and `dimension` is the dimension of states of nodes in the tree. 
+
+3. `Tree Approximation`: It returns a valuated probability scenario tree that approximates the stochastic process in the best possible way. The function `TreeApproximation!(Tree([BStructure],dimension),ProcessFunction,NoOfIterations,pNorm,rWasserstein)` takes:
+	* A scenario tree object from the `Tree()` function with a certain branching structure,
+	* A process function that we want to approximate,
+	* The numbe of iterations,
+	* Choice of the norm (Example: `max=0,sum=1,Euclidean=2 (default)`), and 
+	* Wasserstein parameter (`rWasserstein = 2 (default)`)
+The number of iterations also represents the number of trajectories from the process function that we want to imporve the scenario tree. For each iteration , we perform the stochastic approximation process wchich modeifies one path in the tree towards the new trajectory and hence the approximating quality of the tree is improved in each iteration.
+
+4. `Lattice Approximation`: It is used to approximate Markovian processes. Scenario lattices are natural discretization of Markov processes. The function `LatticeApproximation([BStructure],ProcessFunction,NoOfIterations)` takes:
+	* The branching structure of the lattice,
+	* The process function that we want to approximate, and
+	* The number of iterations.
+The stochastic approximation procedure follows the one for scenario tree approximation but here we find the closest lattice entry and use samples from the process function to imporve it.
+
+5. `Conditional density estimation`: This is a non-parametric technique for generating samples from a give data with unknown distribution. We use this process to generte new but different samples based of the data given using the kernel density estimation technique. The new samples can then be used to generate scenario trees and scenario lattices. The function `KernelScenarios(data,KernelDistribution;Markovian=true)` takes:
+	* A data matrix in 2 dimension (i.e., `NxT` matrix where `N` is the number of trajectories and `T` is the number of stages.
+	* Kernel Distribution is the distribution that you want to use for the kernels. The default distribution is `Logistic distribution`. The user is free to choose any distribution he/she wishes to use based on the package `Distributions.jl`.
+	* The wrapper we use here states whether the trajectories that you want to create are either Markovian or not. When you set `Markovian=true`, the trajectories here are Markovian and so can be used to approximate a scenario lattice. Similarly, if you set `Markovian=false`, the trajectories are non-Markovian and therefore can be used to generate scenario trees.
+
+
 ## Citing `ScenTrees.jl`
 
-For all the users of this library, we request that they cite the following paper in their publications:
+For all the users of this library, we request that you cite the following paper:
 
 !!! info
 	To be added.
