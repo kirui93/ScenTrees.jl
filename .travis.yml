@@ -19,7 +19,7 @@ matrix:
   allow_failures:
     - julia: nightly
    
-#codecov: true
+codecov: true
 
 notifications:
   email: false
