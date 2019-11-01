@@ -1,32 +1,32 @@
-# site_name: ScenTrees.jl
-# repo_url: https://github.com/kirui93/ScenTrees.jl
-# site_description: A Julia Library for Generating and Improving Scenario Trees and Scenario Lattices for Multistage Stochastic Optimization
-# site_author: Kipngeno Kirui
-# theme: readthedocs
+site_name: ScenTrees.jl
+repo_url: https://github.com/kirui93/ScenTrees.jl
+site_description: A Julia Library for Generating and Improving Scenario Trees and Scenario Lattices for Multistage Stochastic Optimization
+site_author: Kipngeno Kirui
+theme: readthedocs
 
-# markdown_extensions:
-# - codehilite
-# - extra
-# - tables
-# - fenced_code
+markdown_extensions:
+- codehilite
+- extra
+- tables
+- fenced_code
 
-# extra_css:
-# - assets/Documenter.css
+extra_css:
+- assets/Documenter.css
 
-# extra_javascript:
-# - https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML
-# - assets/mathjaxhelper.js
+extra_javascript:
+- https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML
+- assets/mathjaxhelper.js
 
-# docs_dir: 'build' #from Julia's Documenter.jl
+docs_dir: build #from Julia's Documenter.jl
 
-# pages:
-# - Home: index.md
-# - Tutorial:
-#   - Title 1: tutorial/tutorial1.md
-#   - Title 2: tutorial/tutorial2.md
-#   - Title 3: tutorial/tutorial3.md
-#   - Title 4: tutorial/tutorial31.md
-#   - Title 5: tutorial/tutorial4.md
-#   - Title 6: tutorial/tutorial41.md
-#   - Title 7: tutorial/tutorial5.md
+pages:
+ - Home: index.md
+ - Tutorial:
+   - Title 1: tutorial/tutorial1.md
+   - Title 2: tutorial/tutorial2.md
+   - Title 3: tutorial/tutorial3.md
+   - Title 4: tutorial/tutorial31.md
+   - Title 5: tutorial/tutorial4.md
+   - Title 6: tutorial/tutorial41.md
+   - Title 7: tutorial/tutorial5.md
 

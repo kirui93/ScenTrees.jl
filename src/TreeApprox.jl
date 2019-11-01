@@ -55,7 +55,7 @@ function TreeApproximation!(newtree::Tree,genPath::Function,samplesize::Int64,pN
                 newtree.state[rt[tmpi],:] .= samplepath[tmpi,:]
             end
         end
-        #To the step  of STOCHASTIC COMPUTATIONS                                
+        #To the step  of STOCHASTIC COMPUTATIONS
         EndLeaf = 0 #start from the root
         for t = 1:T+1
             tmpleaves = newtree.children[EndLeaf+1]
@@ -71,11 +71,11 @@ function TreeApproximation!(newtree::Tree,genPath::Function,samplesize::Int64,pN
         #istar = findall(lf -> lf == EndLeaf, leaf)
         istar = Int64[idx for (idx,lf) in enumerate(leaf) if lf == EndLeaf]
         probaLeaf[istar] .= probaLeaf[istar] .+ 1.0                                                            #counter  of probabilities
-        StPath = path_to_leaves[EndLeaf-(leaf[1]-1)]          
+        StPath = path_to_leaves[EndLeaf-(leaf[1]-1)]
         delta = newtree.state[StPath,:] - samplepath
         d[:,istar] .= d[:,istar] .+ norm(delta, pNorm).^(rwasserstein)
         delta .=  rwasserstein .* norm(delta, pNorm).^(rwasserstein - pNorm) .* abs.(delta)^(pNorm - 1) .* sign.(delta)
-        ak = 1.0 ./ (30.0 .+ probaLeaf[istar]) .^ 0.75
+        ak = 1.0 ./ (30.0 .+ probaLeaf[istar]) #.^ 0.75
         newtree.state[StPath,:] = newtree.state[StPath,:] - delta .* ak
     end
     probabilities  = map(plf -> plf/sum(probaLeaf), probaLeaf) #divide every element by the sum of all elements

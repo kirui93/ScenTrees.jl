@@ -26,12 +26,11 @@ makedocs(
 			"Tutorials" => Any["tutorial/tutorial1.md",
 			                    "tutorial/tutorial2.md",
 			                    "tutorial/tutorial3.md",
-					    "tutorial/tutorial31.md",
+					    		"tutorial/tutorial31.md",
 			                    "tutorial/tutorial4.md",
-					    "tutorial/tutorial41.md",
-					    "tutorial/tutorial5.md"]
+					    		"tutorial/tutorial41.md",
+					    		"tutorial/tutorial5.md"]
 			                    ]
 )
 
-deploydocs(repo   = "github.com/kirui93/ScenTrees.jl.git",
-	   target = "build")
+deploydocs(repo   = "github.com/kirui93/ScenTrees.jl.git")
