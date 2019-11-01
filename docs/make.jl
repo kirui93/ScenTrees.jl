@@ -29,8 +29,17 @@ makedocs(
 				    "tutorial/tutorial31.md",
 				    "tutorial/tutorial4.md",
 				    "tutorial/tutorial41.md",
-				    "tutorial/tutorial5.md"]
-			                    ]
+				    "tutorial/tutorial5.md"
+				]
+			                    
+		]
 )
 
-deploydocs(repo = "github.com/kirui93/ScenTrees.jl.git")
+if !Sys.iswindows()
+	deploydocs(
+		deps = Deps.pip("mkdocs","python-markdown-math"),
+	   	repo = "github.com/kirui93/ScenTrees.jl.git",
+	   	target = "site",
+	   	make = () -> run(`mkdocs build`)  
+	)
+end
