@@ -56,18 +56,62 @@ end
 Returns a plot of a lattice. The arguments is only a lattice.
 """
 
-function PlotLattice(lt::Lattice)
-    pt = subplot2grid((1,length(lt.state)),(0,0),colspan = length(lt.state))
-    pt.spines["top"].set_visible(false)                                           #remove the box at the top
-    pt.spines["right"].set_visible(false)                                         #remove the box at the right
+# function PlotLattice(lt::Lattice)
+#     pt = subplot2grid((1,length(lt.state)),(0,0),colspan = length(lt.state))
+#     pt.spines["top"].set_visible(false)                                           #remove the box at the top
+#     pt.spines["right"].set_visible(false)                                         #remove the box at the right
+#     for t = 2:length(lt.state)
+#         for i=1:length(lt.state[t-1])
+#             for j=1:length(lt.state[t])
+#                 pt.plot([t-2,t-1],[lt.state[t-1][i],lt.state[t][j]])
+#             end
+#         end
+#     end
+#     xlabel("stage")
+#     ylabel("states")
+#     xticks(0:length(lt.state)-1)
+# end
+					
+function PlotLattice(lt::Lattice,fig = 1)
+    if !isempty(fig)
+        figure(fig)
+    end
+    lts = subplot2grid((1,4),(0,0),colspan = 3)
+    title("states")
+    lts.spines["top"].set_visible(false)                                                         # remove the box at the top
+    lts.spines["right"].set_visible(false)                                                       # remove the box at the right
     for t = 2:length(lt.state)
         for i=1:length(lt.state[t-1])
             for j=1:length(lt.state[t])
-                pt.plot([t-2,t-1],[lt.state[t-1][i],lt.state[t][j]])
+                lts.plot([t-2,t-1],[lt.state[t-1][i],lt.state[t][j]])
             end
         end
     end
-    xlabel("stage")
-    ylabel("states")
-    xticks(0:length(lt.state)-1)
+    xlabel("stage,time")
+    #ylabel("states")
+    #xticks(0:length(lt.state)-1)
+
+    prs = subplot2grid((1,4), (0,3))
+    title("probabilities")
+    prs.spines["top"].set_visible(false)
+    prs.spines["left"].set_visible(false)
+    prs.spines["right"].set_visible(false)
+# Use the states and probabilites at the last stage to plot the marginal distribution
+    stts = lt.state[end]   
+    n = length(stts)                                    # length of leaves of the lattice.
+    h = 1.05*std(stts)/ (n^0.2) + 1e-3                  #Silverman rule of thumb
+    lts.set_ylim(minimum(stts)-h, maximum(stts)+h)
+    prs.set_ylim(minimum(stts)-h, maximum(stts)+h)
+    proba = sum(lt.probability[end],dims=1)
+    yticks(())                                          #remove the ticks on probability plot
+    t = LinRange(minimum(stts)-h, maximum(stts)+h, 100) #100 points on probability plot
+    density = zero(t)
+    for (i, ti) in enumerate(t)
+        for (j, xj) in enumerate(stts)
+            tmp = (xj - ti) / h
+            density[i] += proba[j]* 35/32 * max(1.0 -tmp^2, 0.0)^3 /h #triweight kernel
+        end
+    end
+    plot(density, t)
+    prs.fill_betweenx(t, 0 , density)
 end
