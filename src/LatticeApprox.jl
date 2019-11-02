@@ -78,6 +78,9 @@ function PlotLattice(lt::Lattice,fig = 1)
     end
     lts = subplot2grid((1,4),(0,0),colspan = 3)
     title("states")
+    xlabel("stage,time")
+    #ylabel("states")
+    xticks(0:length(lt.state)-1)
     lts.spines["top"].set_visible(false)                                                         # remove the box at the top
     lts.spines["right"].set_visible(false)                                                       # remove the box at the right
     for t = 2:length(lt.state)
@@ -87,9 +90,6 @@ function PlotLattice(lt::Lattice,fig = 1)
             end
         end
     end
-    xlabel("stage,time")
-    #ylabel("states")
-    xticks(0:length(lt.state)-1)
 
     prs = subplot2grid((1,4), (0,3))
     title("probabilities")
