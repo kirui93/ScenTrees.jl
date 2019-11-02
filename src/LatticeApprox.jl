@@ -89,7 +89,7 @@ function PlotLattice(lt::Lattice,fig = 1)
     end
     xlabel("stage,time")
     #ylabel("states")
-    #xticks(0:length(lt.state)-1)
+    xticks(0:length(lt.state)-1)
 
     prs = subplot2grid((1,4), (0,3))
     title("probabilities")
