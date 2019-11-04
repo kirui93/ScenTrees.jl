@@ -17,11 +17,17 @@ We have the following examples in our library:
     1. Gaussian random walk,
     2. Running Maximum process
     3. Sample stock paths
-  
+
 We have created the first two example functions in 1 and 2 dimensions. What we mean by dimension is that, a fucntion in 1 dimension generates just one array. Generally, a function in d-dimension generates `d` arrays. As stated before, the length of the array and the dimension of the array naturally depends on the characteristics of the scenario tree or scenario lattice that you are using.
 
-The position $X_t$ of a Gaussian random walk after $t$ steps is $$X_t = \sum_{k=1}^{t} Y_k$$ where the random variables $(Y_k)_{k\geq 1}$ are independent and identically distributed and each $Y_k$ follows a normal distribution. For the running maximum process, we take the maximum of each two consecutive numbers in a sample drawn from a normal distribution. Mathematically, $$M_t = \max \{\sum_{t=1}^{t^\prime} \xi_t : t^\prime \leq t\} \ \text{with} \ \xi_t \sim N(0,1)$$.
-
+The position ``X_t`` of a Gaussian random walk after ``t`` steps is
+```math
+X_t = \sum_{k=1}^{t} Y_k
+```
+where the random variables ``(Y_k)_{k\geq 1}`` are independent and identically distributed and each ``Y_k`` follows a normal distribution. For the running maximum process, we take the maximum of each two consecutive numbers in a sample drawn from a normal distribution. Mathematically,
+```math
+M_t = \max \{\sum_{t=1}^{t^\prime} \xi_t : t^\prime \leq t\} \ \text{with} \ \xi_t \sim N(0,1).
+```
 We insist that the user of this library _must write a function that takes no inputs_. This function should be, in a way, a hardcoded function that when you call, it produces an array with a certain user pre-determined characteristics.
 
 The above two processes in our library are in 4 stages and therefore can be used with a scenario tree or a scenario lattice with 4 stages. As already stated, the stages in a scenario tree or a scenario lattice starts from `0` to `T`. Each of these processes generates samples with a common starting point since a stochastic process has a deterministic starting value and the rest of the values are random.
@@ -76,13 +82,13 @@ julia> path()
 
 ### Notes
 
-    1. The user of this library must provide this function. 
-    2. The function must take no inputs. This is so important for the stochastic approximation algorithm.
-    3. The length of an array produced by the function must be equal to the number of stages in the scenario tree or the scenario lattice.
-    4. The dimension of the array produced must be the same as the dimension of the states of the scenario tree or scenario lattice.
-    5. The array should have a common deterministic starting point or be in a certain range of values.
-    6. The array produced should be a `Nxd Array{Float64,2}` where `N` is the number of stages and `d` is the dimension. This is important for the stochastic approximation process.
-    7. In higher dimension, dpending on the user, the arrays could be dependent on each other.
+1. The user of this library must provide this function.
+2. The function must take no inputs. This is so important for the stochastic approximation algorithm.
+3. The length of an array produced by the function must be equal to the number of stages in the scenario tree or the scenario lattice.
+4. The dimension of the array produced must be the same as the dimension of the states of the scenario tree or scenario lattice.
+5. The array should have a common deterministic starting point or be in a certain range of values.
+6. The array produced should be a `Nxd Array{Float64,2}` where `N` is the number of stages and `d` is the dimension. This is important for the stochastic approximation process.
+7. In higher dimension, dpending on the user, the arrays could be dependent on each other.
 
 Upto this point, the user can now create a random scenario tree and look at its characteristics as well as write a process function that generates trajectories for the stochastic approximation process. It is important to write a function that follows the above criterion as this becomes very important in the stochastic approximation process.
 

@@ -35,9 +35,9 @@ Generally, the approximating quality of a scenario tree increases with increasin
 
 ## Comparison with implementation in MATLAB
 
-Inorder to see how fast Julia is, we compared the performance of different trees with different heights with the same algorithm written in MATLAB programming language. We run the same trees and saved the time it takes to produce results. The following table shows the results (N/B: The time shown is in seconds):
+In order to see how fast Julia is, we compared the run-time performance of different trees with different heights with the same algorithm written in MATLAB programming language. We run the same trees and saved the time it takes to produce results. The following table shows the results (N/B: The time shown is in seconds):
 
-| Tree           | Number of Iterations | Time (Julia) | Time (MATLAB) | Speed of Julia |
+| Tree           | Number of Iterations | Run-time (Julia) | Run-time (MATLAB) | Speed of Julia |
 |----------------|----------------------|--------------|---------------|-------------------|
 |1x2x2| 10,000| 0.17 | 6.75 | 38.9 times |
 |1x2x2x2| 10,000 | 0.16 | 9.74 | 59.8 times |
@@ -68,5 +68,5 @@ What is more important for testing and development is the processor speed for yo
 
 !!! tip
     This library is actively developed and new features and improvements are constantly and continuously added. So, before using it, make it an habit to update your packages.
-    
+
 This ends our tutorials for using `ScenTrees.jl`. You are now ready to generate scenario trees and scenario lattices depending on what you want to approximate.
