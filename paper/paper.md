@@ -10,12 +10,12 @@ tags:
 authors:
   - name: Kipngeno Kirui
     orcid: 0000-0002-3679-4442
-    affiliation: 1,2
+    affiliation: "1,2"
   - name: Alois Pichler
-    affiliation: 1,2
+    affiliation: "1,2"
     orcid: 0000-0001-8876-2429
   - name: Georg Ch. Pflug
-    affiliation: 3,4
+    affiliation: "3,4"
 affiliations:
   - name: Technical University of Chemnitz
     index: 1
