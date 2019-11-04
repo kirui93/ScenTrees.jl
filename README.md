@@ -25,7 +25,7 @@ Stochastic approximation procedure in `ScenTrees.jl` library follows from the fr
 
 *N/B* - _This package is actively developed and therefore new improvements and new features are continuously added._
 
-# Installation
+## Installation
 
 The following is the standard procedure to add `ScenTrees.jl` and load it available for usage:
 
@@ -39,11 +39,11 @@ Having followed the above procedure the various functions in the library will be
 
 To use `ScenTrees.jl`, you need to have Julia 1.0 and above. This library was developed in Julia 1.0.4 and tested using the Julia standard framework. It has been tested for Julia versions 1.0 and above and nightly for the latest release of Julia in Linux and OSX distributions.
 
-# Documentation 
+## Documentation 
 
 If you have installed ScenTrees.jl using the above procedure then you will have the latest release of this library. To access the documentation just click on this [link](https://kirui93.github.io/ScenTrees.jl/latest/). Here you can get the description of the various functions in the package and also different examples for the different features in the library. We advise the user to read through the documentation to get a general knowledge of how the package works and the various functions that this package provides.
 
-# Example of Usage
+## Example of Usage
 
 After installing the ScenTrees.jl library, you can use it as in the following examples:
 
@@ -91,14 +91,14 @@ julia> PlotLattice(kernelLattice)
 |:---:|:---:|
 |Kernel Scenario Tree | Kernel Scenario Lattice  |
 
-# Contributing to ScenTrees.jl
+## Contributing to ScenTrees.jl
 
-as in [CONTRIBUTING.md](https://github.com/kirui93/ScenTrees.jl/blob/master/CONTRIBUTING.md), if you believe that you have found any bugs or if you need help or any questions regarding the library and any suggestions, please feel free to file a new Github issue at [New issue](https://github.com/kirui93/ScenTrees.jl/issues/new). You can also raise an issue and issue a pull request which fixes the issue as long as it doesn't affect the performance of this library.
+As in [CONTRIBUTING.md](https://github.com/kirui93/ScenTrees.jl/blob/master/CONTRIBUTING.md), if you believe that you have found any bugs or if you need help or any questions regarding the library and any suggestions, please feel free to file a [new Github issue](https://github.com/kirui93/ScenTrees.jl/issues/new). You can also raise an issue and issue a pull request which fixes the issue as long as it doesn't affect the performance of this library.
 
-# Citing ScenTrees.jl
+## Citing ScenTrees.jl
 To be added.
 
-# References
+## References
 
 + Pflug, Georg Ch., and Alois Pichler, 2012. *A distance for Multistage Stochastic Optimization Models*. SIAM Journal on Optimization 22(1) Doi: https://doi.org/10.1137/110825054
 
