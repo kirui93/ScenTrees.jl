@@ -4,7 +4,7 @@ makedocs(
 	sitename =  "ScenTrees.jl",
 	authors = "Kipngeno Kirui",
 	clean = true,
-	doctest = false,
+	doctest = true,
 	format = Documenter.HTML(
 		assets = ["exampleTree1.png",
 		          "Tree402.png",
