@@ -10,22 +10,18 @@ tags:
 authors:
   - name: Kipngeno Kirui
     orcid: 0000-0002-3679-4442
-    affiliation: "1,2"
+    affiliation: "1"
   - name: Alois Pichler
-    affiliation: "1,2"
+    affiliation: "1"
     orcid: 0000-0001-8876-2429
   - name: Georg Ch. Pflug
-    affiliation: "3,4"
+    affiliation: "2"
 affiliations:
-  - name: Technical University of Chemnitz
+  - name: University of Technology, Chemnitz, Germany
     index: 1
-  - name: Faculty of Mathematics
-    index: 2
   - name: University of Vienna
-    index: 3  
-  - name: Department of Statistics and Operations Research
-    index: 4
-date: 4 November, 2019
+    index: 2 
+date: 5 November, 2019
 bibliography: paper.bib
 ---
 
