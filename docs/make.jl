@@ -35,11 +35,5 @@ makedocs(
 		]
 )
 
-if !Sys.iswindows()
-	deploydocs(
-		deps = Deps.pip("mkdocs","python-markdown-math"),
-	   	repo = "github.com/kirui93/ScenTrees.jl.git",
-	   	target = "site",
-	   	make = () -> run(`mkdocs build`)  
-	)
-end
+
+deploydocs(repo = "github.com/kirui93/ScenTrees.jl.git")
