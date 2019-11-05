@@ -31,7 +31,7 @@ bibliography: paper.bib
 
 # Summary
 
-In multistage stochastic optimization we are interested in decision making under uncertainty. In this setting, stochastic processes have random and uncertain outcomes and decisions must be made at different stages of the process. It is generally intrsctable to solve mathematical programs with uncertain parameters described by an underlying probability distribution. The common approach is to form an approximation of the original stochastic process or underlying distribution by discretization. The procedure of discretizing a stochastic process is called `scenario tree generation`. We depict the possible sequences of data for this processes in form of a `scenario tree` in the case of a discrete time stochastic process and a ``scenario lattice`` for Markov processes.
+In multistage stochastic optimization we are interested in decision making under uncertainty. In this setting, stochastic processes have random and uncertain outcomes and decisions must be made at different stages of the process. It is generally intractable to solve mathematical programs with uncertain parameters described by an underlying probability distribution. The common approach is to form an approximation of the original stochastic process or underlying distribution by discretization. The procedure of discretizing a stochastic process is called `scenario tree generation`. We depict the possible sequences of data for this processes in form of a `scenario tree` in the case of a discrete time stochastic process and a ``scenario lattice`` for Markov processes.
 
 Since the paper of @Hoyland2001, scenario tree generation has been used to solve various multistage stochastic problems in the industry and academia. Various authors including @Pflug2001, @KovacevicPichler and @PflugPichler2016 have come up to add and improve various ideas into the process of generating scenario trees. However, there is no fast and open-source implementation of the algorithm that has been available in the public domain for various users to appreciate. Instead, various researchers and industries have been forced to code their own implementations in a variety of languages they like themselves. This has limited many researchers and industries who would not like to code themselves from generating scenario trees with available implementations. Many researchers and industries also would not get the taste of comparing ideas against their own implementations and hence they may end up trusting their own results and implementations and maybe there is a better implementation.
 
@@ -82,7 +82,7 @@ julia> savefig("ApproxTree.pdf")
 
 ![Tree Approximation from Kernel Density Samples](images/rwdataTree.pdf){height=250px}
 
-The number of possible trajectories in the scenario tree equals its number of leaves. TIn the above scenario tree, there are $54$ possible trajectories as the number of leaves is $(1\times3\times3\times3\times2) = 54$. The algorithm returns the multistage distance between the above scenario tree and the original stochastic process as $d=0.23092$.
+The number of possible trajectories in the scenario tree equals its number of leaves. In the above scenario tree, there are $54$ possible trajectories as the number of leaves is $(1\times3\times3\times3\times2) = 54$. The algorithm returns the multistage distance between the above scenario tree and the original stochastic process as $d=0.23092$.
 
 ## Approximating with a scenario lattice
 
