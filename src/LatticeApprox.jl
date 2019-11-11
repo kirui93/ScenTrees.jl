@@ -54,27 +54,10 @@ end
 	PlotLattice(lt::Lattice)
 
 Returns a plot of a lattice. The arguments is only a lattice.
-"""
-
-# function PlotLattice(lt::Lattice)
-#     pt = subplot2grid((1,length(lt.state)),(0,0),colspan = length(lt.state))
-#     pt.spines["top"].set_visible(false)                                           #remove the box at the top
-#     pt.spines["right"].set_visible(false)                                         #remove the box at the right
-#     for t = 2:length(lt.state)
-#         for i=1:length(lt.state[t-1])
-#             for j=1:length(lt.state[t])
-#                 pt.plot([t-2,t-1],[lt.state[t-1][i],lt.state[t][j]])
-#             end
-#         end
-#     end
-#     xlabel("stage")
-#     ylabel("states")
-#     xticks(0:length(lt.state)-1)
-# end
-					
+"""					
 function PlotLattice(lt::Lattice,fig = 1)
     if !isempty(fig)
-        figure(fig)
+        figure(figsize=(10,6))
     end
     lts = subplot2grid((1,4),(0,0),colspan = 3)
     title("states")
