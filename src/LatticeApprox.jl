@@ -83,8 +83,8 @@ function PlotLattice(lt::Lattice,fig = 1)
     stts = lt.state[end]   
     n = length(stts)                                    # length of leaves of the lattice.
     h = 1.05*std(stts)/ (n^0.2) + 1e-3                  #Silverman rule of thumb
-    lts.set_ylim(minimum(stts)-h, maximum(stts)+h)
-    prs.set_ylim(minimum(stts)-h, maximum(stts)+h)
+    lts.set_ylim(minimum(minimum.(lt.state)), maximum(maximum.(lt.state)))
+    prs.set_ylim(minimum(minimum.(lt.state)), maximum(maximum.(lt.state)))
     proba = sum(lt.probability[end],dims=1)
     yticks(())                                          #remove the ticks on probability plot
     t = LinRange(minimum(stts)-h, maximum(stts)+h, 100) #100 points on probability plot
