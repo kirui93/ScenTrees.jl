@@ -20,12 +20,12 @@ function LatticeApproximation(states::Array{Int64,1},path::Function,nScenarios::
     WassersteinDistance = 0.0
     rWasserstein = 2	
     lns = length(states)
-    LatState = [zeros(states[j],1) for j = 1:lns]                                              # States of the lattice at each time t
+    LatState = [zeros(states[j],1) for j = 1:lns]                    # States of the lattice at each time t
     BegPath = path()
-    for t = 1:lns
+    for t = 1:lns                                                   #initialize the states of the nodes of the lattice
         LatState[t] .= BegPath[t]
     end
-    LatProb = vcat([zeros(states[1],1)],[zeros(states[j-1],states[j]) for j = 2:lns])          # Probabilities of the lattice at each time t
+    LatProb = vcat([zeros(states[1],1)],[zeros(states[j-1],states[j]) for j = 2:lns]) # Probabilities of the lattice at each time t
     #Z = Array{Float64}(undef,lns)                   # initialize a 1D vector to hold the states' values
     #Stochastic approximation step comes in here
     for n = 1:nScenarios
@@ -36,18 +36,18 @@ function LatticeApproximation(states::Array{Int64,1},path::Function,nScenarios::
             sumLat = sum(LatProb[t],dims = 2)
             sqStates = 1.3 * sqrt(n) / states[t]
             tmp = Int64[id for (id,ls) in enumerate(sumLat) if ls < sqStates]
-            LatState[t][tmp] .= Z[t]                                                            # corrective action to include lost nodes
-            mindist,indx = findmin(vec(abs.(LatState[t] .- Z[t])))                              # find the closest lattice entry
-            dist = dist + mindist^2                                                             # Euclidean distance for the paths
-            LatProb[t][idtm1,indx] = LatProb[t][idtm1,indx] .+ 1.0                              # increase the probability
+            LatState[t][tmp] .= Z[t]                                      # corrective action to include lost nodes
+            mindist,indx = findmin(vec(abs.(LatState[t] .- Z[t])))        # find the closest lattice entry
+            dist = dist + mindist^2                                       # Euclidean distance for the paths
+            LatProb[t][idtm1,indx] = LatProb[t][idtm1,indx] .+ 1.0        # increase the probability
             idtm1 = indx
-            LatState[t][indx] = LatState[t][indx] - 2/ (3000 + n)^0.75*rWasserstein*mindist^(rWasserstein-1)*(LatState[t][indx] - Z[t])
+            LatState[t][indx] = LatState[t][indx] - 2/ (n+nScenarios)^0.75*rWasserstein*mindist^(rWasserstein-1)*(LatState[t][indx] - Z[t])
         end
         dist = dist^(1/2)
         WassersteinDistance = (WassersteinDistance*(n-1) + dist^rWasserstein)/n
     end                                             
     LatProb = LatProb ./ nScenarios						                # scale the probabilities to 1.0
-    return Lattice("Lattice Approximation of $states, \n distance=$(round(WassersteinDistance^(1/rWasserstein),digits = 4)) at $(nScenarios) scenarios",LatState,LatProb)
+    return Lattice("Lattice Approximation of $states, \n distance=$(round(WassersteinDistance^(1/rWasserstein),digits = 4)/sqrt(nScenarios)) at $(nScenarios) scenarios",LatState,LatProb)
 end
 
 """
