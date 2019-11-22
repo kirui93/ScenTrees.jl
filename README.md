@@ -65,6 +65,7 @@ julia> PlotLattice(rmlattice)
 
 ```julia
 julia> using ScenTrees
+julia> using Distributions
 julia> gsdata = Array{Float64}(undef,1000,4)
 julia> for i = 1:1000
            gsdata[i,:] = GaussianSamplePath1D()
