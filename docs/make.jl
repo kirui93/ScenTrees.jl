@@ -6,8 +6,7 @@ makedocs(
 	clean = true,
 	doctest = true,
 	format = Documenter.HTML(
-		assets = ["exampleTree1.png",
-		          "Tree402.png",
+		assets = ["Tree402.png",
 		          "Tree4022.png",
 			  "Tree40221.png",
 			  "Tree40222.png",
