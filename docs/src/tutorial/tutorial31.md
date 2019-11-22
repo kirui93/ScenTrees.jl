@@ -6,19 +6,19 @@ CurrentModule = ScenTrees
 
 A stochastic process is a sequence of events in which the outcome of any stage depends on some probability. A stochastic process is also called a random process.The stochastic process is said to be continuous, if i.e. with probability one, all of its trajectories are continuous functions in `t`.
 
-There are many ways in which the stochastic processes can be classified. For example, they can be classified in terms of boundedness, continuity etc., i.e. properties of their sample trajectories. They could also be described with respect to the properties of their distribution functions. However, we find it important to classify the stpchastic processes according to their memory. We classify these processes as `discrete time stochastic processes` and `Markovian data processes`. The Markov processes are processes with short memory where the process has memory only at its immediate past. With this in mind, in our stochastic approximation process, we approximate a discrete time stochastic process with a `scenario tree` and a Markovian data process with a `scenario lattice`.  
+There are many ways in which the stochastic processes can be classified. For example, they can be classified in terms of boundedness, continuity etc., i.e. properties of their sample trajectories. They could also be described with respect to the properties of their distribution functions. However, we find it important to classify the stochastic processes according to their memory. We classify these processes as `discrete time stochastic processes` and `Markovian data processes`. The Markov processes are processes with short memory where the process has memory only at its immediate past. With this in mind, in our stochastic approximation process, we approximate a discrete time stochastic process with a `scenario tree` and a Markovian data process with a `scenario lattice`.  
 
 ## Stochastic function
 
-This is a user-defined function representing the stochastic process in which she/he wants to approximate. This is the function that will generate trajectories that helps to improve the states of the nodes in the scenario tree or scenario lattice. To be able to do a good approximation, the user of this library should be aware of the number of stages in the scenario tree or scenario lattice that she/he is working on and more importantly, the dimension of the states of nodes in the tree or the scenario lattice. `Why is this important?` For each iteration, the stochastic approximation algorithm generates one trajectory from the stochastic function that will improve one path in the scenario tree. Therefore, knowing the number of stages and the dimension of the states will help the user to design a stochastic function that generates a trajectory with the same length as the number of stages in the scenario tree and with the same dimension as the dimension of the states in the scenario tree.
+This is a user-defined function representing the stochastic process in which she/he wants to approximate. This is the function that will generate trajectories that helps to improve the states of the nodes in the scenario tree or scenario lattice. To be able to do a good approximation, the user of this package should be aware of the number of stages in the scenario tree or scenario lattice that she/he is working on and more importantly, the dimension of the states of nodes in the tree or the scenario lattice. `Why is this important?` For each iteration, the stochastic approximation algorithm generates one trajectory from the stochastic function that will improve one path in the scenario tree. Therefore, knowing the number of stages and the dimension of the states will help the user to design a stochastic function that generates a trajectory with the same length as the number of stages in the scenario tree and with the same dimension as the dimension of the states in the scenario tree.
 
-We have the following examples in our library:
+We have the following examples in our package:
 
     1. Gaussian random walk,
     2. Running Maximum process
     3. Sample stock paths
 
-We have created the first two example functions in 1 and 2 dimensions. What we mean by dimension is that, a fucntion in 1 dimension generates just one array. Generally, a function in d-dimension generates `d` arrays. As stated before, the length of the array and the dimension of the array naturally depends on the characteristics of the scenario tree or scenario lattice that you are using.
+We have created the first two example functions in 1 and 2 dimensions. What we mean by dimension is that, a function in 1 dimension generates just one array. Generally, a function in d-dimension generates `d` arrays. As stated before, the length of the array and the dimension of the array naturally depends on the characteristics of the scenario tree or scenario lattice that you are using.
 
 The position ``X_t`` of a Gaussian random walk after ``t`` steps is
 ```math
@@ -28,11 +28,11 @@ where the random variables ``(Y_k)_{k\geq 1}`` are independent and identically d
 ```math
 M_t = \max \{\sum_{t=1}^{t^\prime} \xi_t : t^\prime \leq t\} \ \text{with} \ \xi_t \sim N(0,1).
 ```
-We insist that the user of this library _must write a function that takes no inputs_. This function should be, in a way, a hardcoded function that when you call, it produces an array with a certain user pre-determined characteristics.
+We insist that the user of this package _must write a function that takes no inputs_. This function should be, in a way, a hard-coded function that when you call, it produces an array with a certain user pre-determined characteristics.
 
-The above two processes in our library are in 4 stages and therefore can be used with a scenario tree or a scenario lattice with 4 stages. As already stated, the stages in a scenario tree or a scenario lattice starts from `0` to `T`. Each of these processes generates samples with a common starting point since a stochastic process has a deterministic starting value and the rest of the values are random.
+The above two processes in our package are in 4 stages and therefore can be used with a scenario tree or a scenario lattice with 4 stages. As already stated, the stages in a scenario tree or a scenario lattice starts from `0` to `T`. Each of these processes generates samples with a common starting point since a stochastic process has a deterministic starting value and the rest of the values are random.
 
-It is important to create a function that generates samples that are dependent on each other in `d` dimension. Most stochastic processes have states which depends on each other and so it is always important to consider dependency of the samples generated by the stochadtic function.
+It is important to create a function that generates samples that are dependent on each other in `d` dimension. Most stochastic processes have states which depends on each other and so it is always important to consider dependency of the samples generated by the stochastic function.
 
 The following shows sample trajectories of our example functions above:
 
@@ -82,14 +82,14 @@ julia> path()
 
 ### Notes
 
-1. The user of this library must provide this function.
+1. The user of this package must provide this function.
 2. The function must take no inputs. This is so important for the stochastic approximation algorithm.
 3. The length of an array produced by the function must be equal to the number of stages in the scenario tree or the scenario lattice.
 4. The dimension of the array produced must be the same as the dimension of the states of the scenario tree or scenario lattice.
 5. The array should have a common deterministic starting point or be in a certain range of values.
 6. The array produced should be a `Nxd Array{Float64,2}` where `N` is the number of stages and `d` is the dimension. This is important for the stochastic approximation process.
-7. In higher dimension, dpending on the user, the arrays could be dependent on each other.
+7. In higher dimension, depending on the user, the arrays could be dependent on each other.
 
-Upto this point, the user can now create a random scenario tree and look at its characteristics as well as write a process function that generates trajectories for the stochastic approximation process. It is important to write a function that follows the above criterion as this becomes very important in the stochastic approximation process.
+Up to this point, the user can now create a random scenario tree and look at its characteristics as well as write a process function that generates trajectories for the stochastic approximation process. It is important to write a function that follows the above criterion as this becomes very important in the stochastic approximation process.
 
 Having looked on the scenario trees, scenario lattices and stochastic processes, we are now ready to have a look on the stochastic approximation process. This is in our next tutorial.

@@ -4,7 +4,7 @@ CurrentModule = ScenTrees
 
 # Introduction
 
-A stochastic program is a mathematical program that involves some uncertain data. These parameters may be mostly accurately described by random variables. In most cases, it is difficult to optimize directly in terms of the distributions of these random variabls. Hence, in most cases, these distributions are approximated by discrete distributions with a finite number of scenarios for the random variables. This discretization procedure is what is oftedn called `scenario generation`. Uncertainty in long-term capacity planning is inescapable. The random parameters can be concieved to follow a multistage stochastic process over some time space so that the discrete scenarios represent sample paths. The approach we take is to form an approximation of the original stochastic process by discretization. 
+A stochastic program is a mathematical program that involves some uncertain data. These parameters may be mostly accurately described by random variables. In most cases, it is difficult to optimize directly in terms of the distributions of these random variabls. Hence, in most cases, these distributions are approximated by discrete distributions with a finite number of scenarios for the random variables. This discretization procedure is what is often called `scenario generation`. Uncertainty in long-term capacity planning is inescapable. The random parameters can be conceived to follow a multistage stochastic process over some time space so that the discrete scenarios represent sample paths. The approach we take is to form an approximation of the original stochastic process by discretization.
 
 In multistage stochastic optimization, we are interested in approximations of stochastic processes by finite structures. These processes are random and they have uncertain scenarios and a decision maker needs to make decisions at different stages of the process. It is useful to depict the possible sequences of data for this processes in form of a `scenario tree` in the case of a discrete time stochastic process and a `scenario lattice` for Markovian data processes.
 
@@ -14,7 +14,11 @@ A scenario tree/lattice is organized in levels which corresponds to stages ``1,\
 
 ## Goal
 
-The goal  of `ScenTrees.jl` is to generate a valuated probability scenario tree or a scenario lattice which represents the stochastic process in the best way possible using the stochastic approximation algorithm. These processes are random and represent uncertainty at a particular state and at a certain point in time.   
+We model stochastic processes by scenario trees and scenario lattices. The distributions of these processes may be continuous and involves parameters that are uncertain.
+
+The goal  of `ScenTrees.jl` is to approximate the distributions of these stochastic processes by discrete distributions with finite number of scenarios of the random variables. We generate a valuated probability scenario tree or a scenario lattice which represents the stochastic process in the best way possible using the stochastic approximation algorithm. These processes are random and represent uncertainty at a particular state and at a certain point in time.  
+
+These approximations should be tractable, which is small enough to allow for reasonable calculation times, but is large enough to capture the important features of the problem. 
 
 ### Example
 
@@ -22,7 +26,7 @@ Consider a Gaussian random walk in 5 stages. The starting value of this process 
 
 ![100 sample paths from Gaussian random walk](../assets/100GaussianPaths.png)
 
-Using those paths, we generate and improve a scenario tree or a scenario lattice. The number of iterations for the algorithm equals the number of sample paths that we want to generate from the stochastic process and the number of stages in the stochastic process equals the number of stages in the scenario tree or the scenario lattice. 
+Using those paths, we generate and improve a scenario tree or a scenario lattice. The number of iterations for the algorithm equals the number of sample paths that we want to generate from the stochastic process and the number of stages in the stochastic process equals the number of stages in the scenario tree or the scenario lattice.
 
 There are a lot of different branching structures that the user can choose for a tree that represents this stochastic process. The branching structure shows how many branches each node in the tree has at each stage of the tree. For example, we can use a branching structure of `1x2x2x2x2` for the scenario tree. This means that each node in the tree has two children. Basically, this is a `binary tree`. Using this branching structure, we obtain the following valuated probability tree that represents the above stochastic process:
 
@@ -48,7 +52,7 @@ A scenario tree is described by the following:
 
 1. Name of the tree
 2. Parents of the nodes in the tree
-3. Children of the parents in the tree 
+3. Children of the parents in the tree
 4. States of the nodes in the tree
 5. Probabilities of transition from one node to another.
 
@@ -59,10 +63,10 @@ julia> Pkg.add("https://github.com/kirui93/ScenTrees.jl.git")
 julia> using ScenTrees
 julia> methods(Tree)
 # 4 methods for generic function "(::Type)":
-[1] Tree(name::String, parent::Array{Int64,1}, children::Array{Array{Int64,1},1}, state::Array{Float64,2}, probability::Array{Float64,2}) 
-[2] Tree(identifier::Int64) 
-[3] Tree(spec::Array{Int64,1}) 
-[4] Tree(spec::Array{Int64,1}, dimension) 
+[1] Tree(name::String, parent::Array{Int64,1}, children::Array{Array{Int64,1},1}, state::Array{Float64,2}, probability::Array{Float64,2})
+[2] Tree(identifier::Int64)
+[3] Tree(spec::Array{Int64,1})
+[4] Tree(spec::Array{Int64,1}, dimension)
 ```
 All the methods correspond to the way you can create a scenario tree. For the first method, the length of states must be equal to the length of the probabilities. In the 2nd method, you can call any of our predefined trees by just calling on the identifier (these identifiers are `0,301,302,303,304,305,306,307,401,402,4022,404,405`). And finaly the most important methods are the 3rd and 4th method. If you know the branching structure of your scenario tree, then you can create an non-optimal starting tree using it. If you don't state the dimension you ae working on, then it is defaulted into `1`. For example, `Tree([1,2,2,2,2])` creates a binary tree with states of dimension one as in Figure 1 above
 
@@ -84,22 +88,28 @@ julia> methods(Lattice)
 ```
 This method is not very important becasue we only need it to produce the results of the lattice approximation process. We will see later that for lattice approximation, we need the branching structure and so the structure of the lattice is not very important as in the case of a scenario tree.
 
-## Usage
-Since we have the basics of the scenario tree and the scenario lattice and since we created `ScenTrees.jl` with an intention of being user-friendly, we will give an example of its usage and explain each part of it. 
-In the module of `ScenTrees.jl`, we have all the exported functions that are visible to the user i.e., that are public, and the user can call these functions depending on what he/she wants to achieve with this library
+## Exported functions
 
-```julia
-module ScenTrees
-.......... # scripts here
-  
-  export TreeApproximation!, LatticeApproximation,Tree,Lattice,nodes,stage,height,leaves,
-        root,partTree,buildProb!,treeplot,plotD,PlotLattice,bushinessNesDistance,
-        GaussianSamplePath1D,GaussianSamplePath2D,RunningMaximum1D,RunningMaximum2D,path,
-        LogisticKernel,KernelScenarios
-end
-```
-The most important functions in this module are `TreeApproximation!()` and `LatticeApproximation()` since these are the two functions which are used to approximate scenario trees and scenario lattices respectively. The other important function is the `Tree(BranchingStructure,dimension)` function which gives the basic starting structure of a scenario tree.
+Since we have the basics of the scenario tree and the scenario lattice and since we created `ScenTrees.jl` with an intention of being user-friendly, we present the exported functions that are visible to the user i.e., that are public, and the user can call these functions depending on what he/she wants to achieve with this package:
 
-All of the above functions have been documented in their respective scripts and the user can find out what each function does by putting a `?` before the function. For example, `?leaves` will give an explanation of what the function `leaves` does. 
+      * TreeApproximation!
+      * LatticeApproximation,
+      * Tree (associated are: nodes, height, leaves, root, partTree, buildProb!)
+      * Lattice,
+      * treeplot, plotD and PlotLattice,
+      * bushinessNesDistance,
+      * GaussianSamplePath1D,
+      * GaussianSamplePath2D,
+      * RunningMaximum1D,
+      * RunningMaximum2D,
+      * path,
+      * LogisticKernel, and,
+      * KernelScenarios
 
-In the upcoming tutorials, we will have a look in detail on the functionalities of the main functions of this library.
+- The most important functions in this module are `TreeApproximation!()` and `LatticeApproximation()` since these are the two functions which are used to approximate scenario trees and scenario lattices respectively.
+
+- The other important function is the `Tree(BranchingStructure,dimension)` function which gives the basic starting structure of a scenario tree.
+
+All of the above functions have been documented in their respective scripts and the user can find out what each function does by putting a `?` before the function. For example, `?leaves` will give an explanation of what the function `leaves` does.
+
+In the upcoming tutorials, we will have a look in detail on the functionalities of the main functions of this package.

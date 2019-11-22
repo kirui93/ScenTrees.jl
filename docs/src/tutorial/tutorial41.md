@@ -48,7 +48,7 @@ The new sample path ``\mathbf{\tilde{\xi_T}}`` is what we will feed in the stoch
 
 ## Implementation of the above process
 
-The above process is implemented in our library in `KernelDensityEstimation.jl`.In this script, we use the concept of function closures which we assume that the user of this library is aware of. The user is required to provide a data in 2 dimension, i.e., a matrix of Float64 or Int64, to this function and also the distribution of the kernel that he/she wants to use. The default kernel distribution is the Logistic kernel. The kernel distribution should conform to the distributions stated in [Distributions.jl](https://github.com/JuliaStats/Distributions.jl) library.
+The above process is implemented in our package in `KernelDensityEstimation.jl`.In this script, we use the concept of function closures which we assume that the user of this package is aware of. The user is required to provide a data in 2 dimension, i.e., a matrix of Float64 or Int64, to this function and also the distribution of the kernel that he/she wants to use. The default kernel distribution is the Logistic kernel. The kernel distribution should conform to the distributions stated in [Distributions.jl](https://github.com/JuliaStats/Distributions.jl) package.
 
 Most of the times when you load the data into Julia, it recognizes it as a `DataFrame` type. But we have wrote the function in a manner that the user should provide a Matrix of either floats or integers. In the following procedure, we use the function `Matrix` to convert the loaded dataframe into a matrix which is the right type of input into the function.
 
@@ -59,7 +59,7 @@ Since `TreeApproximation!` and `LatticeApproximation` function needs a process f
 To confirm the above statement, consider a ``1000x5`` dimsneional data from random walk. What is important to be said is that we use the package [`CSV`.jl](https://github.com/JuliaData/CSV.jl) to read the data into Julia and since we need the data in matrix form, we use the function `Matrix` from the package [`DataFrames.jl`](https://github.com/JuliaData/DataFrames.jl) to convert the dataframe into an array in two dimension which is then the input of our function.
 
 ```julia
-julia> using ScenTrees, CSV
+julia> using ScenTrees, CSV, Distributions
 julia> data = CSV.read(".../RandomDataWalk.csv")
 julia> Rdw = Matrix(data)
 julia> Kdt = KernelScenarios(Rwd,Logistic;Markovian=true)
