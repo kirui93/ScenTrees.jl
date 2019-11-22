@@ -1,25 +1,14 @@
 using Documenter, ScenTrees
 
+const ASSETS = readdir(joinpath(@__DIR__, "src", "assets"))
+
 makedocs(
 	sitename =  "ScenTrees.jl",
 	authors = "Kipngeno Kirui",
 	clean = true,
 	doctest = true,
 	format = Documenter.HTML(
-		assets = ["Tree402.png",
-		          "Tree4022.png",
-			  "Tree40221.png",
-			  "Tree40222.png",
-			  "example1.png",
-			  "example21.png",
-			  "example22.png",
-		          "treeapprox1.png",
-		          "treeapprox2D.png",
-		          "ExampleLattice2.png",
-		          "LatticeApprox.png",
-			  "diffHeights.png",
-			  "KernLattice.png"
-		          ],
+		assets = ASSETS,
 		prettyurls = get(ENV, "CI", nothing) == "true"),
 	pages = ["Home" => "index.md",
 		"Tutorials" => Any["tutorial/tutorial1.md",
