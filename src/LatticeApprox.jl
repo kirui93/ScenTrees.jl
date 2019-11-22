@@ -47,7 +47,7 @@ function LatticeApproximation(states::Array{Int64,1},path::Function,nScenarios::
         WassersteinDistance = (WassersteinDistance*(n-1) + dist^rWasserstein)/n
     end                                             
     LatProb = LatProb ./ nScenarios						                # scale the probabilities to 1.0
-    return Lattice("Lattice Approximation of $states, \n distance=$(round(WassersteinDistance^(1/rWasserstein),digits = 4)/sqrt(nScenarios)) at $(nScenarios) scenarios",LatState,LatProb)
+    return Lattice("Lattice Approximation of $states, \n distance=$(round((WassersteinDistance^(1/rWasserstein))/sqrt(nScenarios),digits = 4)) at $(nScenarios) scenarios",LatState,LatProb)
 end
 
 """
@@ -82,9 +82,9 @@ function PlotLattice(lt::Lattice,fig = 1)
 # Use the states and probabilites at the last stage to plot the marginal distribution
     stts = lt.state[end]   
     n = length(stts)                                    # length of leaves of the lattice.
-    h = 1.05*std(stts)/ (n^0.2) + 1e-3                  #Silverman rule of thumb
-    lts.set_ylim(minimum(minimum.(lt.state)), maximum(maximum.(lt.state)))
-    prs.set_ylim(minimum(minimum.(lt.state)), maximum(maximum.(lt.state)))
+    h = 1.05*std(stts)/ (n^0.1) + eps()                  #Silverman rule of thumb
+    lts.set_ylim(minimum(stts)-0.2*h, maximum(stts)+0.2*h)
+    prs.set_ylim(minimum(stts)-1.3*h, maximum(stts)+1.3*h)
     proba = sum(lt.probability[end],dims=1)
     yticks(())                                          #remove the ticks on probability plot
     t = LinRange(minimum(stts)-h, maximum(stts)+h, 100) #100 points on probability plot
