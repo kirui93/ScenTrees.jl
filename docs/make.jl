@@ -1,6 +1,6 @@
 using Documenter, ScenTrees
 
-const ASSETS = readdir(joinpath(@__DIR__, "src", "assets"))
+#const ASSETS = readdir(joinpath(@__DIR__, "src", "assets"))
 
 makedocs(
 	sitename =  "ScenTrees.jl",
@@ -8,7 +8,7 @@ makedocs(
 	clean = true,
 	doctest = true,
 	format = Documenter.HTML(
-		assets = ASSETS,
+		#assets = ASSETS,
 		prettyurls = get(ENV, "CI", nothing) == "true"),
 	pages = ["Home" => "index.md",
 		"Tutorials" => Any["tutorial/tutorial1.md",
