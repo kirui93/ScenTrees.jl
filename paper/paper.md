@@ -1,5 +1,5 @@
 ---
-title: 'ScenTrees.jl: A Julia Library for Generating Scenario Trees and Scenario Lattices
+title: 'ScenTrees.jl: A Julia Package for Generating Scenario Trees and Scenario Lattices
   for Multistage Stochastic Programming'
 tags:
   - Multistage Stochastic Programming
@@ -20,7 +20,7 @@ affiliations:
   - name: University of Technology, Chemnitz, Germany
     index: 1
   - name: University of Vienna
-    index: 2 
+    index: 2
 date: 5 November, 2019
 bibliography: paper.bib
 ---
@@ -37,9 +37,9 @@ Generally, we consider a stochastic process $X$ over a discrete time, i.e., $X =
 
 A scenario tree is a set of nodes and branches used in models of decision making under uncertainty. Every node in a scenario tree represents a possible state of the stochastic process at a particular point in time and a position where a decision can be made. Each scenario tree node has only a single predecessor, but can have multiple successors. This makes the difference with scenario lattices since nodes of scenario lattices can have multiple predecessors. A scenario tree is organized in levels which corresponds to stages $(0,1,\ldots,T)$. Each node in a stage has a specified number of predecessors as defined by the branching structure of the scenario tree. An edge from a node indicates a possible realization of the uncertain variables from that state. The first node of a scenario tree is called the root node and the set of nodes in the last stage are called the leaves. Any possible path from the root node to any of the leaf nodes is called a `trajectory` (also called a `path` or a `scenario`).
 
-`ScenTrees.jl` is a Julia [@JULIA2019] library for generating scenario trees and scenario lattices which can be used, for example, for multistage stochastic optimization problems. The theory and design of the `ScenTrees.jl` library follows Algorithm 5 in @PflugPichlerDynScenarioGen. The library's design allows us to obtain a fast code with high flexibility and excellent computational efficiency. The design choices were highly motivated by the properties of the Julia [@julia] language. It starts with a tree which is a qualified quess by the user or an expert opinion and iterates over the nodes of the tree updating them with scenarios drawn from a user-defined distribution. In this way, the approximating quality of the tree is improved for each scenario generated. The iteration stops when the predefined number of scenarios have been performed.
+`ScenTrees.jl` is a Julia [@JULIA2019] package for generating scenario trees and scenario lattices which can be used, for example, for multistage stochastic optimization problems. The theory and design of the `ScenTrees.jl` package follows Algorithm 5 in @PflugPichlerDynScenarioGen. The package's design allows us to obtain a fast code with high flexibility and excellent computational efficiency. The design choices were highly motivated by the properties of the Julia [@julia] language. It starts with a tree which is a qualified guess by the user or an expert opinion and iterates over the nodes of the tree updating them with scenarios drawn from a user-defined distribution. In this way, the approximating quality of the tree is improved for each scenario generated. The iteration stops when the predefined number of scenarios have been performed.
 
-# Main features of the library
+# Main features of the package
 
 The stochastic approximation framework allows ``ScenTrees.jl`` to be generally applicable to any stochastic process to be approximated. The following are key features that ``ScenTrees.jl`` provides. Implementation details and examples of usage can be found in the software's documentation.^[Documentation: https://kirui93.github.io/ScenTrees.jl/latest]
 
@@ -49,10 +49,10 @@ The stochastic approximation framework allows ``ScenTrees.jl`` to be generally a
 
 # Example: Scenario generation from observed trajectories
 
-We want to use the concept of density estimation and stochastic approximation to generate scenario trees and scenario lattices for a $(1000\times 5)$ dimensional data. The first step is to load the library and the data into Julia as follows:
+We want to use the concept of density estimation and stochastic approximation to generate scenario trees and scenario lattices for a $(1000\times 5)$ dimensional data. The first step is to load the package and the data into Julia as follows:
 
 ```julia
-# Load the library
+# Load the package
 julia> using ScenTrees
 # Load the CSV data from a directory
 julia> df = CSV.read("../RData.csv");
