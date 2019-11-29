@@ -27,9 +27,7 @@ bibliography: paper.bib
 
 # Summary
 
-In multistage stochastic optimization we are interested in decision making under uncertainty. In this setting, stochastic processes have random and uncertain outcomes and decisions must be made at different stages of the process. It is generally intractable to solve mathematical programs with uncertain parameters described by an underlying probability distribution. The common approach is to form an approximation of the original stochastic process or underlying distribution by discretization. The procedure of discretizing a stochastic process is called `scenario tree generation`. We depict the possible sequences of data for this processes in form of a `scenario tree` in the case of a discrete time stochastic process and a ``scenario lattice`` for Markov processes.
-
-Since the paper of @Hoyland2001, scenario tree generation has been used to solve various multistage stochastic problems in the industry and academia. Various authors including @Pflug2001, @KovacevicPichler and @PflugPichler2016 have come up to add and improve various ideas into the process of generating scenario trees. However, there is no fast and open-source implementation of the algorithm that has been available in the public domain for various users to appreciate. Instead, various researchers and industries have been forced to code their own implementations in a variety of languages they like themselves. This has limited many researchers and industries who would not like to code themselves from generating scenario trees with available implementations. Many researchers and industries also would not get the taste of comparing ideas against their own implementations and hence they may end up trusting their own results and implementations and maybe there is a better implementation.
+In multistage stochastic optimization we are also interested in decision making under uncertainty. In general, stochastic processes have random and uncertain outcomes and decisions must be made at different stages of the process. Sometimes, it is generally intractable to solve mathematical programs with uncertain parameters described by an underlying probability distribution. For algorithmic treatment, such programs should be approximated by simpler ones, in the same manner as functions are represented as vectors on finite grids on digital computers. The approximation procedure is through discretization. The procedure of discretizing a stochastic process is called `scenario generation`. We depict the possible sequences of data for this processes in form of a `scenario tree` in the case of a discrete time stochastic process and a ``scenario lattice`` for Markov processes.
 
 The natural question when dealing with scenario generation for multistage stochastic optimization problems is how to approximate a continuous distribution of the stochastic process in such a way that the distance between the initial distribution and its approximation is minimized. We start with an initial scenario tree and use stochastic approximation to improve the values on the nodes of the tree. To quantify the quality of the approximation, we use process distance between the original process and the optimal scenario tree [@Pflug2009]. Process distance extends and generalizes the Wasserstein distance to stochastic processes. It was analyzed by @PflugPichler2011 and used by @KovacevicPichler directly to generate scenario trees.
 
@@ -41,11 +39,13 @@ A scenario tree is a set of nodes and branches used in models of decision making
 
 # Main features of the package
 
-The stochastic approximation framework allows ``ScenTrees.jl`` to be generally applicable to any stochastic process to be approximated. The following are key features that ``ScenTrees.jl`` provides. Implementation details and examples of usage can be found in the software's documentation.^[Documentation: https://kirui93.github.io/ScenTrees.jl/latest]
+``ScenTrees.jl`` is applicable to any type of stochastic process. The key features of the package are:
 
 1. `Generation of scenario trees and scenario lattices from stochastic processes using the stochastic approximation algorithm`: Here, the structure of the scenario tree or the scenario lattice is fixed in terms of the branching vector then stochastic approximation is used to improve the states of the nodes considering all the data available for every approximation. This improvement goes on until a pre-specified number of iterations have been performed and then the process distance is calculated.^[Tutorial4: https://kirui93.github.io/ScenTrees.jl/latest/tutorial/tutorial4/]
 
 2. `Generation of scenarios based on data`: Here we have data from some observed trajectories of a scenario process with an unknown distribution and we employ conditional density estimation to generate new but different samples based on these trajectories. The new samples can then be used to generate scenario trees or scenario lattices using the stochastic approximation procedure as outlined in 1 above.^[Tutorial41: https://kirui93.github.io/ScenTrees.jl/latest/tutorial/tutorial41/]
+
+Implementation details and examples of usage can be found in the software's documentation.^[Documentation: https://kirui93.github.io/ScenTrees.jl/latest]
 
 # Example: Scenario generation from observed trajectories
 
@@ -66,7 +66,7 @@ julia> Example = KernelScenarios(data, Logistic; Markovian=false)()
 ```
 The generated data has a length equal to the number of columns of the original data. These generated trajectories are the ones we use to approximate a scenario tree and a scenario lattice in the following subsections.
 
-## Approximating with a scenario tree
+## Approximation with scenario tree
 
 Consider a scenario tree with a branching vector $[1,3,3,3,2]$. We approximate this process using $1,000,000$ iterations as follows:
 ```julia
@@ -80,7 +80,7 @@ julia> savefig("ApproxTree.pdf")
 
 The number of possible trajectories in the scenario tree equals its number of leaves. In the above scenario tree, there are $54$ possible trajectories as the number of leaves is $(1\times3\times3\times3\times2) = 54$. The algorithm returns the multistage distance between the above scenario tree and the original stochastic process as $d=0.23092$.
 
-## Approximating with a scenario lattice
+## Approximation with scenario lattice
 
 Consider a scenario lattice with a branching vector $(1,3,4,5,6)$. Clearly, this scenario lattice has $5$ stages as shown by the number of elements in the branching vector, which is equal to number of columns in the data. We consider $1,000,000$ iterations for the stochastic approximation algorithm.
 
