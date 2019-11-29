@@ -33,9 +33,9 @@ The cumulative sum of weights leads to a high probability of picking a data path
 
 The value of the data ``\xi_t`` is obtained by setting the value at stage ``t`` to
 ```math
-\xi_t = X_{j^{\star,t}} + \text{rand}_{k_{h_N}}
+\xi_t = X_{j^{\star}} + h_N \times \text{rand}_{k()}
 ```
-where ``\text{rand}_{k_{h_N}}`` is a random value sampled from the kernel estimator using the composition method.
+where ``\text{rand}_{k()}`` is a random value sampled from the kernel estimator.
 
 The generated data point is according to the distribution of the density at the current stage and dependent on the history of all the data points. It has been shown that the choice of the kernel does not have an important effect on density estimation. Hence, we employ the following logistic kernel as default: ``k(x) = \frac{1}{(e^x + e^{-x})^2}.``
 
