@@ -12,17 +12,11 @@ Every stochastic approximation iteration modifies one path within the tree towar
 The stochastic approximation process is outlined as follows:
 
 1. Decide on the branching structure of the tree/ lattice,
-
 2. Start with a tree/lattice (which is more of a qualified guess) with the stated branching structure,
-
 3. Generate one sample from a particular known distribution with the same length and dimension as the states of the nodes of the tree/lattice.
-
 4. The algorithm finds a sequence of nodes in the tree where the distance between the states of those nodes and the generated sample is minimal. The algorithm then updates the states of those nodes with the values in the generated sample. The states of other nodes remains unchanged.
-
 5. At every iteration of the algorithm, the multistage distance is calculated.
-
 6. When done with the states of the nodes of the tree, the algorithm calculates the conditional probabilities to reach each node in the tree. At the end, the sum of the conditional probabilities to reach each node of the same parent must add up to 1.
-
 7. The algorithm stops when all the number of iterations have been performed.
 
 !!! warning
@@ -35,15 +29,11 @@ The stochastic approximation process is outlined as follows:
 
 In this package, we have the function `TreeApproximation!(Tree(BranchingStructure,dimension),Function,NumberOfIterations,2,2)` which does the stochastic approximation process for scenario trees. This function takes the following inputs:
 
-  - Tree (which takes the branching structure and dimension and inputs)
-
-  - Name of the function that generates samples
-
-  - Number of iterations
-
-  - Choice `d` of the norm (Example: `max=0,sum=1,Euclidean=2`(default))
-
-  - Choice `r` for the Wasserstein distance (`r=2`(default))
+- Tree (which takes the branching structure and dimension and inputs)
+- Name of the function that generates samples
+- Number of iterations
+- Choice `d` of the norm (Example: `max=0,sum=1,Euclidean=2`(default))
+- Choice `r` for the Wasserstein distance (`r=2`(default))
 
 Given the above inputs, the function does the stochastic approximation process and returns a valuated scenario tree.
 
@@ -108,11 +98,11 @@ Each of these scenario trees have a multistage distance of `0.25142` from the or
 
 As mentioned before, some of the process that you may want to approximate are Markovian data processes. These processes can only be approximated by a scenario lattice. All the nodes in the same stage in a lattice have the same children nodes.
 
-To approximate a Markovian data process, we use the function `LatticeApproximation(BranchingStructure,Function,NoOfIterations)`. The following are the description of the inputs of the funtion:
+To approximate a Markovian data process, we use the function `LatticeApproximation(BranchingStructure,Function,NoOfIterations)`. The following are the description of the inputs of the function:
 
-  - Branching structure of the scenario lattice,
-  - Function that generates samples and,
-  - Number of iterations to be performed,
+- Branching structure of the scenario lattice,
+- Function that generates samples and,
+- Number of iterations to be performed,
 
 Lattice Approximation follows the same stochastic approximation process as for the scenario tree. The only difference is that, in each stage of a lattice, we find the closest lattice entry and use the sample generated to improve it. At the beginning, the lattice is not stable but with more and more iterations, the scenario lattice converges in probability and the resulting lattice can then be used for decision making process.
 
@@ -152,4 +142,4 @@ The above approximation gives the following output:
 You can see that in the scenario lattice, we have many possibilities than in a scenario tree. This shows generally that scenario lattices with half the number of nodes of a scenario tree have more number of scenarios or trajectories. A scenario lattice does not allow to trace back the history of a given scenario based on its ending node as there are many possible paths at that node. This is the main reason why we consider scenario lattices for Markovian processes
 
 !!! info
-  Currently, lattice approximation can only work for 1 dimension. It is in our working plan to generalize and extend this lattice approximation to any dimension of the states of the scenario lattice.
+    Currently, lattice approximation can only work for 1 dimension. It is in our working plan to generalize and extend this lattice approximation to any dimension of the states of the scenario lattice.

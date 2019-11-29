@@ -15,10 +15,9 @@ end
 Returns an approximated lattice according to the samples from the `path` provided to. The function `path` generates one sample from a known distribution with length
 equal to the length of states of the lattice.
 """
-
 function LatticeApproximation(states::Array{Int64,1},path::Function,nScenarios::Int64)
     WassersteinDistance = 0.0
-    rWasserstein = 2	
+    rWasserstein = 2
     lns = length(states)
     LatState = [zeros(states[j],1) for j = 1:lns]                    # States of the lattice at each time t
     BegPath = path()
@@ -45,16 +44,16 @@ function LatticeApproximation(states::Array{Int64,1},path::Function,nScenarios::
         end
         dist = dist^(1/2)
         WassersteinDistance = (WassersteinDistance*(n-1) + dist^rWasserstein)/n
-    end                                             
+    end
     LatProb = LatProb ./ nScenarios						                # scale the probabilities to 1.0
     return Lattice("Lattice Approximation of $states, \n distance=$(round((WassersteinDistance^(1/rWasserstein))/sqrt(nScenarios),digits = 4)) at $(nScenarios) scenarios",LatState,LatProb)
 end
 
 """
-	PlotLattice(lt::Lattice)
+	PlotLattice(lt::Lattice,fig=1)
 
-Returns a plot of a lattice. The arguments is only a lattice.
-"""					
+Returns a plot of a lattice.
+"""
 function PlotLattice(lt::Lattice,fig = 1)
     if !isempty(fig)
         figure(figsize=(10,6))
@@ -80,7 +79,7 @@ function PlotLattice(lt::Lattice,fig = 1)
     prs.spines["left"].set_visible(false)
     prs.spines["right"].set_visible(false)
 # Use the states and probabilites at the last stage to plot the marginal distribution
-    stts = lt.state[end]   
+    stts = lt.state[end]
     n = length(stts)                                    # length of leaves of the lattice.
     h = 1.05*std(stts)/ (n^0.1) + eps()                  #Silverman rule of thumb
     lts.set_ylim(minimum(stts)-0.2*h, maximum(stts)+0.2*h)

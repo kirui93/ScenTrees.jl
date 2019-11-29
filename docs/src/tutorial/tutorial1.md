@@ -4,7 +4,7 @@ CurrentModule = ScenTrees
 
 # Introduction
 
-A stochastic program is a mathematical program that involves some uncertain data. These parameters may be mostly accurately described by random variables. In most cases, it is difficult to optimize directly in terms of the distributions of these random variabls. Hence, in most cases, these distributions are approximated by discrete distributions with a finite number of scenarios for the random variables. This discretization procedure is what is often called `scenario generation`. Uncertainty in long-term capacity planning is inescapable. The random parameters can be conceived to follow a multistage stochastic process over some time space so that the discrete scenarios represent sample paths. The approach we take is to form an approximation of the original stochastic process by discretization.
+A stochastic program is a mathematical program that involves some uncertain data. These parameters may be mostly accurately described by random variables. In most cases, it is difficult to optimize directly in terms of the distributions of these random variables. Hence, in most cases, these distributions are approximated by discrete distributions with a finite number of scenarios for the random variables. This discretization procedure is what is often called `scenario generation`. Uncertainty in long-term capacity planning is inescapable. The random parameters can be conceived to follow a multistage stochastic process over some time space so that the discrete scenarios represent sample paths. The approach we take is to form an approximation of the original stochastic process by discretization.
 
 In multistage stochastic optimization, we are interested in approximations of stochastic processes by finite structures. These processes are random and they have uncertain scenarios and a decision maker needs to make decisions at different stages of the process. It is useful to depict the possible sequences of data for this processes in form of a `scenario tree` in the case of a discrete time stochastic process and a `scenario lattice` for Markovian data processes.
 
@@ -18,7 +18,7 @@ We model stochastic processes by scenario trees and scenario lattices. The distr
 
 The goal  of `ScenTrees.jl` is to approximate the distributions of these stochastic processes by discrete distributions with finite number of scenarios of the random variables. We generate a valuated probability scenario tree or a scenario lattice which represents the stochastic process in the best way possible using the stochastic approximation algorithm. These processes are random and represent uncertainty at a particular state and at a certain point in time.  
 
-These approximations should be tractable, which is small enough to allow for reasonable calculation times, but is large enough to capture the important features of the problem. 
+These approximations should be tractable, which is small enough to allow for reasonable calculation times, but is large enough to capture the important features of the problem.
 
 ### Example
 
@@ -36,13 +36,13 @@ There are a lot of different branching structures that the user can choose for a
 
 The above tree is optimal and therefore can be used by a decision maker for a decision making process depending on the type of problem he/she is handling.
 
-To measure the quality of the approximation, we use the concept of multistage distance between the stochastic process and the scanario tree or lattice.
+To measure the quality of the approximation, we use the concept of multistage distance between the stochastic process and the scenario tree or lattice.
 
 ### Multistage distance
 
-To measure the distance of stochastic processes, it is not sufficient to only consider the distance between thier laws. It is also important to consider the information accumulated over time i.e., what the filtrations has to tell us over time. The Wasserstein distance do not correctly separate stochastic processes having different filtrations. It ignores filtrations and hence does not distinguish stochastic processes.
+To measure the distance of stochastic processes, it is not sufficient to only consider the distance between their laws. It is also important to consider the information accumulated over time i.e., what the filtration has to tell us over time. The Wasserstein distance do not correctly separate stochastic processes having different filtration. It ignores filtration and hence does not distinguish stochastic processes. Multistage distance is also called the `process distance` or `nested distance`.
 
-Multistage distance was introduced by [Georg Ch. Pflug (2009)](https://doi.org/10.1137/080718401). It turns out that this distance is very important to measure the distence between multistage stochastic processes as it incorporates filtrations introduced by the processes. We use this distance in our algorithm to measure the quality of approximation of the scenario tree. Generally, a scenario tree with a minimal distance to the stochastic process is consider to have a better quality approximation.
+Multistage distance was introduced by [Georg Ch. Pflug (2009)](https://doi.org/10.1137/080718401). It turns out that this distance is very important to measure the distance between multistage stochastic processes as it incorporates filtration introduced by the processes. We use this distance in our algorithm to measure the quality of approximation of the scenario tree. Generally, a scenario tree with a minimal distance to the stochastic process is consider to have a better quality approximation.
 
 The distance between the above scenario tree and the original process is `0.0894`. This shows that the scenario tree above approximates the stochastic process well. This tree can therefore be used for decision making under uncertainty.
 
@@ -56,10 +56,10 @@ A scenario tree is described by the following:
 4. States of the nodes in the tree
 5. Probabilities of transition from one node to another.
 
-A scenario tree is a mutable struct of type `Tree()`. To create a non-optimal scenario tree, we need to fix the branching structure and the dimension of the states of nodes you are wroking on. This typs `Tree()` has different methods:
+A scenario tree is a mutable struct of type `Tree()`. To create a non-optimal scenario tree, we need to fix the branching structure and the dimension of the states of nodes you are working on. The type `Tree()` has different methods:
 ```julia
 julia> using Pkg
-julia> Pkg.add("https://github.com/kirui93/ScenTrees.jl.git")
+julia> Pkg.add("ScenTrees")
 julia> using ScenTrees
 julia> methods(Tree)
 # 4 methods for generic function "(::Type)":
@@ -68,7 +68,7 @@ julia> methods(Tree)
 [3] Tree(spec::Array{Int64,1})
 [4] Tree(spec::Array{Int64,1}, dimension)
 ```
-All the methods correspond to the way you can create a scenario tree. For the first method, the length of states must be equal to the length of the probabilities. In the 2nd method, you can call any of our predefined trees by just calling on the identifier (these identifiers are `0,301,302,303,304,305,306,307,401,402,4022,404,405`). And finaly the most important methods are the 3rd and 4th method. If you know the branching structure of your scenario tree, then you can create an non-optimal starting tree using it. If you don't state the dimension you ae working on, then it is defaulted into `1`. For example, `Tree([1,2,2,2,2])` creates a binary tree with states of dimension one as in Figure 1 above
+All the methods correspond to the way you can create a scenario tree. For the first method, the length of states must be equal to the length of the probabilities. In the 2nd method, you can call any of our predefined trees by just calling on the identifier (these identifiers are `0,301,302,303,304,305,306,307,401,402,4022,404,405`). And finally the most important methods are the 3rd and 4th method. If you know the branching structure of your scenario tree, then you can create an non-optimal starting tree using it. If you don't state the dimension you are working on, then it is defaulted into `1`. For example, `Tree([1,2,2,2,2])` creates a binary tree with states of dimension one as in Figure 1 above
 
 ## Description of a scenario lattice
 
@@ -86,7 +86,7 @@ julia> methods(Lattice)
  1 method for generic function "(::Type)":
 [1] Lattice(name::String, state::Array{Array{Float64,2},1}, probability::Array{Array{Float64,2},1})
 ```
-This method is not very important becasue we only need it to produce the results of the lattice approximation process. We will see later that for lattice approximation, we need the branching structure and so the structure of the lattice is not very important as in the case of a scenario tree.
+This method is not very important because we only need it to produce the results of the lattice approximation process. We will see later that for lattice approximation, we need the branching structure and so the structure of the lattice is not very important as in the case of a scenario tree.
 
 ## Exported functions
 
@@ -102,8 +102,7 @@ Since we have the basics of the scenario tree and the scenario lattice and since
       * GaussianSamplePath2D,
       * RunningMaximum1D,
       * RunningMaximum2D,
-      * path,
-      * LogisticKernel, and,
+      * path, and,
       * KernelScenarios
 
 - The most important functions in this module are `TreeApproximation!()` and `LatticeApproximation()` since these are the two functions which are used to approximate scenario trees and scenario lattices respectively.

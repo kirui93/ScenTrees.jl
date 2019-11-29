@@ -1,3 +1,4 @@
+using PyPlot
 
 """
     bushinessNesDistance()
@@ -6,9 +7,6 @@ This function returns a plot showing the multistage distance of trees of differe
 The bushiness of the tree is increased with increasing height of the tree and the multistage
 distance is calculated. The result is the plot returned.
 """
-
-using PyPlot
-
 function bushinessNesDistance()
     bushns = [3, 4, 5, 6, 7, 8]
     nstdistance = [ 0.24868 0.16772 0.12339 0.09586 0.07725 0.06408;

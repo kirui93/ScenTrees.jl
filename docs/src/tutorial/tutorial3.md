@@ -24,8 +24,8 @@ In the above scenario lattice, the total number of nodes are ``1+2+3+4+5 = 15`` 
 Some of the characteristics of a scenario lattice are:
 
 1. You will notice that a states and the probabilities of the lattice are of type `Array{Array{Float64,2},1}`. This is because of the fact that the nodes of the lattice can have multiple predecessors.
-2. The number of states in the scenario lattice is equal to the number of nodes. The number of nodes is given by the sum of elements in the braching vector.
-3. Scenario lattices are used for Markovian processes; which are memoryless processes. Therefore, the number of probabilities to reach one node is equal to the number of predecessors of that node.
+2. The number of states in the scenario lattice is equal to the number of nodes. The number of nodes is given by the sum of elements in the branching vector.
+3. Scenario lattices are used for Markovian processes; which are memory-less processes. Therefore, the number of probabilities to reach one node is equal to the number of predecessors of that node.
 4. The sum of all probabilities in each stage equals to one.
 
 ```julia

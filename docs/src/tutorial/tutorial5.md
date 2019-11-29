@@ -61,6 +61,6 @@ The comparison done for this package in Julia 1.0.4 and MATLAB R2019a was done o
 What is more important for testing and development is the processor speed for your machine. Machines with low processors will take longer time to execute the functions than machines with high processors. Hence, depending on the type of processor you have, you may or may not or even pass the computational speed that we achieved for this package.
 
 !!! tip
-  This package is actively developed and new features and improvements are constantly and continuously added. So, before using it, make it an habit to update your packages.
+    This package is actively developed and new features and improvements are constantly and continuously added. So, before using it, make it an habit to update your packages.
 
 This ends our tutorials for using `ScenTrees.jl`. You are now ready to generate scenario trees and scenario lattices depending on what you want to approximate.

@@ -17,9 +17,9 @@ The above tree basically is not optimal since we just randomly fill the states o
 
 ![Non optimal tree in 1D](../assets/example1.png)
 
-The above tree is in 1-state dimension. 
+The above tree is in 1-state dimension.
 
-The foloowing shows the procedure to plot trees in 2 or higher dimension. We will employ the use of the function `partTree()` which partitions the main tree into subtrees of different states. For example, if the main tree is in 2 dimension, this function will return an array with two trees where the only difference is the states of the nodes of the trees. Then, we can plot each of this trees and display. Alternatively, you can use the function `plotD` which plots the trees in any dimension without partition.
+The following shows the procedure to plot trees in 2 or higher dimension. We will employ the use of the function `partTree()` which partitions the main tree into subtrees of different states. For example, if the main tree is in 2 dimension, this function will return an array with two trees where the only difference is the states of the nodes of the trees. Then, we can plot each of this trees and display. Alternatively, you can use the function `plotD` which plots the trees in any dimension without partition.
 
 ```julia
 julia> example2 = Tree([1,2,2],2);
@@ -108,7 +108,11 @@ From the above, it is clear that the sum of the conditional probabilities to rea
 One of the most important things in programming is visualization. In this package, we can plot a scenario tree in 1D with the `treeplot` function and with the `plotD` function for a scenario tree in D dimension.
 
 !!! info
-	You need to install the [PyPlot.jl](https://github.com/JuliaPy/PyPlot.jl) package for this plots.
+    You need to install the [PyPlot.jl](https://github.com/JuliaPy/PyPlot.jl) package for this plots.
+
+!!! warning
+    Matplotlib is required at the moment so that you can be able to do the plots.
+    In the future, we are thinking of changing into a lighter backend for plots.
 
 For example, we can plot a default tree already in the package and then the figure can be saved with the function `savefig`. These trees can be accessed through an identifier which is just a number. These identifiers are `0,301,302,303,304,305,306,307,401,402,4022,404,405`. Therefore, for these examples, you can just access them through their identifier. For example, `Tree(402)` returns tree with the identifier 402 in our examples. You can have a look at these trees and plot them just to get a glimpse on how scenario trees are and then you can also have a look at their characteristics as explained in the above example.
 

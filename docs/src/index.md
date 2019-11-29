@@ -21,7 +21,7 @@ The package `ScenTrees.jl` can be installed in Julia REPL as follows:
 
 ```julia
 julia> using Pkg
-julia> Pkg.add("https://github.com/kirui93/ScenTrees.jl.git")
+julia> Pkg.add("ScenTrees")
 julia> using ScenTrees
 ```
 
@@ -38,7 +38,7 @@ The following are the most important functions that ScenTrees.jl package provide
 3. `Tree Approximation`: It returns a valuated probability scenario tree that approximates the stochastic process in the best possible way. The function `TreeApproximation!(Tree([BStructure],dimension),ProcessFunction,NoOfIterations,pNorm,rWasserstein)` takes:
 	* A scenario tree object from the `Tree()` function with a certain branching structure,
 	* A process function that we want to approximate,
-	* The numbe of iterations,
+	* The number of iterations,
 	* Choice of the norm (Example: `max=0,sum=1,Euclidean=2 (default)`), and
 	* Wasserstein parameter (`rWasserstein = 2 (default)`)
 
@@ -50,7 +50,7 @@ The number of iterations also represents the number of trajectories from the pro
 	* The number of iterations.
 The scenario lattice approximation procedure follows the one for scenario tree approximation but here we find the closest lattice entry and use samples from the process function to improve it.
 
-5. `Generation of scenarios from data`: This is a non-parametric technique for generating samples from a give data with unknown distribution. We use this process to generte new but different samples based of the data given using the kernel density estimation technique. The new samples can then be used to generate scenario trees and scenario lattices. The function `KernelScenarios(data,KernelDistribution;Markovian=true)` takes:
+5. `Generation of scenarios from data`: This is a non-parametric technique for generating samples from a give data with unknown distribution. We use this process to generate new but different samples based of the data given using the kernel density estimation technique. The new samples can then be used to generate scenario trees and scenario lattices. The function `KernelScenarios(data,KernelDistribution;Markovian=true)` takes:
 
 	* A data matrix in 2 dimension (i.e., `NxT` matrix where `N` is the number of trajectories and `T` is the number of stages.
 	* Kernel Distribution is the distribution that you want to use for the kernels. The default distribution is `Logistic distribution`. The user is free to choose any distribution he/she wishes to use based on the package `Distributions.jl`.
@@ -62,4 +62,4 @@ The scenario lattice approximation procedure follows the one for scenario tree a
 For all the users of this package, we request that you cite the following paper:
 
 !!! info
-	To be added.
+    To be added.
