@@ -46,7 +46,7 @@ function LatticeApproximation(states::Array{Int64,1},path::Function,nScenarios::
         WassersteinDistance = (WassersteinDistance*(n-1) + dist^rWasserstein)/n
     end
     LatProb = LatProb ./ nScenarios						                # scale the probabilities to 1.0
-    return Lattice("Lattice Approximation of $states, \n distance=$(round((WassersteinDistance^(1/rWasserstein))/sqrt(nScenarios),digits = 4)) at $(nScenarios) scenarios",LatState,LatProb)
+    return Lattice("Lattice Approximation of $states, \n distance=$(round((WassersteinDistance^(1/rWasserstein))/sqrt(nScenarios),digits = 8)) at $(nScenarios) scenarios",LatState,LatProb)
 end
 
 """

@@ -24,7 +24,7 @@ function KernelScenarios(data::Union{Array{Int64,2},Array{Float64,2}},kernelDist
         N,T = size(data)                                                  # Dimensions of the data
         d = 1
         w = fill(1.0,N)                                                     # initialize the weights
-        ξ = Array{Float64,1}(undef,T)                                     # trajectory to be created
+        x = Array{Float64,1}(undef,T)                                     # trajectory to be created
         for t = 1:T
             w = w / sum(w)                                                # normalized weights
             Nt = sum(w)^2 / sum(w.^2)                                     # effective sample size
@@ -34,23 +34,25 @@ function KernelScenarios(data::Union{Array{Int64,2},Array{Float64,2}},kernelDist
             u = rand(rng,Uniform(0,1))
             _,jstar = findmin(cumsum(w) .< u * sum(w))
             # The cumulative sum of weights leads to a high probability of picking a data path near an observation (Sequin && Pichler 2017)
-            ξ[t] = rand(rng,kernelDistribution(data[jstar,t],ht))
+            x[t] = rand(rng,kernelDistribution(data[jstar,t],ht))
             # The new generated value is according to the distribution of density of the current stage and dependent on the history of all the data paths.
             # All the rows in the column are associated with a certain weight as follows:
             # Each weight is a product of the kernels of the data at that point.
             if t<T
-                for j = 1:N
-                    # The choice of the kernel does not have any important effect on density estimation (Jones (1990)).
-                    if Markovian
+                # The choice of the kernel does not have any important effect on density estimation (Jones (1990)).
+                if Markovian
+                    for j = 1:N
                         # Markovian is used for scenario lattices
-                        w[j] = pdf(kernelDistribution(data[j,t],ht),ξ[t])
-                    else
+                        w[j] = pdf(kernelDistribution(data[j,t],ht),x[t])
+                    end
+                else
+                    for j = 1:N
                         # Non-Markovian is used for scenario trees
-                        w[j] *= pdf(kernelDistribution(data[j,t],ht),ξ[t])
+                        w[j] *= pdf(kernelDistribution(data[j,t],ht),x[t])
                     end
                 end
             end
         end
-        return ξ                         # The length of ξ is equal to the number stages = T
+        return x        # The length of x is equal to the number stages = T
     end
 end
