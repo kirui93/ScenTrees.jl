@@ -25,10 +25,10 @@ function LatticeApproximation(states::Array{Int64,1},path::Function,nScenarios::
         LatState[t] .= BegPath[t]
     end
     LatProb = vcat([zeros(states[1],1)],[zeros(states[j-1],states[j]) for j = 2:lns]) # Probabilities of the lattice at each time t
-    #Z = Array{Float64}(undef,lns)                   # initialize a 1D vector to hold the states' values
+    Z = Array{Float64}(undef,lns,1)                   # initialize a 1D vector to hold the states' values
     #Stochastic approximation step comes in here
     for n = 1:nScenarios
-        Z = path()                                                                                                                            #draw a new sample Gaussian path
+        Z .= path()    #Replace the values in the holding vector                                                                                                                           #draw a new sample Gaussian path
         idtm1 = 1
         dist = 0.0
         for t = 1:length(states)                                                                                                                  #walk along the gradient
@@ -56,11 +56,11 @@ Returns a plot of a lattice.
 """
 function PlotLattice(lt::Lattice,fig = 1)
     if !isempty(fig)
-        figure(figsize=(10,6))
+        figure(figsize=(6,4))
     end
     lts = subplot2grid((1,4),(0,0),colspan = 3)
     title("states")
-    xlabel("stage,time")
+    xlabel("stage,time",fontsize=12)
     #ylabel("states")
     xticks(0:length(lt.state)-1)
     lts.spines["top"].set_visible(false)                                                         # remove the box at the top
@@ -80,10 +80,10 @@ function PlotLattice(lt::Lattice,fig = 1)
     prs.spines["right"].set_visible(false)
 # Use the states and probabilites at the last stage to plot the marginal distribution
     stts = lt.state[end]
-    n = length(stts)                                    # length of leaves of the lattice.
+    n = length(stts)                                    # length of terminal nodes of the lattice.
     h = 1.05*std(stts)/ (n^0.1) + eps()                  #Silverman rule of thumb
-    lts.set_ylim(minimum(stts)-0.2*h, maximum(stts)+0.2*h)
-    prs.set_ylim(minimum(stts)-1.3*h, maximum(stts)+1.3*h)
+    lts.set_ylim(minimum(stts)-1.5*h, maximum(stts)+1.5*h)
+    prs.set_ylim(minimum(stts)-3.0*h, maximum(stts)+3.0*h)
     proba = sum(lt.probability[end],dims=1)
     yticks(())                                          #remove the ticks on probability plot
     t = LinRange(minimum(stts)-h, maximum(stts)+h, 100) #100 points on probability plot
