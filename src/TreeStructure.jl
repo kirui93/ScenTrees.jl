@@ -316,10 +316,10 @@ function treeplot(trr::Tree, fig= 1)
     trs = subplot2grid((1,4), (0,0), colspan=3)
     title("states")
     stg = stage(trr)
-    xticks(range(1, stop = height(trr) + 1))                                              #Set the ticks on the x-axis
-    xlabel("stage, time")
-    trs.spines["top"].set_visible(false)                                                       #remove the line of the box at the top
-    trs.spines["right"].set_visible(false)		                                       # remove the line of the box at the right
+    xticks(1:height(trr)+1)         # Set the ticks on the x-axis
+    xlabel("stage, time",fontsize=12)
+    trs.spines["top"].set_visible(false)         # remove the line of the box at the top
+    trs.spines["right"].set_visible(false)		 # remove the line of the box at the right
     for i in range(1,stop = length(trr.parent))
         if stg[i] > 0
             trs.plot([stg[i]-1,stg[i]],[trr.state[trr.parent[i]],trr.state[i]])
@@ -335,8 +335,8 @@ function treeplot(trr::Tree, fig= 1)
     Yi = [trr.state[i] for i in Yi]
     nY = length(Yi)
     h = 1.05*std(Yi)/ (nY^0.2) + 1e-3                                                           #Silverman rule of thumb
-    trs.set_ylim(minimum(Yi)-h, maximum(Yi)+h)
-    prs.set_ylim(minimum(Yi)-h, maximum(Yi)+h)
+    #trs.set_ylim(minimum(Yi)-h, maximum(Yi)+h)
+    #prs.set_ylim(minimum(Yi)-h, maximum(Yi)+h)
     yticks(())                                                                                                             #remove the ticks on probability plot
     t = LinRange(minimum(Yi)-h, maximum(Yi)+h, 100)                           #100 points on probability plot
     #density = zeros(length(collect(t)))

@@ -40,13 +40,13 @@ function LatticeApproximation(states::Array{Int64,1},path::Function,nScenarios::
             dist = dist + mindist^2                                       # Euclidean distance for the paths
             LatProb[t][idtm1,indx] = LatProb[t][idtm1,indx] .+ 1.0        # increase the probability
             idtm1 = indx
-            LatState[t][indx] = LatState[t][indx] - 2/ (n+nScenarios)^0.75*rWasserstein*mindist^(rWasserstein-1)*(LatState[t][indx] - Z[t])
+            LatState[t][indx] = LatState[t][indx] - 2/ (3000+n)^0.75*rWasserstein*mindist^(rWasserstein-1)*(LatState[t][indx] - Z[t])
         end
         dist = dist^(1/2)
         WassersteinDistance = (WassersteinDistance*(n-1) + dist^rWasserstein)/n
     end
     LatProb = LatProb ./ nScenarios						                # scale the probabilities to 1.0
-    return Lattice("Lattice Approximation of $states, \n distance=$(round((WassersteinDistance^(1/rWasserstein))/sqrt(nScenarios),digits = 8)) at $(nScenarios) scenarios",LatState,LatProb)
+    return Lattice("Lattice Approximation of $states, \n distance=$(round(WassersteinDistance^(1/rWasserstein),digits = 8)) at $(nScenarios) scenarios",LatState,LatProb)
 end
 
 """
@@ -62,13 +62,13 @@ function PlotLattice(lt::Lattice,fig = 1)
     title("states")
     xlabel("stage,time",fontsize=12)
     #ylabel("states")
-    xticks(0:length(lt.state)-1)
+    xticks(1:length(lt.state))
     lts.spines["top"].set_visible(false)                                                         # remove the box at the top
     lts.spines["right"].set_visible(false)                                                       # remove the box at the right
     for t = 2:length(lt.state)
         for i=1:length(lt.state[t-1])
             for j=1:length(lt.state[t])
-                lts.plot([t-2,t-1],[lt.state[t-1][i],lt.state[t][j]])
+                lts.plot([t-1,t],[lt.state[t-1][i],lt.state[t][j]])
             end
         end
     end
@@ -81,9 +81,9 @@ function PlotLattice(lt::Lattice,fig = 1)
 # Use the states and probabilites at the last stage to plot the marginal distribution
     stts = lt.state[end]
     n = length(stts)                                    # length of terminal nodes of the lattice.
-    h = 1.05*std(stts)/ (n^0.1) + eps()                  #Silverman rule of thumb
-    lts.set_ylim(minimum(stts)-1.5*h, maximum(stts)+1.5*h)
-    prs.set_ylim(minimum(stts)-3.0*h, maximum(stts)+3.0*h)
+    h = 0.9*std(stts)/ (n^0.2) + eps()                  #Silverman rule of thumb
+    #lts.set_ylim(minimum(stts)-1.5*h, maximum(stts)+1.5*h)
+    #prs.set_ylim(minimum(stts)-3.0*h, maximum(stts)+3.0*h)
     proba = sum(lt.probability[end],dims=1)
     yticks(())                                          #remove the ticks on probability plot
     t = LinRange(minimum(stts)-h, maximum(stts)+h, 100) #100 points on probability plot
