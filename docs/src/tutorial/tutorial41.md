@@ -14,7 +14,7 @@ The stochastic approximation process has already been described above so we will
     (a) Estimation of the distribution of conditional densities and,
     (b) Composition method
 
-We estimate the distribution of transition densities given the history of the process. This distribution is estimated by the non-parametric kernel density estimation. The density at stage ``t+1`` conditional on the history ``\mathbf{x_{t}} = (,x_{i_{1}},x_{i_{2}},\ldots,x_{i_{t}})`` is estimated by
+We estimate the distribution of transition densities given the history of the process. This distribution is estimated by the non-parametric kernel density estimation. The density at stage ``t+1`` conditional on the history ``\mathbf{x_{t}} = (x_1,x_2,\ldots,x_t)`` is estimated by
 ```math
 \hat{f}_{t+1}(x_{t+1}|\mathbf{x_{t}}) = \sum_{j=1}^{N} w_j(\mathbf{x_{t}}) \cdot k_{h_N}(x_{t+1} - \xi_{j,t+1}),
 ```
@@ -40,15 +40,15 @@ where ``\text{rand}(k())`` is a random value sampled from the kernel estimator.
 The generated data point is according to the distribution of the density at the current stage and dependent on the history of all the data points. It has been shown that the choice of the kernel does not have an important effect on density estimation. Hence, we employ the following logistic kernel as default: ``k(x) = \frac{1}{(e^x + e^{-x})^2}.``
 
 One of the most important factor to consider in density estimation is the bandwidth. We use the Silverman's rule of thumb to obtain the bandwidths for each of the data columns as follows ``h_N = \sigma(X_t)\cdot N^{\frac{-1}{d+4}}``
-where ``d`` is dimension of the data and ``\sigma(X_t)`` is the standard deviation of data in stage ``t``.
+where ``d`` is dimension of values sitting on each node at stage ``t`` and ``\sigma(X_t)`` is the standard deviation of data in stage ``t``.
 
-Using the above procedure, every new sample path starts with ``x_1`` at the first stage. Using the composition method, we find a new sample ``x_2`` from ``\hat{f}_2(.|x_1)`` at the second stage. Next, we generate a new data point ``x_3`` from ``\hat{f}_3(.|x_{1:2})``  at the third stage, a new stage `x_t` from ``\hat{f}_t(.|x_{1:t-1})`` at stage `t` e.t.c. Iterating the procedure until the stage `T` reveals a new sample path `x = (x_1,x_2,\ldots,x_T)`, generated from the initial data `\xi_1,\ldots,\xi_N`.
+Using the above procedure, every new sample path starts with ``x_1`` at the first stage. Using the composition method, we find a new sample ``x_2`` from ``\hat{f}_2(.|x_1)`` at the second stage. Next, we generate a new data point ``x_3`` from ``\hat{f}_3(.|x_{1:2})``  at the third stage, a new sample ``x_t`` from ``\hat{f}_t(.|x_{1:t-1})`` at stage ``t`` e.t.c. Iterating the procedure until the stage ``T`` reveals a new sample path ``x = (x_1,x_2,\ldots,x_T)``, generated from the initial data ``\xi_1,\ldots,\xi_N`` directly.
 
 The new sample path ``x`` is what we will feed in the stochastic approximation algorithm to generate either a scenario tree or a scenario lattice.
 
 ## Implementation of the above process
 
-The above process is implemented in our package in `KernelDensityEstimation.jl`.In this script, we use the concept of function closures which we assume that the user of this package is aware of. The user is required to provide a data in 2 dimension, i.e., a matrix of Float64 or Int64, to this function and also the distribution of the kernel that he/she wants to use. The default kernel distribution is the Logistic kernel. The kernel distribution should conform to the distributions stated in [Distributions.jl](https://github.com/JuliaStats/Distributions.jl) package.
+The above process is implemented in our package in `KernelDensityEstimation.jl`.In this script, we use the concept of function closures which we assume that the user of this package is aware of. The user is required to provide a data in 2 dimension, i.e., a matrix of `Float64` or `Int64`, to this function and also the distribution of the kernel that he/she wants to use. The default kernel distribution is the Logistic kernel. The kernel distribution should conform to the distributions stated in [Distributions.jl](https://github.com/JuliaStats/Distributions.jl) package.
 
 Most of the times when you load the data into Julia, it recognizes it as a `DataFrame` type. But we have wrote the function in a manner that the user should provide a Matrix of either floats or integers. In the following procedure, we use the function `Matrix` to convert the loaded dataframe into a matrix which is the right type of input into the function.
 
@@ -91,3 +91,5 @@ julia> KernTree = TreeApproximation!(Tree([1,2,2,2],1),KernelScenarios(gsdata,Lo
 julia> treeplot(KernTree)
 ```
 ![Scenario Tree From Kernel Trajectories](../assets/kerneltree.png)
+
+This method is very efficient when you have limited data. This data may not be enough to generate a scenario tree or a scenario lattice. In case of limited data it is necessary to learn as much as possible from the observations available. Therefore generating scenarios using the above procedure proves to be important.

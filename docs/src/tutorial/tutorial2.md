@@ -4,9 +4,9 @@ CurrentModule = ScenTrees
 
 # Scenario Trees
 
-Consider a general stochastic process ``X`` over a discrete time space ``T``, i.e., ``X = (X,\dots,X_T)`` where ``X_1`` is a deterministic starting value and the rest are random values or random vectors whose probability distribution is known. A scenario tree is a discrete time and discrete state process approximating the process `X`. We represent the scenario tree by ``\tilde{X} = (\tilde{X}_1,...,\tilde{X}_T)``. A scenario is a path from the root node to any of the leaves in the tree. The number of stages in a scenario must be equal to the number of stages in a scenario tree which is equal to the length of the sample from the stochastic process ``X``.
+Consider a general stochastic process ``X`` over a discrete time space ``T``, i.e., ``X = (X_1,\dots,X_T)`` where ``X_1`` is a deterministic starting value and the rest are random values or random vectors whose probability distribution is known. A scenario tree is a discrete time and discrete state process approximating the process `X`. We represent the scenario tree by ``\tilde{X} = (\tilde{X}_1,...,\tilde{X}_T)``. A scenario is a path from the root node to any of the leaves in the tree. The number of stages in a scenario must be equal to the number of stages in a scenario tree which is equal to the length of the sample from the stochastic process ``X``.
 
-A basic scenario tree can be created using the `Tree(BStructure::Array{Int64,1},dimension::Int64)` function in the package. This function takes the branching structure of the tree and the dimension of the states that you are working on. For example, consider a tree with a branching structure of `1x2x2`. This is a tree with a root in stage `1`, and `2` nodes in stage 2 and each of the `2` nodes in stage one has `2` nodes in stage `3` and each node has only one state and so `dimension = 1`.
+A basic scenario tree can be created using the `Tree(BStructure::Array{Int64,1},dimension::Int64)` function in the package. This function takes the branching structure of the tree and the dimension of the states that you are working on. For example, consider a tree with a branching structure of `1x2x2`. This is a tree with a root in stage `1`, and `2` nodes in stage 2 and each of the `2` nodes in stage two has `2` nodes in stage `3` and each node has only one state and so `dimension = 1`.
 
 ```julia
 julia> example1 = Tree([1,2,2],1);
@@ -19,7 +19,7 @@ The above tree basically is not optimal since we just randomly fill the states o
 
 The above tree is in 1-state dimension.
 
-The following shows the procedure to plot trees in 2 or higher dimension. We will employ the use of the function `partTree()` which partitions the main tree into subtrees of different states. For example, if the main tree is in 2 dimension, this function will return an array with two trees where the only difference is the states of the nodes of the trees. Then, we can plot each of this trees and display. Alternatively, you can use the function `plotD` which plots the trees in any dimension without partition.
+The following shows the procedure to plot trees in 2 or higher dimension. We will employ the use of the function `partTree()` which partitions the main tree into sub-trees of different states. For example, if the main tree is in 2 dimension, this function will return an array with two trees where the only difference is the states of the nodes of the trees. Then, we can plot each of this trees and display. Alternatively, you can use the function `plotD` which plots the trees in any dimension without partition.
 
 ```julia
 julia> example2 = Tree([1,2,2],2);
