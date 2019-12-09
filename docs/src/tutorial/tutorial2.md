@@ -4,9 +4,9 @@ CurrentModule = ScenTrees
 
 # Scenario Trees
 
-Consider a general stochastic process ``X`` over a discrete time space ``T``, i.e., ``X = (X_0,...,X_T)`` where ``X_0`` is a deterministic starting value and the rest are random values or random vectors whose probability distribution is known. A scenario tree is a discrete time and discrete state process approximating the process `X`. We represent the scenario tree by ``\tilde{X} = (\tilde{X}_0,...,\tilde{X}_T)``. A scenario is a path from the root node to any of the leaves in the tree. The number of stages in a scenario must be equal to the number of stages in a scenario tree which is equal to the length of the sample from the stochastic process ``X``.
+Consider a general stochastic process ``X`` over a discrete time space ``T``, i.e., ``X = (X,\dots,X_T)`` where ``X_1`` is a deterministic starting value and the rest are random values or random vectors whose probability distribution is known. A scenario tree is a discrete time and discrete state process approximating the process `X`. We represent the scenario tree by ``\tilde{X} = (\tilde{X}_1,...,\tilde{X}_T)``. A scenario is a path from the root node to any of the leaves in the tree. The number of stages in a scenario must be equal to the number of stages in a scenario tree which is equal to the length of the sample from the stochastic process ``X``.
 
-A basic scenario tree can be created using the `Tree(bStructure::Array{Int64,1},dimension::Int64)` function in the package. This function takes the branching structure of the tree and the dimension of the states that you are working on. For example, consider a tree with a branching structure of `1x2x2`. This is a tree with a root in stage `0`, and `2` nodes in stage 1 and each of the `2` nodes in stage one has `2` nodes in stage `2` and each node has only one state and so `dimension = 1`.
+A basic scenario tree can be created using the `Tree(BStructure::Array{Int64,1},dimension::Int64)` function in the package. This function takes the branching structure of the tree and the dimension of the states that you are working on. For example, consider a tree with a branching structure of `1x2x2`. This is a tree with a root in stage `1`, and `2` nodes in stage 2 and each of the `2` nodes in stage one has `2` nodes in stage `3` and each node has only one state and so `dimension = 1`.
 
 ```julia
 julia> example1 = Tree([1,2,2],1);
@@ -55,7 +55,7 @@ julia> nodes(example1)
 
 ### Stages of the tree
 
-Each node in a tree is in a specific stage and nodes in the same stage have the same number of children. The stages in a tree starts from `0` where the root node is and ends at stage `T``where the leaf nodes are.
+Each node in a tree is in a specific stage and nodes in the same stage have the same number of children. The stages in a tree starts from `0` where the root node is and ends at stage `T` where the leaf nodes are.
 
 ```julia
 julia> stage(example1)
@@ -82,7 +82,7 @@ julia> root(example1)
 
 The function `root` can also give us a sequence of nodes to reach a particular node of the tree. It turns out that this function will be very important in stochastic approximation as it will give us a path that we can improve with samples from a stochastic process.
 
-If we want a sequence of nodes to reach, for example, node 6 in the above tree, we just call out the `root``function as follows:
+If we want a sequence of nodes to reach, for example, node 6 in the above tree, we just call out the `root` function as follows:
 
 ```julia
 julia> root(example1,6)

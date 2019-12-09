@@ -22,7 +22,7 @@ These approximations should be tractable, which is small enough to allow for rea
 
 ### Example
 
-Consider a Gaussian random walk in 5 stages. The starting value of this process is known and fixed, say at ``0`` and the other values are random. The following plot shows 100 sample paths of this process:
+Consider a Gaussian random walk in 5 stages. The starting value of this process is known and fixed, say at ``1`` and the other values are random. The following plot shows 100 sample paths of this process:
 
 ![100 sample paths from Gaussian random walk](../assets/100GaussianPaths.png)
 

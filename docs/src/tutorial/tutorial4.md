@@ -19,8 +19,8 @@ The stochastic approximation process is outlined as follows:
 6. When done with the states of the nodes of the tree, the algorithm calculates the conditional probabilities to reach each node in the tree. At the end, the sum of the conditional probabilities to reach each node of the same parent must add up to 1.
 7. The algorithm stops when all the number of iterations have been performed.
 
-!!! warning
-    The most important function in this approximation process is the function that user wants to approximate. This is the function that generates samples that improves the tree in each iteration. _The function must be designed in a way that it doesn't take any inputs. It must be a hard-coded function in that and the length of an array that it produces must match the number of stages of the tree and the dimension of the states of the tree._
+
+The most important function in this approximation process is the function that user wants to approximate. This is the function that generates samples that improves the tree in each iteration. _The function must be designed in a way that it doesn't take any inputs. It must be a hard-coded function in that and the length of an array that it produces must match the number of stages of the tree and the dimension of the states of the tree._
 
 !!! tip
     The branching structure of the scenario tree and the scenario lattice must start with `1`. This indicates the root of the tree. It also fix the deterministic state of the tree. The rest of the values in the branching vector of the scenario tree or the scenario lattice generally depends on the user. For example, a binary tree in 4 stages would have a branching structure of `[1,2,2,2]`.
@@ -140,6 +140,3 @@ The above approximation gives the following output:
 ![Example of an approximated lattice](../assets/LatticeApprox.png)
 
 You can see that in the scenario lattice, we have many possibilities than in a scenario tree. This shows generally that scenario lattices with half the number of nodes of a scenario tree have more number of scenarios or trajectories. A scenario lattice does not allow to trace back the history of a given scenario based on its ending node as there are many possible paths at that node. This is the main reason why we consider scenario lattices for Markovian processes
-
-!!! info
-    Currently, lattice approximation can only work for 1 dimension. It is in our working plan to generalize and extend this lattice approximation to any dimension of the states of the scenario lattice.

@@ -14,9 +14,9 @@ The stochastic approximation process has already been described above so we will
     (a) Estimation of the distribution of conditional densities and,
     (b) Composition method
 
-We estimate the distribution of transition densities given the history of the process. This distribution is estimated by the non-parametric kernel density estimation. The density at stage ``t+1`` conditional on the history ``\mathbf{x_{t}} = (x_0,x_{i_{1}},x_{i_{2}},\ldots,x_{i_{t}})`` is estimated by
+We estimate the distribution of transition densities given the history of the process. This distribution is estimated by the non-parametric kernel density estimation. The density at stage ``t+1`` conditional on the history ``\mathbf{x_{t}} = (,x_{i_{1}},x_{i_{2}},\ldots,x_{i_{t}})`` is estimated by
 ```math
-\hat{f}_{t+1}(x_{t+1}|\mathbf{x_{t}}) = \sum_{j=1}^{N} w_j(\mathbf{x_{t}}) \cdot k_{h_N}(x_{t+1} - \xi_{j,t+1})
+\hat{f}_{t+1}(x_{t+1}|\mathbf{x_{t}}) = \sum_{j=1}^{N} w_j(\mathbf{x_{t}}) \cdot k_{h_N}(x_{t+1} - \xi_{j,t+1}),
 ```
 where ``k(.)`` is a kernel function, ``h_N`` is the bandwidth and ``k_{h_N}`` is the weighted kernel function.
 
@@ -39,12 +39,12 @@ where ``\text{rand}(k())`` is a random value sampled from the kernel estimator.
 
 The generated data point is according to the distribution of the density at the current stage and dependent on the history of all the data points. It has been shown that the choice of the kernel does not have an important effect on density estimation. Hence, we employ the following logistic kernel as default: ``k(x) = \frac{1}{(e^x + e^{-x})^2}.``
 
-One of the most important factor to consider in density estimation is the bandwidth. We use the Silverman's rule of thumb to obtain the bandwidths for each of the data columns as follows ``h_N = \sigma(X_t)\cdot N^{\frac{-1}{N+4}}``
-where ``N`` is the number of available trajectories and ``\sigma(X_t)`` is the standard deviation of data in stage ``t``.
+One of the most important factor to consider in density estimation is the bandwidth. We use the Silverman's rule of thumb to obtain the bandwidths for each of the data columns as follows ``h_N = \sigma(X_t)\cdot N^{\frac{-1}{d+4}}``
+where ``d`` is dimension of the data and ``\sigma(X_t)`` is the standard deviation of data in stage ``t``.
 
-Using the above procedure, every new sample path starts with ``\mathbf{\tilde{\xi_1}} := (x_1)``. Using the composition method, we find a new sample ``\tilde{\xi_2}`` from ``\hat{f}_1(.|\mathbf{\tilde{\xi_1}})`` at the first stage. Next, we set ``\mathbf{\tilde{\xi_2}} = (\tilde{\xi_1},\tilde{\xi_2})`` and generate a new data point ``\tilde{\xi_2}`` from ``\hat{f}_2(.|\mathbf{\tilde{\xi_1}})``  at the second stage. The process continues in that manner until the final stage ``T`` where we get the final new sample path ``\mathbf{\tilde{\xi_T}} = (\tilde{\xi_0},\tilde{\xi_1},\ldots,\tilde{\xi_T})`` which is generated form the initial data ``\mathbf{x_{t}}``.
+Using the above procedure, every new sample path starts with ``x_1`` at the first stage. Using the composition method, we find a new sample ``x_2`` from ``\hat{f}_2(.|x_1)`` at the second stage. Next, we generate a new data point ``x_3`` from ``\hat{f}_3(.|x_{1:2})``  at the third stage, a new stage `x_t` from ``\hat{f}_t(.|x_{1:t-1})`` at stage `t` e.t.c. Iterating the procedure until the stage `T` reveals a new sample path `x = (x_1,x_2,\ldots,x_T)`, generated from the initial data `\xi_1,\ldots,\xi_N`.
 
-The new sample path ``\mathbf{\tilde{\xi_T}}`` is what we will feed in the stochastic approximation algorithm to generate either a scenario tree or a scenario lattice.
+The new sample path ``x`` is what we will feed in the stochastic approximation algorithm to generate either a scenario tree or a scenario lattice.
 
 ## Implementation of the above process
 
@@ -54,9 +54,9 @@ Most of the times when you load the data into Julia, it recognizes it as a `Data
 
 The function `KernelScenarios(data::Union{Array{Int64,2},Array{Float64,2}}, kernelDistribution = Logistic; Markovian = true)` takes a ``(N \times T)`` dimensional data and the distribution of the kernel you want to employ. The $N$ rows of the data are the number of trajectories in the initial data and the $T$ columns is the number of stages in in each trajectory of the data. We also let the user to specify whether the process he/she is creating is a Markovian process or not. We are aware that scenario lattices are natural discretization of Markovian process. Hence the user should create samples for a scenario tree for the condition `Markovian=false` and scenario lattices for the condition `Markovian = true`.
 
-Since `TreeApproximation!` and `LatticeApproximation` function needs a process function for generating samples that doesn't take any inputs, we employ the concept of function closures inside the above function. The function `KernelScenarios(data,kernelDistribution;Markovian=true)` is a getfield type of a function closure and so is sufficient to be a function required for stochastic approximation process.
+Since `TreeApproximation!` and `LatticeApproximation` function needs a process function for generating samples that doesn't take any inputs, we employ the concept of function closures inside the above function. The function `KernelScenarios(data,kernelDistribution;Markovian=true)` is a get-field type of a function closure and so is sufficient to be a function required for stochastic approximation process.
 
-To confirm the above statement, consider a ``1000x5`` dimsneional data from random walk. What is important to be said is that we use the package [`CSV`.jl](https://github.com/JuliaData/CSV.jl) to read the data into Julia and since we need the data in matrix form, we use the function `Matrix` from the package [`DataFrames.jl`](https://github.com/JuliaData/DataFrames.jl) to convert the dataframe into an array in two dimension which is then the input of our function.
+To confirm the above statement, consider a ``1000x5`` dimensional data from random walk. What is important to be said is that we use the package [`CSV`.jl](https://github.com/JuliaData/CSV.jl) to read the data into Julia and since we need the data in matrix form, we use the function `Matrix` from the package [`DataFrames.jl`](https://github.com/JuliaData/DataFrames.jl) to convert the dataframe into an array in two dimension which is then the input of our function.
 
 ```julia
 julia> using ScenTrees, CSV, Distributions
