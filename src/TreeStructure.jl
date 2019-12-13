@@ -40,7 +40,7 @@ mutable struct Tree                                                             
     """
     	Tree(identifier::Int64)
 
-    Returns some examples of predefirned trees.
+    Returns some examples of predefined trees.
     These are (0,302,303,304,305,306,307,402,404,405).
     You can call any of the above tree and plot to see the properties of the tree.
     """
@@ -127,7 +127,13 @@ mutable struct Tree                                                             
     """
     	Tree(spec::Vector{Int64}, dimension=Int64[])
 
-    Returns a tree according to the specified branching vector and the dimension. The branching vector must start with 1 for the root node.
+    Returns a tree according to the specified branching vector and the dimension.
+
+    Args:
+    spec - the branching structure of the scenario tree.
+    dimension - describes how many values (states) in each node.
+
+    The branching vector must start with 1 for the root node.
     """
     function Tree(spec::Vector{Int64}, dimension=Int64[])
         self = new()
@@ -163,6 +169,10 @@ end
 	stage(trr::Tree, node=Int64[])
 
 Returns the stage of each node in the tree.
+
+Args:
+trr - an instance of a Tree.
+node - the number of node in the scenario tree you want to know its stage.
 """
 function stage(trr::Tree,node = Int64[])
     if isempty(node)
@@ -185,7 +195,10 @@ end
 """
 	height(trr::Tree)
 
-Returns the height of the tree which is just the maximum number of the stages of each node
+Returns the height of the tree which is just the maximum number of the stages of each node.
+
+Args:
+trr - an instance of a Tree.
 """
 function height(trr::Tree)
     return maximum(stage(trr))
@@ -195,6 +208,10 @@ end
 	leaves(trr::Tree,node=Int64[])
 
 Returns the leaf nodes, their indexes and the conditional probabilities.
+
+Args:
+trr - an instance of a Tree.
+node - a node in the tree you want to its children.
 """
 function leaves(trr::Tree, node = Int64[])
     nodes = 1:length(trr.parent)
@@ -228,6 +245,12 @@ end
 	nodes(trr::Tree,t=Int64[])
 
 Returns the nodes in the tree, generally the range of the nodes in the tree.
+
+Args:
+trr - an instance of a Tree.
+t  - stage in the tree.
+
+Example : nodes(trr,2) - gives all nodes at stage 2.
 """
 function nodes(trr::Tree, t = Int64[])
     nodes = 1 : length(trr.parent)
@@ -241,8 +264,14 @@ end
 
 """
 	root(trr::Tree,nodes=Int64[])
-Returns the starting node of the tree if the node is not specified.
-Else, returns the path from the root node to the specified node in th tree.
+Returns the root of the tree if the node is not specified.
+
+Args:
+trr - an instance of Tree.
+nodes - node in the tree you want to know the sequence from the root.
+
+If `nodes` is not specified, it returns the root of the tree.
+If `nodes` is specified, it returns a sequence of nodes from the root to the specified node.
 """
 function root(trr::Tree,nodes = Int64[])
     if isempty(nodes)
@@ -267,6 +296,9 @@ end
 	partTree(trr::Tree)
 
 Returns a vector of trees in d-dimension.
+
+Args:
+trr - an instance of Tree.
 """
 function partTree(trr::Tree)
     trees = Tree[]
@@ -280,7 +312,9 @@ end
 """
 	buildProb!(trr::Tree,probabilities::Array{Float64,2})
 
-Returns the probabilities of the nodes without probabilities if the array of probabilities is less than the length of parents in the stochastic approximation procedure.
+Returns the probabilities of the nodes without probabilities
+if the array of probabilities is less than the length of parents
+in the stochastic approximation procedure.
 """
 function buildProb!(trr::Tree,probabilities::Array{Float64,2})
     leaf,omegas,probaLeaf = leaves(trr)
@@ -306,7 +340,8 @@ end
 """
 	treeplot(trr::Tree,fig=1)
 
-Returns the plot of the input tree annotated with density of probabilities of reaching the leaf nodes in the tree.
+Returns the plot of the input tree annotated with density of
+probabilities of reaching the leaf nodes in the tree.
 """
 function treeplot(trr::Tree, fig= 1)
     if !isempty(fig)

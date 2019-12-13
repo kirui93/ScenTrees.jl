@@ -16,7 +16,7 @@ We have the following examples in our package:
 
 1. Gaussian random walk,
 2. Running Maximum process
-3. Sample stock paths
+3. Sample Gaussian stock paths
 
 We have created the first two example functions in 1 and 2 dimensions. What we mean by dimension is that, a function in 1 dimension generates just one array. Generally, a function in d-dimension generates `d` arrays. As stated before, the length of the array and the dimension of the array naturally depends on the characteristics of the scenario tree or scenario lattice that you are using.
 

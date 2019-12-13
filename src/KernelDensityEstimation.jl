@@ -7,9 +7,17 @@ rng = MersenneTwister(01012019);
     KernelScenarios(data::Union{Array{Int64,2},Array{Float64,2}},kernelDistribution = Logistic;Markovian::Bool = true)
 
 Returns an instance of a closure of the conditional density estimation method.
-This function takes a matrix of data in 2 dimension (NxT) where N is the number of trajectories and T is the number of stages.
-To get a Markov trajectory from above, `KernelScenarios(data,kernelDistribution;amrkovian=true)()` gives the result.
-User specifies both data and the distribution of the kernel he/she wants to use. The default kernel is the Logistic kernel.
+
+Args:
+data - a matrix of data in 2 dimension (NxT) where N is the number of trajectories and T is the number of stages.
+kernelDistribution - the distribution of the kernel functions. Default is Logistic distribution.
+
+An optional keyword `Markovian` is passed to handle weights
+for Markovian trajectories or non-Markovian ones.
+
+To get a Markov trajectory from above,
+`KernelScenarios(data,kernelDistribution;Markovian=true)()` gives the result for
+Markovian samples, which is used to generate a scenario lattice.
 """
 function KernelScenarios(data::Union{Array{Int64,2},Array{Float64,2}},kernelDistribution = Logistic; Markovian::Bool = true)
     # We use the function closure here because we want to use this function in the stochastic approximation process.

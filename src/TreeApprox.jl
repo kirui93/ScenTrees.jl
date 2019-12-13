@@ -2,18 +2,22 @@
 #We start with a predefined tree. We already known the bushiness of the treee, number of stages in the tree, height of the tree,
 #leaves in the tree, nodes of the tree e.t.c. The tree we start with is just random and is not good for stochastic approximation.
 #Therefore, we take a path, either GaussianSamplePath or RunningMaximum and a number of scenarios and then try to improve this tree using the simulated path.
-#The function Stochastic approximation tree takes a path, newtree, samplesize, pNorm and Wassertein parameter.
+#The function Stochastic approximation tree takes a path, newtree, samplesize, p and Wassertein parameter = r.
 
 using LinearAlgebra: norm, transpose
 
 """
-	TreeApproximation!(newtree::Tree,genPath::Function,samplesize::Int64,pNorm::Int64=2,rwasserstein::Int64=2)
+	TreeApproximation!(newtree::Tree,genPath::Function,samplesize::Int64,p::Int64=2,r::Int64=2)
 
-Returns a valuated probability scenario tree.
-Note that the inputs are in the following order: Tree(), path, number of iterations, d,r.
-The function `Tree()` takes the branching structure and the dimension of the tree.
+Returns a valuated probability scenario tree approximating the input stochastic process.
+
+Args:
+newtree - Tree with a certain branching structure,
+genPath - function generating samples from the stochastic process to be approximated,
+p - choice of norm (default p = 2 (Euclidean distance)), and,
+r - transportation distance parameter
 """
-function TreeApproximation!(newtree::Tree,genPath::Function,samplesize::Int64,pNorm::Int64=2,rwasserstein::Int64=2)
+function TreeApproximation!(newtree::Tree,genPath::Function,samplesize::Int64,p::Int64=2,r::Int64=2)
     leaf,omegas,probaLeaf = leaves(newtree)                               #leaves,omegas and probabilities of the leaves of the tree
     dm = size(newtree.state,2)                                            #We get the dim from the dimsention of the states we are working on.
     T = height(newtree)                                                   #height of the tree
@@ -55,7 +59,7 @@ function TreeApproximation!(newtree::Tree,genPath::Function,samplesize::Int64,pN
             tmpleaves = newtree.children[EndLeaf+1]
             disttemp = Inf #or fill(Inf,dm)
             for i = tmpleaves
-                dist = norm(view(samplepath, 1:t) - view(newtree.state, path_to_all_nodes[i]), pNorm)
+                dist = norm(view(samplepath, 1:t) - view(newtree.state, path_to_all_nodes[i]), p)
                 if dist < disttemp
                     disttemp = dist
                     EndLeaf = i
@@ -67,13 +71,13 @@ function TreeApproximation!(newtree::Tree,genPath::Function,samplesize::Int64,pN
         probaLeaf[istar] .= probaLeaf[istar] .+ 1.0                                                            #counter  of probabilities
         StPath = path_to_leaves[EndLeaf-(leaf[1]-1)]
         delta = newtree.state[StPath,:] - samplepath
-        d[:,istar] .= d[:,istar] .+ norm(delta, pNorm).^(rwasserstein)
-        delta .=  rwasserstein .* norm(delta, pNorm).^(rwasserstein - pNorm) .* abs.(delta)^(pNorm - 1) .* sign.(delta)
-        ak = 1.0 ./ (30.0 .+ probaLeaf[istar]) #.^ 0.75
+        d[:,istar] .= d[:,istar] .+ norm(delta, p).^(r)
+        delta .=  r .* norm(delta, p).^(r - p) .* abs.(delta)^(p - 1) .* sign.(delta)
+        ak = 1.0 ./ (30.0 .+ probaLeaf[istar]) #.^ 0.75        # sequence for convergence
         newtree.state[StPath,:] = newtree.state[StPath,:] - delta .* ak
     end
     probabilities  = map(plf -> plf/sum(probaLeaf), probaLeaf) #divide every element by the sum of all elements
-    transportationDistance = (d * hcat(probabilities) / samplesize) .^ (1/rwasserstein)
+    transportationDistance = (d * hcat(probabilities) / samplesize) .^ (1/r)
     newtree.name = "Stochastic Approximation ,d=$(round.(transportationDistance,digits=5)),$(samplesize) scenarios"
     newtree.probability .= buildProb!(newtree,hcat(probabilities)) #build the probabilities of this tree
     return newtree

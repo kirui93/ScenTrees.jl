@@ -33,7 +33,7 @@ In this package, we have the function `TreeApproximation!(Tree(BranchingStructur
 - Name of the function that generates samples
 - Number of iterations
 - Choice `d` of the norm (Example: `max=0,sum=1,Euclidean=2`(default))
-- Choice `r` for the Wasserstein distance (`r=2`(default))
+- Choice `r` for the transportation distance (`r=2`(default))
 
 Given the above inputs, the function does the stochastic approximation process and returns a valuated scenario tree.
 
@@ -42,7 +42,7 @@ Given the above inputs, the function does the stochastic approximation process a
 
 ### Example
 
-Consider the following. We want to approximate the Gaussian random walk in 4 stages with a tree with a branching structure of `1x3x3x3` in 1 dimension using the usual Euclidean distance ,`pNorm=2` and `rWasserstein=2` for the Wasserstein distance.
+Consider the following. We want to approximate the Gaussian random walk in 4 stages with a tree with a branching structure of `1x3x3x3` in 1 dimension using the usual Euclidean distance ,`p=2` and `r=2` for the transportation distance.
 
 ```julia
 julia> using ScenTrees

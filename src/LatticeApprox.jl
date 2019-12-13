@@ -1,3 +1,4 @@
+
 using Statistics
 using LinearAlgebra
 using PyPlot
@@ -12,12 +13,16 @@ end
 """
 	LatticeApproximation(states::Array{Int64,1},path::Function,nScenarios::Int64)
 
-Returns an approximated lattice according to the samples from the `path` provided to. The function `path` generates one sample from a known distribution with length
-equal to the length of states of the lattice.
+Returns an approximated lattice approximating the stochastic process provided.
+
+Args:
+states - branching structure of the scenario lattice e.g., states = [1,2,3,4,5] represents a 5-staged lattice
+path - function generating samples from known distribution with length equal to the length of states of the lattice.
+nScenarios - number of iterations for stochastic approximation algorithm.
 """
 function LatticeApproximation(states::Array{Int64,1},path::Function,nScenarios::Int64)
-    WassersteinDistance = 0.0
-    rWasserstein = 2
+    TransportationDistance = 0.0
+    r = 2                                      # Wassertein parameter = r for transportation map
     lns = length(states)
     LatState = [zeros(states[j],1) for j = 1:lns]                    # States of the lattice at each time t
     BegPath = path()
@@ -31,22 +36,19 @@ function LatticeApproximation(states::Array{Int64,1},path::Function,nScenarios::
         Z .= path()    #Replace the values in the holding vector                                                                                                                           #draw a new sample Gaussian path
         idtm1 = 1
         dist = 0.0
-        for t = 1:length(states)                                                                                                                  #walk along the gradient
-            sumLat = sum(LatProb[t],dims = 2)
-            sqStates = 1.3 * sqrt(n) / states[t]
-            tmp = Int64[id for (id,ls) in enumerate(sumLat) if ls < sqStates]
-            LatState[t][tmp] .= Z[t]                                      # corrective action to include lost nodes
+        for t = 1:length(states) #walk along the gradient
+            LatState[t][findall(sum(LatProb[t],dims = 2) .< 1.3 * sqrt(n) / states[t])] .= Z[t]# corrective action to include lost nodes
             mindist,indx = findmin(vec(abs.(LatState[t] .- Z[t])))        # find the closest lattice entry
             dist = dist + mindist^2                                       # Euclidean distance for the paths
             LatProb[t][idtm1,indx] = LatProb[t][idtm1,indx] .+ 1.0        # increase the probability
             idtm1 = indx
-            LatState[t][indx] = LatState[t][indx] - 2/ (3000+n)^0.75*rWasserstein*mindist^(rWasserstein-1)*(LatState[t][indx] - Z[t])
+            LatState[t][indx] = LatState[t][indx] - 2/ (3000+n)^0.75*r*mindist^(r-1)*(LatState[t][indx] - Z[t])
         end
         dist = dist^(1/2)
-        WassersteinDistance = (WassersteinDistance*(n-1) + dist^rWasserstein)/n
+        TransportationDistance = (TransportationDistance*(n-1) + dist^r)/n
     end
     LatProb = LatProb ./ nScenarios						                # scale the probabilities to 1.0
-    return Lattice("Lattice Approximation of $states, \n distance=$(round(WassersteinDistance^(1/rWasserstein),digits = 8)) at $(nScenarios) scenarios",LatState,LatProb)
+    return Lattice("Lattice Approximation of $states, \n distance=$(round(TransportationDistance^(1/r),digits = 8)) at $(nScenarios) scenarios",LatState,LatProb)
 end
 
 """
