@@ -15,10 +15,10 @@ using CSV, DataFrames, XLSX
     end
     @testset "Initial Trees" begin
         init = Tree([1,2,2,2],1)
-        @test typeof(a) == Tree
+        @test typeof(init) == Tree
         @test length(init.parent) == 15
-        @test length(a.state) == length(a.probability) == length(a.parent) == 15
-        @test length(a.children) == 8
+        @test length(init.state) == length(init.probability) == length(init.parent) == 15
+        @test length(init.children) == 8
         @test length(stage(init)) == 15
         @test height(init) == 3
         @test length(leaves(init)) == 3
