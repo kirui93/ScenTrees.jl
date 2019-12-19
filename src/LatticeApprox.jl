@@ -11,44 +11,42 @@ mutable struct Lattice
 end
 
 """
-	LatticeApproximation(states::Array{Int64,1},path::Function,nScenarios::Int64)
+	LatticeApproximation(states::Array{Int64,1},path::Function,nIterations::Int64)
 
 Returns an approximated lattice approximating the stochastic process provided.
 
 Args:
 states - branching structure of the scenario lattice e.g., states = [1,2,3,4,5] represents a 5-staged lattice
 path - function generating samples from known distribution with length equal to the length of states of the lattice.
-nScenarios - number of iterations for stochastic approximation algorithm.
+nIterations - number of iterations for stochastic approximation algorithm.
 """
-function LatticeApproximation(states::Array{Int64,1},path::Function,nScenarios::Int64)
-    TransportationDistance = 0.0
-    r = 2                                      # Wassertein parameter = r for transportation map
+function LatticeApproximation(states::Array{Int64,1},path::Function,nIterations::Int64)
+    t_dist = 0.0                               # multistage distance
+    r = 2                                      # parameter = r for transportation map
     lns = length(states)
-    LatState = [zeros(states[j],1) for j = 1:lns]                    # States of the lattice at each time t
+    LatState = [zeros(states[j],1) for j = 1:lns]   # States of the lattice at each time t
     BegPath = path()
-    for t = 1:lns                                                   #initialize the states of the nodes of the lattice
-        LatState[t] .= BegPath[t]
+    for t = 1:lns                                #initialize the states of the nodes of the lattice
+        copyto!(LatState[t],BegPath[t])
     end
     LatProb = vcat([zeros(states[1],1)],[zeros(states[j-1],states[j]) for j = 2:lns]) # Probabilities of the lattice at each time t
-    Z = Array{Float64}(undef,lns,1)                   # initialize a 1D vector to hold the states' values
-    #Stochastic approximation step comes in here
-    for n = 1:nScenarios
-        Z .= path()    #Replace the values in the holding vector                                                                                                                           #draw a new sample Gaussian path
-        idtm1 = 1
-        dist = 0.0
+    Z = Array{Float64}(undef,lns,1)                   # initialize a 1D vector to hold the state values
+    #Stochastic approximation procedure to update the values on the nodes of the scenario lattice.
+    for n = 1:nIterations
+        copyto!(Z,path());last_index = 1;dist = 0.0
         for t = 1:length(states) #walk along the gradient
             LatState[t][findall(sum(LatProb[t],dims = 2) .< 1.3 * sqrt(n) / states[t])] .= Z[t]# corrective action to include lost nodes
-            mindist,indx = findmin(vec(abs.(LatState[t] .- Z[t])))        # find the closest lattice entry
-            dist = dist + mindist^2                                       # Euclidean distance for the paths
-            LatProb[t][idtm1,indx] = LatProb[t][idtm1,indx] .+ 1.0        # increase the probability
-            idtm1 = indx
-            LatState[t][indx] = LatState[t][indx] - 2/ (3000+n)^0.75*r*mindist^(r-1)*(LatState[t][indx] - Z[t])
+            min_dist,new_index = findmin(vec(abs.(LatState[t] .- Z[t])))  # find the closest lattice entry
+            dist += min_dist^2                             # Euclidean distance for the paths
+            LatProb[t][last_index,new_index] += 1.0        # increase the probability
+            last_index = new_index
+            LatState[t][new_index] -= (2/(3000+n)^0.75)*r*min_dist^(r-1)*(LatState[t][new_index] - Z[t])
         end
         dist = dist^(1/2)
-        TransportationDistance = (TransportationDistance*(n-1) + dist^r)/n
+        t_dist = (t_dist*(n-1) + dist^r)/n
     end
-    LatProb = LatProb ./ nScenarios						                # scale the probabilities to 1.0
-    return Lattice("Lattice Approximation of $states, \n distance=$(round(TransportationDistance^(1/r),digits = 8)) at $(nScenarios) scenarios",LatState,LatProb)
+    LatProb = LatProb ./ nIterations						                # scale the probabilities to 1.0
+    return Lattice("Lattice Approximation of $states,\n distance=$(round(t_dist^(1/r),digits = 8)) at $(nIterations) iterations ", LatState, LatProb)
 end
 
 """

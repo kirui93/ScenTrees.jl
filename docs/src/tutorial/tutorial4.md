@@ -27,7 +27,7 @@ The most important function in this approximation process is the function that u
 
 ## Tree Approximation
 
-In this package, we have the function `TreeApproximation!(Tree(BranchingStructure,dimension),Function,NumberOfIterations,2,2)` which does the stochastic approximation process for scenario trees. This function takes the following inputs:
+In this package, we have the function `TreeApproximation!(Tree(BranchingStructure,dimension),genPath,nIterations,2,2)` which does the stochastic approximation process for scenario trees. This function takes the following inputs:
 
 - Tree (which takes the branching structure and dimension and inputs)
 - Name of the function that generates samples
@@ -98,7 +98,7 @@ Each of these scenario trees have a multistage distance of `0.25142` from the or
 
 As mentioned before, some of the process that you may want to approximate are Markovian data processes. These processes can only be approximated by a scenario lattice. All the nodes in the same stage in a lattice have the same children nodes.
 
-To approximate a Markovian data process, we use the function `LatticeApproximation(BranchingStructure,Function,NoOfIterations)`. The following are the description of the inputs of the function:
+To approximate a Markovian data process, we use the function `LatticeApproximation(BranchingStructure,path,nIterations)`. The following are the description of the inputs of the function:
 
 - Branching structure of the scenario lattice,
 - Function that generates samples and,

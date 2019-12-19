@@ -20,18 +20,10 @@ To get a Markov trajectory from above,
 Markovian samples, which is used to generate a scenario lattice.
 """
 function KernelScenarios(data::Union{Array{Int64,2},Array{Float64,2}},kernelDistribution = Logistic; Markovian::Bool = true)
-    # We use the function closure here because we want to use this function in the stochastic approximation process.
-    # That is, we wwant to follow the specifications of the TreeApproximation and Latticeapproximation inputs.
-    # The way we have created the stochastic approximation functions is that it takes a function which does not take any inputs.
-    # And so the outer function takes the data and the distribution of the kernel while the inner function takes no inputs.
-    # To obtain the result then, call "KernelScenarios(data,Logistic)()".
-    # Notice we have an input of whether you are creating Markovian trajectories or not.
-    # This is important for generating either scenario trees or scenario lattices.
-    # The default for Markovian is true hence the trajectory created is Markovian which is used for scenario lattices.
     function closure()
         N,T = size(data)                                                  # Dimensions of the data
         d = 1
-        w = fill(1.0,N)                                                     # initialize the weights
+        w = fill(1.0,N)                                                   # initialize the weights
         x = Array{Float64,1}(undef,T)                                     # trajectory to be created
         for t = 1:T
             w = w / sum(w)                                                # normalized weights
@@ -41,21 +33,14 @@ function KernelScenarios(data::Union{Array{Int64,2},Array{Float64,2}},kernelDist
             # Composition method comes in here
             u = rand(rng,Uniform(0,1))
             _,jstar = findmin(cumsum(w) .< u * sum(w))
-            # The cumulative sum of weights leads to a high probability of picking a data path near an observation (Sequin && Pichler 2017)
             x[t] = rand(rng,kernelDistribution(data[jstar,t],ht))
-            # The new generated value is according to the distribution of density of the current stage and dependent on the history of all the data paths.
-            # All the rows in the column are associated with a certain weight as follows:
-            # Each weight is a product of the kernels of the data at that point.
             if t<T
-                # The choice of the kernel does not have any important effect on density estimation (Jones (1990)).
-                if Markovian
+                if Markovian      # Markovian is used for scenario lattices
                     for j = 1:N
-                        # Markovian is used for scenario lattices
                         w[j] = pdf(kernelDistribution(data[j,t],ht),x[t])
                     end
-                else
+                else             # Non-Markovian is used for scenario trees
                     for j = 1:N
-                        # Non-Markovian is used for scenario trees
                         w[j] *= pdf(kernelDistribution(data[j,t],ht),x[t])
                     end
                 end
