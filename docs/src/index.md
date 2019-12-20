@@ -4,7 +4,7 @@ CurrentModule = ScenTrees
 
 # ScenTrees.jl
 
-We present `Scentrees.jl` package for generating and improving scenario trees and scenario lattices for multistage stochastic optimization problems using stochastic optimization.
+We present `ScenTrees.jl` package for generating and improving scenario trees and scenario lattices for multistage stochastic optimization problems using stochastic optimization.
 
 ## Main features of the package
 

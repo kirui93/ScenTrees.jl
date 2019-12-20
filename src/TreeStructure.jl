@@ -6,20 +6,13 @@ using Random
 rng = MersenneTwister(01012019);
 
 #This defines the tree structure.
-#A tree has a name, a list of parents, a list of states, list of probabilities, and a list of children.
-#Name - a string representing the name of the tree.
-#List of parents - shows the parent of each node in the tree.
-#List of states - contains the state of each node in the tree.
-#List of probabilities - shows the conditional probability of moving from one node to another.
-#List of children - contains the children of every parent node.
 
 mutable struct Tree                                                                               #Tree structure
-    name::String                                                                                       #name of the tree
-    parent::Vector{Int64}                                                                    # parents of nodes in the tree
-    children::Vector{Vector{Int64}}                                             # successor nodes of each parent
-    state::Matrix{Float64}                                                                 # states of nodes in the tree
-    probability::Matrix{Float64}                                                     #probability to go from one node to another
-
+    name::String                        # name of the tree
+    parent::Vector{Int64}               # parents of nodes in the tree
+    children::Vector{Vector{Int64}}     # successor nodes of each parent
+    state::Matrix{Float64}              # states of nodes in the tree
+    probability::Matrix{Float64}        # probability to go from one node to another
 
     """
     	Children(parent::Vector{Int64})
@@ -352,12 +345,12 @@ function treeplot(trr::Tree, fig= 1)
     title("states")
     stg = stage(trr)
     xticks(1:height(trr)+1)         # Set the ticks on the x-axis
-    xlabel("stage, time",fontsize=12)
+    xlabel("stage,time",fontsize=12)
     trs.spines["top"].set_visible(false)         # remove the line of the box at the top
     trs.spines["right"].set_visible(false)		 # remove the line of the box at the right
-    for i in range(1,stop = length(trr.parent))
+    for i =1:length(trr.parent)
         if stg[i] > 0
-            trs.plot([stg[i]-1,stg[i]],[trr.state[trr.parent[i]],trr.state[i]])
+            trs.plot([stg[i],stg[i]+1],[trr.state[trr.parent[i]],trr.state[i]],linewidth=1.5)
         end
     end
     prs = subplot2grid((1,4), (0,3))
@@ -369,12 +362,11 @@ function treeplot(trr::Tree, fig= 1)
     (Yi,_,probYi) = leaves(trr)
     Yi = [trr.state[i] for i in Yi]
     nY = length(Yi)
-    h = 1.05*std(Yi)/ (nY^0.2) + 1e-3                                                           #Silverman rule of thumb
+    h = 1.05*std(Yi)/ (nY^0.2) + 1e-3         #Silverman rule of thumb
     #trs.set_ylim(minimum(Yi)-h, maximum(Yi)+h)
     #prs.set_ylim(minimum(Yi)-h, maximum(Yi)+h)
     yticks(())                                                                                                             #remove the ticks on probability plot
-    t = LinRange(minimum(Yi)-h, maximum(Yi)+h, 100)                           #100 points on probability plot
-    #density = zeros(length(collect(t)))
+    t = LinRange(minimum(Yi)-h, maximum(Yi)+h, 100)  #100 points on probability plot
     density = zero(t)
     for (i, ti) in enumerate(t)
         for (j, xj) in enumerate(Yi)

@@ -6,7 +6,7 @@
 
 | **Build and Test Status**         | **Coverage**                          | **Documentation**             |
 |:---------------------------------:|:-------------------------------------:|:-----------------------------:|
-|[![Build and Test Status](https://travis-ci.com/kirui93/ScenTrees.jl.svg?branch=master)](https://travis-ci.com/kirui93/ScenTrees.jl) | [![Coverage](https://codecov.io/gh/kirui93/ScenTrees.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/kirui93/ScenTrees.jl) | [![Documentation](https://img.shields.io/badge/dos-latest-blue.svg)](https://kirui93.github.io/ScenTrees.jl/latest/)| 
+|[![Build and Test Status](https://travis-ci.com/kirui93/ScenTrees.jl.svg?branch=master)](https://travis-ci.com/kirui93/ScenTrees.jl) | [![Coverage](https://codecov.io/gh/kirui93/ScenTrees.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/kirui93/ScenTrees.jl) | [![Documentation](https://img.shields.io/badge/dos-latest-blue.svg)](https://kirui93.github.io/ScenTrees.jl/latest/)|
 
 # ScenTrees.jl
 
@@ -14,10 +14,10 @@
 
 We provide two important features at the moment:
 
-- Stochastic approximation of stochastic processes by scenario trees and scenario lattices.
+- Generation of scenario trees and scenario lattices using stochastic approximation procedure.
     + Scenario trees are used in the case of discrete time and discrete state stochastic processes.
     + Scenario lattices are a natural discretization of Markov processes and so if the stochastic process is Markovian, scenario lattices would approximate the process well.
-- Estimating trajectories from stochastic data using kernel density estimation.
+- Estimating trajectories from stochastic data using conditional density estimation.
     + This is a non-parametric technique for generating trajectories from a given observed data whose distribution is unknown.
     + The new trajectories estimated here can thus be used in stochastic approximation process to generate scenario trees and scenario lattices.
 
@@ -35,7 +35,7 @@ Get the latest stable release with Julia's package manager:
 
 To use `ScenTrees.jl`, you need to have Julia >= v1.0. This package was developed in Julia 1.0.4, and has been tested for Julia >= v1.0 in Linux and OSX distributions.
 
-## Documentation 
+## Documentation
 
 To access the documentation just click on this [link](https://kirui93.github.io/ScenTrees.jl/latest/). Here you can get the description of the various functions in the package and also different examples for the different features.
 
