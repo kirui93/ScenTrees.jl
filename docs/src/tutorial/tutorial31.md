@@ -15,7 +15,7 @@ This is a user-defined function representing the stochastic process in which she
 We have the following examples in our package:
 
 1. Gaussian random walk,
-2. Running Maximum process
+2. Running Maximum process, and,
 3. Sample Gaussian stock paths
 
 We have created the first two example functions in 1 and 2 dimensions. What we mean by dimension is that, a function in 1 dimension generates just one array. Generally, a function in d-dimension generates `d` arrays. As stated before, the length of the array and the dimension of the array naturally depends on the characteristics of the scenario tree or scenario lattice that you are using.
@@ -38,46 +38,23 @@ The following shows sample trajectories of our example functions above:
 
 ```julia
 julia> GaussianSamplePath1D() # 4 stages, 1 dimension
-4x1 Array{Float64,2}:
-0.0
--0.1566
--1.5676
--1.2084
+[0.0, -0.1566, -1.5676, -1.2084]
 
-julia> GaussianSamplePath1D() # 2nd run - same starting value, different other values (randomness)
-4x1 Array{Float64,2}:
-0.0
--2.1779
--2.4299
--1.3796
+julia> GaussianSamplePath1D()
+# 2nd run - same starting value, different other values (randomness)
+[0.0, -2.1779, -2.4299, -1.3796]
 
 julia> GaussianSamplePath2D() # 4 stages, 2 dimension
-4x2 Array{Float64,2}:
-1.0         0.0
-0.6968     -0.3676
-2.2257     -0.1558
-3.3988     -0.2629
+[1.0, 0.6968, 2.2257, 3.3988 ; 0.0, -0.3676, -0.1558, -0.2629]
 
 julia> RunningMaximum1D()
-4x1 Array{Float64,2}:
-0.0
-0.0
-0.5574
-0.9278
+[0.0, 0.0, 0.5574, 0.9278]
 
 julia> RunningMaximum2D()
-4x2 Array{Float64,2}:
-0.0         0.0
-2.7430      0.4331
-2.3931      0.4331
--0.7218     0.3281
+[0.0, 2.7430, 2.3931, -0.7218; 0.0, 0.4331, 0.4331, 0.3281]
 
-julia> path()
-4x1 Array{Float64,2}:
-100.0
-78.7084
-109.4443
-74.3815
+julia> path() # example of stock prices
+[100.0, 78.7084, 109.4443, 74.3815]
 ```
 
 ### Notes
@@ -87,7 +64,7 @@ julia> path()
 3. The length of an array produced by the function must be equal to the number of stages in the scenario tree or the scenario lattice.
 4. The dimension of the array produced must be the same as the dimension of the states of the scenario tree or scenario lattice.
 5. The array should have a common deterministic starting point or be in a certain range of values.
-6. The array produced should be a `Nxd Array{Float64,2}` where `N` is the number of stages and `d` is the dimension. This is important for the stochastic approximation process.
+6. The array produced should be a `N x d Array{Float64,2}` where `N` is the number of stages and `d` is the dimension. This is important for the stochastic approximation process.
 7. In higher dimension, depending on the user, the arrays could be dependent on each other.
 
 Up to this point, the user can now create a random scenario tree and look at its characteristics as well as write a process function that generates trajectories for the stochastic approximation process. It is important to write a function that follows the above criterion as this becomes very important in the stochastic approximation process.

@@ -6,7 +6,7 @@ CurrentModule = ScenTrees
 
 Consider a general stochastic process ``X`` over a discrete time space ``T``, i.e., ``X = (X_1,\dots,X_T)`` where ``X_1`` is a deterministic starting value and the rest are random values or random vectors whose probability distribution is known. A scenario tree is a discrete time and discrete state process approximating the process `X`. We represent the scenario tree by ``\tilde{X} = (\tilde{X}_1,...,\tilde{X}_T)``. A scenario is a path from the root node to any of the leaves in the tree. The number of stages in a scenario must be equal to the number of stages in a scenario tree which is equal to the length of the sample from the stochastic process ``X``.
 
-A basic scenario tree can be created using the `Tree(BStructure::Array{Int64,1},dimension::Int64)` function in the package. This function takes the branching structure of the tree and the dimension of the states that you are working on. For example, consider a tree with a branching structure of `1x2x2`. This is a tree with a root in stage `1`, and `2` nodes in stage 2 and each of the `2` nodes in stage two has `2` nodes in stage `3` and each node has only one state and so `dimension = 1`.
+A basic scenario tree can be created using the `Tree(bstructure::Array{Int64,1}, dimension::Int64)` function in the package. This function takes the branching structure of the tree and the dimension of the states that you are working on. For example, consider a tree with a branching structure of `1x2x2`. This is a tree with a root in stage `1`, and `2` nodes in stage 2 and each of the `2` nodes in stage two has `2` nodes in stage `3` and each node has only one state and so `dimension = 1`.
 
 ```julia
 julia> example1 = Tree([1,2,2],1);
@@ -22,7 +22,7 @@ The above tree is in 1-state dimension.
 The following shows the procedure to plot trees in 2 or higher dimension. We will employ the use of the function `partTree()` which partitions the main tree into sub-trees of different states. For example, if the main tree is in 2 dimension, this function will return an array with two trees where the only difference is the states of the nodes of the trees. Then, we can plot each of this trees and display. Alternatively, you can use the function `plotD` which plots the trees in any dimension without partition.
 
 ```julia
-julia> example2 = Tree([1,2,2],2);
+julia> example2 = Tree([1,2,2], 2);
 julia> example2Trees = partTree(example2);
 julia> treeplot(example2Trees[1])
 julia> savefig("example21.png")
@@ -68,7 +68,7 @@ julia> stage(example1)
 2
 ```
 
-The above example shows that we have 1 node in stage 0, 2 nodes in stage 1 and 4 nodes in stage 2.
+The above example shows that we have 1 node in stage 0, 2 nodes in stage 1 and 4 nodes in stage 2. Totally, these scenario tree has 3 stages if you count from 1. The height of this scenario therefore is 3. 
 
 ### Root of the tree
 
@@ -98,7 +98,7 @@ In each tree, we have the leaves. Leaves are all those in the tree which doesn't
 
 ```julia
 julia> leaves(example1)
-([4,5,6,7],1:4,[0.2508,0.1709,0.2566,0.2508])
+([4,5,6,7], 1:4, [0.2508,0.1709,0.2566,0.2508])
 ```
 
 From the above, it is clear that the sum of the conditional probabilities to reach all the leaves in the tree is `1`.
@@ -114,7 +114,7 @@ One of the most important things in programming is visualization. In this packag
     Matplotlib is required at the moment so that you can be able to do the plots.
     In the future, we are thinking of changing into a lighter backend for plots.
 
-For example, we can plot a default tree already in the package and then the figure can be saved with the function `savefig`. These trees can be accessed through an identifier which is just a number. These identifiers are `0,301,302,303,304,305,306,307,401,402,4022,404,405`. Therefore, for these examples, you can just access them through their identifier. For example, `Tree(402)` returns tree with the identifier 402 in our examples. You can have a look at these trees and plot them just to get a glimpse on how scenario trees are and then you can also have a look at their characteristics as explained in the above example.
+For example, we can plot a default tree already in the package and then the figure can be saved with the function `savefig()`. These trees can be accessed through an identifier which is just a number. These identifiers are `0, 301, 302, 303, 304, 305, 306, 307, 401, 402, 4022, 404, 405`. Therefore, for these examples, you can just access them through their identifier. For example, `Tree(402)` returns tree with the identifier 402 in our examples. You can have a look at these trees and plot them just to get a glimpse on how scenario trees are and then you can also have a look at their characteristics as explained in the above example.
 
 ```julia
 julia> treeplot(Tree(402));
@@ -134,4 +134,4 @@ julia> savefig("Tree40222.png")
 ```
 | [![Tree of state 1 ](../assets/Tree40221.png)](../assets/Tree40221.png)  | [![Tree of state 2](../assets/Tree40222.png)](../assets/Tree40222.png) |
 |:---:|:---:|
-| Predeined tree of state 1 | Predefined tree of state 2 |
+| Predefined tree of state 1 | Predefined tree of state 2 |

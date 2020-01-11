@@ -1,13 +1,9 @@
 
-using Distributions
-using Statistics
-using PyPlot
-using Random
+using Distributions, Statistics, PyPlot, Random
 rng = MersenneTwister(01012019);
 
 #This defines the tree structure.
-
-mutable struct Tree                                                                               #Tree structure
+mutable struct Tree
     name::String                        # name of the tree
     parent::Vector{Int64}               # parents of nodes in the tree
     children::Vector{Vector{Int64}}     # successor nodes of each parent
@@ -22,29 +18,29 @@ mutable struct Tree                                                             
     function Children(parent::Vector{Int64})
         allchildren = Vector{Vector{Int64}}([])
         for node in unique(parent)
-            push!(allchildren,[i for i = 1:length(parent) if parent[i] == node])
+            push!(allchildren, [i for i = 1 : length(parent) if parent[i] == node])
         end
         return allchildren
     end
     Tree(name::String,parent::Vector{Int64},
     children::Vector{Vector{Int64}},
-    state::Matrix{Float64},probability::Matrix{Float64})=new(name,parent,Children(parent),state,probability)
+    state::Matrix{Float64}, probability::Matrix{Float64})=new(name, parent, Children(parent), state, probability)
 
     """
     	Tree(identifier::Int64)
 
     Returns some examples of predefined trees.
-    These are (0,302,303,304,305,306,307,402,404,405).
+    These are (0, 302, 303, 304, 305, 306, 307, 402, 404, 405).
     You can call any of the above tree and plot to see the properties of the tree.
     """
     function Tree(identifier::Int64)
         self= new()
         if identifier==0
             self.name = "Empty Tree"
-            self.parent = zeros(Int64,0)
+            self.parent = zeros(Int64 , 0)
             self.children = Children(self.parent)
-            self.state = zeros(Float64,0)'
-            self.probability = ones(Float64,0)'
+            self.state = zeros(Float64, 0)'
+            self.probability = ones(Float64, 0)'
         elseif identifier == 302
             self.name = "Tree 1x2x2"
             self.parent =[0,1,1,2,2,3,3]
@@ -91,14 +87,12 @@ mutable struct Tree                                                             
             self.name = "Tree 1x2x2x2"
             self.parent = [0,1,1,2,2,3,3,4,4,5,5,6,6,7,7]
             self.children = Children(self.parent)
-            #self.state= [10.0 11.0 8.0 12.0 9.0 6.0 10.0 13.0 10.01 8.01 12.01 9.01 4.0 11.0 12.99]'
             self.state = [10.0 12.0 8.0 15.0 11.0 9.0 5.0 18.0 16.0 13.0 11.0 10.0 7.0 6.0 3.0]'
             self.probability = [1.0 0.8 0.7 0.3 0.2 0.8 0.4 0.6 0.2 0.5 0.5 0.4 0.6 0.7 0.3]'
         elseif identifier == 4022
             self.name = "Tree 1x2x2x2"
             self.parent = [0,1,1,2,2,3,3,4,4,5,5,6,6,7,7]
             self.children = Children(self.parent)
-            #self.state= [10.0 11.0 8.0 12.0 9.0 6.0 10.0 13.0 10.01 8.01 12.01 9.01 4.0 11.0 12.99]'
             self.state = [10.0 0.0; 12.0 1.0; 8.0 -1.0; 15.0 2.0; 11.0 1.0; 9.0 -0.5; 5.0 -2.0; 18.0 3.0; 16.0 1.8; 13.0 0.9; 11.0 0.2; 10.0 0.0; 7.0 -1.2; 6.0 -2.0; 3.0 -3.2]
             self.probability = [1.0 0.8 0.7 0.3 0.2 0.8 0.4 0.6 0.2 0.5 0.5 0.4 0.6 0.7 0.3]'
         elseif identifier ==404
@@ -118,40 +112,40 @@ mutable struct Tree                                                             
     end
 
     """
-    	Tree(spec::Vector{Int64}, dimension=Int64[])
+    	Tree(bstructure::Vector{Int64}, dimension=Int64[])
 
     Returns a tree according to the specified branching vector and the dimension.
 
     Args:
-    spec - the branching structure of the scenario tree.
+    bstructure - the branching structure of the scenario tree.
     dimension - describes how many values (states) in each node.
 
     The branching vector must start with 1 for the root node.
     """
-    function Tree(spec::Vector{Int64}, dimension=Int64[])
+    function Tree(bstructure::Vector{Int64}, dimension=Int64[])
         self = new()
         if isempty(dimension)
             dimension = 1
         end
-        leaves = spec
-        for stage = 1 : length(spec)
+        leaves = bstructure
+        for stage = 1 : length(bstructure)
             if stage == 1
                 leaves = 1
-                self.name = "Tree $(spec[1])"
-                self.parent = zeros(Int64,spec[1])
+                self.name = "Tree $(bstructure[1])"
+                self.parent = zeros(Int64, bstructure[1])
                 self.children = Children(self.parent)
-                self.state = randn(rng,spec[1],dimension)
-                self.probability = ones(spec[1],1)
+                self.state = randn(rng, bstructure[1], dimension)
+                self.probability = ones(bstructure[1], 1)
             else
-                leaves = leaves * spec[stage-1]
-                newleaves = vec(ones(Int64,spec[stage]) .* transpose(length(self.parent) .+ (1 .- leaves:0)))
+                leaves = leaves * bstructure[stage-1]
+                newleaves = vec(ones(Int64, bstructure[stage]) .* transpose(length(self.parent) .+ (1 .- leaves : 0)))
                 self.parent =  vcat(self.parent, newleaves)
                 self.children = Children(self.parent)
-                self.state = vcat(self.state,randn(length(newleaves),dimension))
-                self.name = "$(self.name)x$(spec[stage])"
-                tmp = rand(rng,Uniform(0.3,1.0), spec[stage], leaves)
-                tmp = tmp ./ (transpose(ones(1,spec[stage])) .* sum(tmp,dims=1))
-                self.probability = vcat(self.probability,vec(tmp))
+                self.state = vcat(self.state, randn(length(newleaves), dimension))
+                self.name = "$(self.name)x$(bstructure[stage])"
+                tmp = rand(rng, Uniform(0.3, 1.0), bstructure[stage], leaves)
+                tmp = tmp ./ (transpose(ones(1, bstructure[stage])) .* sum(tmp, dims = 1))
+                self.probability = vcat(self.probability, vec(tmp))
             end
         end
         return self
@@ -167,7 +161,7 @@ Args:
 trr - an instance of a Tree.
 node - the number of node in the scenario tree you want to know its stage.
 """
-function stage(trr::Tree,node = Int64[])
+function stage(trr::Tree, node = Int64[])
     if isempty(node)
         node = 1 : length(trr.parent)
     elseif isa(node, Int64)
@@ -175,7 +169,7 @@ function stage(trr::Tree,node = Int64[])
     end
     #stage = zeros(length(collect(node))) #you can also use this
     stage = zero(node)
-    for i = 1:length(node)
+    for i = 1 : length(node)
         pred = node[i]
         while pred > 0 && trr.parent[pred] > 0
             pred = trr.parent[pred]
@@ -207,11 +201,11 @@ trr - an instance of a Tree.
 node - a node in the tree you want to its children.
 """
 function leaves(trr::Tree, node = Int64[])
-    nodes = 1:length(trr.parent)
-    leaves = setdiff(nodes,trr.parent)
+    nodes = 1 : length(trr.parent)
+    leaves = setdiff(nodes, trr.parent)
     #leaves are all nodes which are not parents
     #setdiff(A,B) finds all the elements that belongs to A and are not in B
-    omegas = 1:length(leaves)
+    omegas = 1 : length(leaves)
     if !isempty(node) && isa(node,Int64)
         node = Int64[node]
     end
@@ -219,19 +213,19 @@ function leaves(trr::Tree, node = Int64[])
         omegas = Set{Int64}()
         nodes = leaves
         while any(j !=0 for j ∈ nodes)
-            omegas = union(omegas,(ind for (ind,j) ∈ enumerate(nodes) if j ∈ node))
-            nodes = Int64[trr.parent[max(0,j)] for j ∈ nodes]
+            omegas = union(omegas, (ind for (ind, j) ∈ enumerate(nodes) if j ∈ node))
+            nodes = Int64[trr.parent[max(0 , j)] for j ∈ nodes]
         end
         omegas = collect(omegas)
     end
     leaves = Int64[leaves[j] for j ∈ omegas]
-    prob = ones(Float64,length(leaves))
+    prob = ones(Float64 , length(leaves))
     nodes = leaves
     while any(j !=0 for j ∈ nodes)
         prob = prob .* trr.probability[[j for j in nodes]]
-        nodes = Int64[trr.parent[max(0,j)] for j ∈ nodes]
+        nodes = Int64[trr.parent[max(0 , j)] for j ∈ nodes]
     end
-    return leaves,omegas, prob
+    return leaves, omegas, prob
 end
 
 """
@@ -266,10 +260,10 @@ nodes - node in the tree you want to know the sequence from the root.
 If `nodes` is not specified, it returns the root of the tree.
 If `nodes` is specified, it returns a sequence of nodes from the root to the specified node.
 """
-function root(trr::Tree,nodes = Int64[])
+function root(trr::Tree, nodes = Int64[])
     if isempty(nodes)
         nodes = trr.children[1]
-    elseif isa(nodes,Int64)
+    elseif isa(nodes , Int64)
         nodes = Int64[nodes]
     end
     root = 1 : length(trr.parent)
@@ -277,7 +271,7 @@ function root(trr::Tree,nodes = Int64[])
         iroot = Vector{Int64}([])
         tmp = i
         while tmp > 0
-            push!(iroot,tmp)
+            push!(iroot , tmp)
             tmp = trr.parent[tmp]
         end
         root = Int64[i for i in reverse(iroot) if i in root]
@@ -295,8 +289,8 @@ trr - an instance of Tree.
 """
 function partTree(trr::Tree)
     trees = Tree[]
-    for col = 1:size(trr.state,2)
-        subtree = Tree("Tree of state $col",trr.parent,trr.children,hcat(trr.state[:,col]),trr.probability)
+    for col = 1:size(trr.state , 2)
+        subtree = Tree("Tree of state $col", trr.parent, trr.children, hcat(trr.state[:,col]), trr.probability)
         push!(trees,subtree)
     end
     return trees
@@ -309,14 +303,14 @@ Returns the probabilities of the nodes without probabilities
 if the array of probabilities is less than the length of parents
 in the stochastic approximation procedure.
 """
-function buildProb!(trr::Tree,probabilities::Array{Float64,2})
-    leaf,omegas,probaLeaf = leaves(trr)
+function buildProb!(trr::Tree, probabilities::Array{Float64,2})
+    leaf, omegas, probaLeaf = leaves(trr)
     if length(probabilities) == length(nodes(trr))
         trr.probability .= probabilities
     else
         probabilities .= max.(0.0,probabilities)
-        j = leaf;i = trr.parent[j];j .= j[i.> 0];i .= i[i .> 0]
-        trr.probability .= zeros(length(trr.state[:,1]),1)
+        j = leaf; i = trr.parent[j]; j .= j[i .> 0]; i .= i[i .> 0]
+        trr.probability .= zeros(length(trr.state[:,1]), 1)
         trr.probability[j] = probabilities
         while !isempty(i)
             for k = 1:length(i)
@@ -344,11 +338,11 @@ function treeplot(trr::Tree, fig= 1)
     trs = subplot2grid((1,4), (0,0), colspan=3)
     title("states")
     stg = stage(trr)
-    xticks(1:height(trr)+1)         # Set the ticks on the x-axis
+    xticks(1 : height(trr) + 1)         # Set the ticks on the x-axis
     xlabel("stage,time",fontsize=12)
     trs.spines["top"].set_visible(false)         # remove the line of the box at the top
     trs.spines["right"].set_visible(false)		 # remove the line of the box at the right
-    for i =1:length(trr.parent)
+    for i = 1 : length(trr.parent)
         if stg[i] > 0
             trs.plot([stg[i],stg[i]+1],[trr.state[trr.parent[i]],trr.state[i]],linewidth=1.5)
         end
@@ -362,7 +356,7 @@ function treeplot(trr::Tree, fig= 1)
     (Yi,_,probYi) = leaves(trr)
     Yi = [trr.state[i] for i in Yi]
     nY = length(Yi)
-    h = 1.05*std(Yi)/ (nY^0.2) + 1e-3         #Silverman rule of thumb
+    h = 1.05 * std(Yi) / (nY^0.2) + 1e-3         #Silverman rule of thumb
     #trs.set_ylim(minimum(Yi)-h, maximum(Yi)+h)
     #prs.set_ylim(minimum(Yi)-h, maximum(Yi)+h)
     yticks(())                                                                                                             #remove the ticks on probability plot
@@ -392,7 +386,7 @@ function plotD(newtree::Tree)
       ax.spines["right"].set_visible(false)                                               #remove the box right
       for i in range(1,stop = length(newtree.parent))
           if stg[i] > 0
-              ax.plot([stg[i]-1,stg[i]],[newtree.state[:,rw][newtree.parent[i]],newtree.state[:,rw][i]])
+              ax.plot([stg[i], stg[i]+1],[newtree.state[:,rw][newtree.parent[i]], newtree.state[:,rw][i]])
           end
           xlabel("stage, time")
           ylabel("states")

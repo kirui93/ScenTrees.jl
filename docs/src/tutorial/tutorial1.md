@@ -12,37 +12,37 @@ A scenario tree is a set of nodes and branches used in models of decision making
 
 A scenario tree/lattice is organized in levels which corresponds to stages ``1,\ldots,T``. Each node in a stage has a specified number of predecessors as defined by the branching structure. A node represents a possible state of the stochastic process and the vertices represents the possibility of transition between the two connected nodes. A scenario tree differs from a scenario lattice by the condition that each node in stage ``t`` must have one predecessor in stage ``t-1``. For a lattice, that is not the case; all the nodes in stage ``t-1`` share the same children in stage ``t``.
 
-## Goal
+## Goal of `ScenTrees.jl`
 
 We model stochastic processes by scenario trees and scenario lattices. The distributions of these processes may be continuous and involves parameters that are uncertain.
 
 The goal  of `ScenTrees.jl` is to approximate the distributions of these stochastic processes by discrete distributions with finite number of scenarios of the random variables. We generate a valuated probability scenario tree or a scenario lattice which represents the stochastic process in the best way possible using the stochastic approximation algorithm. These processes are random and represent uncertainty at a particular state and at a certain point in time.  
 
-These approximations should be tractable, which is small enough to allow for reasonable calculation times, but is large enough to capture the important features of the problem.
+These approximations should be tractable, which is small enough to allow for reasonable calculation times, but is large enough to capture the important features of the problem. We use the concept of multistage distance to determine the quality of the approximations
 
-### Example
+### Introductory example
 
-Consider a Gaussian random walk in 5 stages. The starting value of this process is known and fixed, say at ``1`` and the other values are random. The following plot shows 100 sample paths of this process:
+Consider a simple Gaussian random walk in 5 stages. The starting value of this process is known and fixed, say at ``0`` and the other values are random. The following plot shows 100 sample paths of this process:
 
 ![100 sample paths from Gaussian random walk](../assets/100GaussianPaths.png)
 
-Using those paths, we generate and improve a scenario tree or a scenario lattice. The number of iterations for the algorithm equals the number of sample paths that we want to generate from the stochastic process and the number of stages in the stochastic process equals the number of stages in the scenario tree or the scenario lattice.
+We generate and improve a scenario tree or a scenario lattice using this stochastic process. The number of iterations for the algorithm equals the number of sample paths that we want to generate from the stochastic process. Also, the number of stages in the stochastic process equals the number of stages in the scenario tree or the scenario lattice.
 
-There are a lot of different branching structures that the user can choose for a tree that represents this stochastic process. The branching structure shows how many branches each node in the tree has at each stage of the tree. For example, we can use a branching structure of `1x2x2x2x2` for the scenario tree. This means that each node in the tree has two children. Basically, this is a `binary tree`. Using this branching structure, we obtain the following valuated probability tree that represents the above stochastic process:
+The user is free to choose any branching structure for the scenario tree/lattice. The branching structure shows how many branches each node in the tree has at each stage of the tree. For example, we can use a branching structure of ``1x2x2x2x2`` for the scenario tree. This means that each node in the tree has two children. Basically, this is a `binary tree`. It has been shown that the elements in the branching structure have a direct relationship with the quality of the resulting scenario tree/lattice. A scenario tree/lattice with many branches has a better approximation quality than a scenario tree with less branches.
+
+Using the binary branching structure stated above, we obtain the following valuated probability tree that represents the above stochastic process:
 
 ![Scenario Tree 1x2x2x2x2](../assets/TreeExample.png)
 
 *Figure 1: Scenario Tree 1x2x2x2x2*
 
-The above tree is optimal and therefore can be used by a decision maker for a decision making process depending on the type of problem he/she is handling.
-
-To measure the quality of the approximation, we use the concept of multistage distance between the stochastic process and the scenario tree or lattice.
+The above tree is optimal and therefore can be used by a decision maker for a decision making process depending on the type of problem he/she is handling. To measure the quality of this approximation, we use the concept of multistage distance between the stochastic process and the scenario tree or lattice, which we introduce in the following subsection.
 
 ### Multistage distance
 
-To measure the distance of stochastic processes, it is not sufficient to only consider the distance between their laws. It is also important to consider the information accumulated over time i.e., what the filtration has to tell us over time. The Wasserstein distance do not correctly separate stochastic processes having different filtration. It ignores filtration and hence does not distinguish stochastic processes. Multistage distance is also called the `process distance` or `nested distance`.
+To measure the distance of stochastic processes, it is not sufficient to only consider the distance between their laws. It is also important to consider the information accumulated over time i.e., what the filtration has to tell us over time. The Wasserstein distance do not correctly separate stochastic processes having different filtration. It ignores filtration and hence does not distinguish stochastic processes. Multistage distance comes in handy in the situations for measuring distances for stochastic processes. Multistage distance is also called the `process distance` or `nested distance`.
 
-Multistage distance was introduced by [Georg Ch. Pflug (2009)](https://doi.org/10.1137/080718401). It turns out that this distance is very important to measure the distance between multistage stochastic processes as it incorporates filtration introduced by the processes. We use this distance in our algorithm to measure the quality of approximation of the scenario tree. Generally, a scenario tree with a minimal distance to the stochastic process is consider to have a better quality approximation.
+Multistage distance was introduced by [Georg Ch. Pflug (2009)](https://doi.org/10.1137/080718401). It turns out that this distance is very important to measure the distance between multistage stochastic processes as it incorporates filtration introduced by the processes. We use this distance in our algorithm to measure the quality of approximation of the scenario tree and scnario lattice. Generally, a scenario tree/lattice with a minimal distance to the stochastic process is consider to have a better quality approximation.
 
 The distance between the above scenario tree and the original process is `0.0894`. This shows that the scenario tree above approximates the stochastic process well. This tree can therefore be used for decision making under uncertainty.
 
@@ -63,12 +63,13 @@ julia> Pkg.add("ScenTrees")
 julia> using ScenTrees
 julia> methods(Tree)
 # 4 methods for generic function "(::Type)":
-[1] Tree(name::String, parent::Array{Int64,1}, children::Array{Array{Int64,1},1}, state::Array{Float64,2}, probability::Array{Float64,2})
+[1] Tree(name::String, parent::Array{Int64,1},
+children::Array{Array{Int64,1},1}, state::Array{Float64,2}, probability::Array{Float64,2})
 [2] Tree(identifier::Int64)
 [3] Tree(spec::Array{Int64,1})
 [4] Tree(spec::Array{Int64,1}, dimension)
 ```
-All the methods correspond to the way you can create a scenario tree. For the first method, the length of states must be equal to the length of the probabilities. In the 2nd method, you can call any of our predefined trees by just calling on the identifier (these identifiers are `0,301,302,303,304,305,306,307,401,402,4022,404,405`). And finally the most important methods are the 3rd and 4th method. If you know the branching structure of your scenario tree, then you can create an non-optimal starting tree using it. If you don't state the dimension you are working on, then it is defaulted into `1`. For example, `Tree([1,2,2,2,2])` creates a binary tree with states of dimension one as in Figure 1 above
+All the methods correspond to the way you can create a scenario tree. For the first method, the length of states must be equal to the length of the probabilities. In the 2nd method, you can call any of our predefined trees by just calling on the identifier (these identifiers are `0, 301, 302, 303, 304, 305, 306, 307, 401, 402, 4022, 404, 405`). And finally the most important methods are the 3rd and 4th method. If you know the branching structure of your scenario tree, then you can create an non-optimal starting tree using it. If you don't state the dimension you are working on, then it is defaulted into `1`. For example, `Tree([1,2,2,2,2])` creates a binary tree with states of dimension one as in Figure 1 above
 
 ## Description of a scenario lattice
 
@@ -84,7 +85,8 @@ A scenario lattice has only one method.
 ```julia
 julia> methods(Lattice)
  1 method for generic function "(::Type)":
-[1] Lattice(name::String, state::Array{Array{Float64,2},1}, probability::Array{Array{Float64,2},1})
+[1] Lattice(name::String, state::Array{Array{Float64,2},1},
+probability::Array{Array{Float64,2},1})
 ```
 This method is not very important because we only need it to produce the results of the lattice approximation process. We will see later that for lattice approximation, we need the branching structure and so the structure of the lattice is not very important as in the case of a scenario tree.
 
@@ -92,23 +94,21 @@ This method is not very important because we only need it to produce the results
 
 Since we have the basics of the scenario tree and the scenario lattice and since we created `ScenTrees.jl` with an intention of being user-friendly, we present the exported functions that are visible to the user i.e., that are public, and the user can call these functions depending on what he/she wants to achieve with this package:
 
-      * TreeApproximation!
-      * LatticeApproximation,
-      * Tree (associated are: nodes, height, leaves, root, partTree, buildProb!)
-      * Lattice,
-      * treeplot, plotD and PlotLattice,
-      * bushinessNesDistance,
-      * GaussianSamplePath1D,
-      * GaussianSamplePath2D,
-      * RunningMaximum1D,
-      * RunningMaximum2D,
-      * path, and,
-      * KernelScenarios
+1. Tree (associated are: nodes, stage, height, leaves, root, partTree, buildProb!),
+2. TreeApproximation!
+3. Lattice,
+4. LatticeApproximation,
+5. KernelScenarios (for conditional density estimation method)
+6. Plotting utilities (these functions include: treeplot, plotD and PlotLattice),
+7. Examples of process functions (GaussianSamplePath1D, GaussianSamplePath2D, RunningMaximum1D, RunningMaximum2D, path) and,
+8. bushinessNesDistance (returns a graph showing how different factors affects the multistage distance.)
 
 - The most important functions in this module are `TreeApproximation!()` and `LatticeApproximation()` since these are the two functions which are used to approximate scenario trees and scenario lattices respectively.
 
-- The other important function is the `Tree(BranchingStructure,dimension)` function which gives the basic starting structure of a scenario tree.
+- The other important function is the `Tree(bstructure, dimension)` function which gives the basic starting structure of a scenario tree.
+
+### Querying the documentation of each function
 
 All of the above functions have been documented in their respective scripts and the user can find out what each function does by putting a `?` before the function. For example, `?leaves` will give an explanation of what the function `leaves` does.
 
-In the upcoming tutorials, we will have a look in detail on the functionalities of the main functions of this package.
+In the upcoming tutorials, we will have a look in detail on what each function of this package does.
