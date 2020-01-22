@@ -2,10 +2,10 @@
 title: 'ScenTrees.jl: A Julia Package for Generating Scenario Trees and Scenario Lattices
   for Multistage Stochastic Programming'
 tags:
-  - Multistage Stochastic Programming
-  - Scenario Trees
-  - Scenario Lattices
-  - Stochastic Processes
+  - Multistage stochastic programming
+  - Scenario trees
+  - Scenario lattices
+  - Stochastic processes
   - Julia
 authors:
   - name: Kipngeno Benard Kirui
@@ -27,21 +27,21 @@ bibliography: paper.bib
 
 # Summary
 
-Stochastic processes have random and uncertain outcomes and decisions must be made at different stages of the process. Mathematical programs with such uncertain parameters, described by an underlying probability distribution, are sometimes intractable to solve. For algorithmic treatment, such programs should be approximated into simpler ones, in the same manner as functions are represented as vectors on finite grids on digital computers. This approximation procedure is referred to as ``scenario generation``.
+Stochastic processes have random and uncertain outcomes. Decisions for stochastic problems involving such processes must be made at the different stages of the problem. Mathematical problems with such uncertain parameters, described by an underlying probability distribution, are sometimes intractable to solve. For algorithmic treatment, such programs should be approximated by simpler ones, in the same manner as functions are represented as vectors on finite grids on digital computers. This approximation procedure is referred to as ``scenario generation``.
 
-There is a vast literature describing different methods of scenario generation. Many authors including @Hoyland2001, @Pflug2001, @KovacevicPichler, @PflugPichlerDynScenarioGen and @PflugPichler2016 have addressed different approximation techniques for stochastic processes. But still there is no an open-source implementation of the various algorithms in the public domain.
+There is a vast literature describing different methods of scenario generation. Many authors including @Hoyland2001, @Pflug2001, @KovacevicPichler, @PflugPichlerDynScenarioGen and @PflugPichler2016 have addressed different approximation techniques for stochastic processes. But still there is no open-source implementation of the various algorithms in the public domain.
 
 We therefore present ``ScenTrees.jl``, a open-source Julia [@julia] package for generating scenario trees and scenario lattices which can be used, for example, for multistage stochastic optimization problems. It allows users to represent possible sequences of stochastic processes in form of a ``scenario tree`` in the case of a discrete time stochastic process and a ``scenario lattice`` for Markovian data processes. In extension, it also provides users with a platform for generating new and additional trajectories in case of a limited data using conditional density estimation. The theory and design of the ``ScenTrees.jl`` package follows the concept in @PflugPichlerDynScenarioGen directly. It starts with an initial tree, which is a qualified guess by expert opinion, and uses the stochastic approximation procedure to improve the values on the nodes of the tree with samples form the stochastic process to be approximated. The transition probabilities from one node to another are also addressed.
 
-To assess the quality of this approximation, a distance between the initial distribution and its approximation is defined. Typically, we want an approximating tree that has a minimal distance to the original process. We therefore employ the ``process distance`` (also called ``multistage distance``) [@Pflug2009] to quantify the quality of approximation of the scenario tree. Process distance extends and generalizes the Wasserstein distance to stochastic processes. It was analyzed by @PflugPichler2011 and used by @KovacevicPichler directly to generate scenario trees.
+To assess the quality of this approximation, a distance between the initial distribution and its approximation is defined. Typically, we want an approximating tree that has a minimal distance to the original process. We therefore employ the ``process distance`` (also called ``multistage distance``) [@Pflug2009] to quantify the quality of approximation of the scenario tree. The process distance extends and generalizes the Wasserstein distance to stochastic processes. It was analyzed by @PflugPichler2011 and used by @KovacevicPichler directly to generate scenario trees.
 
 # Main features of the package
 
 ``ScenTrees.jl`` is generally applicable to any type of stochastic process. The key features of the packages are:
 
-1. `Generation of scenario trees and scenario lattices from stochastic processes using the stochastic approximation procedure`: Here, the branching structure of the scenario tree or the scenario lattice is fixed and then stochastic approximation procedure is used to improve/update the values of the nodes considering all the data available for every iteration. This improvement goes on until the specified number of iterations have been performed and then the process distance is calculated.^[Tutorial4: https://kirui93.github.io/ScenTrees.jl/latest/tutorial/tutorial4/]
+1. Generation of scenario trees and scenario lattices from stochastic processes using the stochastic approximation procedure. Here, the branching structure of the scenario tree or the scenario lattice is fixed and then stochastic approximation procedure is used to improve/update the values of the nodes considering all the data available for every iteration. This improvement goes on until the specified number of iterations have been performed and then the process distance is calculated.^[Tutorial4: https://kirui93.github.io/ScenTrees.jl/latest/tutorial/tutorial4/]
 
-2. `Generation of scenarios based on limited data using conditional density estimation`: In the case of a limited data with an unknown distribution, we employ conditional density estimation to generate new and different samples based on the these available trajectories. The newly generated samples are able to capture the necessary and important characteristics in the original data as well as patterns in the original data. These samples can thus be used in the stochastic approximation procedure to generate scenario trees or scenario lattices.^[Tutorial41: https://kirui93.github.io/ScenTrees.jl/latest/tutorial/tutorial41/]
+2. Generation of scenarios based on limited data using conditional density estimation. In the case of a limited data with an unknown distribution, we employ conditional density estimation to generate new and different samples based on the these available trajectories. The newly generated samples are able to capture the necessary and important characteristics in the original data as well as patterns in the original data. These samples can thus be used in the stochastic approximation procedure to generate scenario trees or scenario lattices.^[Tutorial41: https://kirui93.github.io/ScenTrees.jl/latest/tutorial/tutorial41/]
 
 Implementation details and various examples to demonstrate different methods can be found in the package's documentation.^[Documentation: https://kirui93.github.io/ScenTrees.jl/latest]
 

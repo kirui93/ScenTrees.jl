@@ -83,7 +83,7 @@ To use the above samples for scenario trees or scenario lattice generation:
 ```julia
 julia> kerneltree = TreeApproximation!(Tree([1,2,2,2],1),KernelScenarios(gsdata,Logistic;Markovian=false),100000,2,2);
 julia> treeplot(kerneltree)
-julia> kernelLattice = LatticeApproximation([1,3,4,5],KernelScenarios(gsdata,Logistic;Markovian=true),100000);
+julia> kernelLattice = LatticeApproximation([1,3,4,5],KernelScenarios(gsdata,Logistic;Markovian=true),100000,2);
 julia> PlotLattice(kernelLattice)
 ```
 
