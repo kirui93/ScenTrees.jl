@@ -11,11 +11,11 @@ mutable struct Tree
     probability::Matrix{Float64}        # probability to go from one node to another
 
     """
-    	Children(parent::Vector{Int64})
+    	child(parent::Vector{Int64})
 
     Returns a vector of successors of each of the parent nodes.
     """
-    function Children(parent::Vector{Int64})
+    function child(parent::Vector{Int64})
         allchildren = Vector{Vector{Int64}}([])
         for node in unique(parent)
             push!(allchildren, [i for i = 1 : length(parent) if parent[i] == node])
@@ -24,7 +24,7 @@ mutable struct Tree
     end
     Tree(name::String,parent::Vector{Int64},
     children::Vector{Vector{Int64}},
-    state::Matrix{Float64}, probability::Matrix{Float64})=new(name, parent, Children(parent), state, probability)
+    state::Matrix{Float64}, probability::Matrix{Float64})=new(name, parent, child(parent), state, probability)
 
     """
     	Tree(identifier::Int64)
@@ -38,73 +38,73 @@ mutable struct Tree
         if identifier==0
             self.name = "Empty Tree"
             self.parent = zeros(Int64 , 0)
-            self.children = Children(self.parent)
+            self.children = child(self.parent)
             self.state = zeros(Float64, 0)'
             self.probability = ones(Float64, 0)'
         elseif identifier == 302
             self.name = "Tree 1x2x2"
             self.parent =[0,1,1,2,2,3,3]
-            self.children = Children(self.parent)
+            self.children = child(self.parent)
             self.state = [2.0 2.1 1.9 4.0 1.0 3.0]'
             self.probability = [1.0 0.5 0.5 0.5 0.5 0.5 0.5]'
         elseif identifier == 303
             self.name = "Tree 1x1x4"
             self.parent = [0,1,2,2,2,2]
-            self.children = Children(self.parent)
+            self.children = child(self.parent)
             self.state = [3.0 3.0 6.0 4.0 2.0 0.0]'
             self.probability = [1.0 1.0 0.25 0.25 0.25 0.25]'
         elseif identifier == 304
             self.name = "Tree 1x4x1x1"
             self.parent = [0,1,2,0,4,5,0,7,8,0,10,11]
-            self.children = Children(self.parent)
+            self.children = child(self.parent)
             self.state = [0.1 2.1 3.0 0.1 1.9 1.0 0.0 -2.9 -1.0 -0.1 -3.1 -4.0]'
             self.probability = [0.14 1.0 1.0 0.06 1.0 1.0 0.48 1.0 1.0 0.32 1.0 1.0]'
         elseif identifier == 305
             self.name = "Tree 1x1x4"
             self.parent = [0,1,2,2,2,2]
-            self.children = Children(self.parent)
+            self.children = child(self.parent)
             self.state = [0.0 10.0 28.0 22.0 21.0 20.0]'
             self.probability = [1.0 1.0 0.25 0.25 0.25 0.25]'
         elseif identifier == 306
             self.name = "Tree 1x2x2"
             self.parent = [0,1,1,2,2,3,3]
-            self.children = Children(self.parent)
+            self.children = child(self.parent)
             self.state = [0.0 10.0 10.0 28.0 22.0 21.0 20.0]'
             self.probability = [1.0 0.5 0.5 0.5 0.5 0.5 0.5]'
         elseif identifier == 307
             self.name = "Tree 1x4x1"
             self.parent = [0,1,1,1,1,2,3,4,5]
-            self.children = Children(self.parent)
+            self.children = child(self.parent)
             self.state = [0.0 10.0 10.0 10.0 10.0 28.0 22.0 21.0 20.0]'
             self.probability = [1.0 0.25 0.25 0.25 0.25 1.0 1.0 1.0 1.0]'
         elseif identifier == 401
             self.name = "Tree 1x1x2x2"
             self.parent = [0,1,2,2,3,3,4,4]
-            self.children = Children(self.parent)
+            self.children = child(self.parent)
             self.state = [10.0 10.0 8.0 12.0 9.0 6.0 10.0 13.0]'
             self.probability = [1.0 1.0 0.66 0.34 0.24 0.76 0.46 0.54]'
         elseif identifier == 402
             self.name = "Tree 1x2x2x2"
             self.parent = [0,1,1,2,2,3,3,4,4,5,5,6,6,7,7]
-            self.children = Children(self.parent)
+            self.children = child(self.parent)
             self.state = [10.0 12.0 8.0 15.0 11.0 9.0 5.0 18.0 16.0 13.0 11.0 10.0 7.0 6.0 3.0]'
             self.probability = [1.0 0.8 0.7 0.3 0.2 0.8 0.4 0.6 0.2 0.5 0.5 0.4 0.6 0.7 0.3]'
         elseif identifier == 4022
             self.name = "Tree 1x2x2x2"
             self.parent = [0,1,1,2,2,3,3,4,4,5,5,6,6,7,7]
-            self.children = Children(self.parent)
+            self.children = child(self.parent)
             self.state = [10.0 0.0; 12.0 1.0; 8.0 -1.0; 15.0 2.0; 11.0 1.0; 9.0 -0.5; 5.0 -2.0; 18.0 3.0; 16.0 1.8; 13.0 0.9; 11.0 0.2; 10.0 0.0; 7.0 -1.2; 6.0 -2.0; 3.0 -3.2]
             self.probability = [1.0 0.8 0.7 0.3 0.2 0.8 0.4 0.6 0.2 0.5 0.5 0.4 0.6 0.7 0.3]'
         elseif identifier ==404
             self.name = "Tree 1x2x2x2"
             self.parent = [0,1,1,2,2,3,3,4,4,5,5,6,6,7,7]
-            self.children = Children(self.parent)
+            self.children = child(self.parent)
             self.state = (0.2+0.6744).*[0.0 1.0 -1.0 2.0 0.1 0.0 -2.0 3.0 1.1 0.9 -1.1 1.2 -1.2 -0.8 -3.2]'
             self.probability = [1.0 0.3 0.7 0.2 0.8 0.1 0.9 0.5 0.5 0.6 0.4 0.4 0.6 0.3 0.7]'
         elseif identifier == 405
             self.name = "Tree 5"
             self.parent = [0,1,2,3,3,2,6,6,6,1,10,10,11,12,12,12]
-            self.children = Children(self.parent)
+            self.children = child(self.parent)
             self.state = [7.0 12.0 14.0 15.0 13.0 9.0 11.0 10.0 8.0 4.0 6.0 2.0 5.0 0.0 1.0 3.0]'
             self.probability = [1.0 0.7 0.4 0.7 0.3 0.6 0.2 0.3 0.5 0.3 0.2 0.8 1.0 0.3 0.5 0.2]'
         end
@@ -133,14 +133,14 @@ mutable struct Tree
                 leaves = 1
                 self.name = "Tree $(bstructure[1])"
                 self.parent = zeros(Int64, bstructure[1])
-                self.children = Children(self.parent)
+                self.children = child(self.parent)
                 self.state = randn(rng, bstructure[1], dimension)
                 self.probability = ones(bstructure[1], 1)
             else
                 leaves = leaves * bstructure[stage-1]
                 newleaves = vec(ones(Int64, bstructure[stage]) .* transpose(length(self.parent) .+ (1 .- leaves : 0)))
                 self.parent =  vcat(self.parent, newleaves)
-                self.children = Children(self.parent)
+                self.children = child(self.parent)
                 self.state = vcat(self.state, randn(length(newleaves), dimension))
                 self.name = "$(self.name)x$(bstructure[stage])"
                 tmp = rand(rng, Uniform(0.3, 1.0), bstructure[stage], leaves)
@@ -280,14 +280,14 @@ function root(trr::Tree, nodes = Int64[])
 end
 
 """
-	partTree(trr::Tree)
+	part_tree(trr::Tree)
 
 Returns a vector of trees in d-dimension.
 
 Args:
 trr - an instance of Tree.
 """
-function partTree(trr::Tree)
+function part_tree(trr::Tree)
     trees = Tree[]
     for col = 1:size(trr.state , 2)
         subtree = Tree("Tree of state $col", trr.parent, trr.children, hcat(trr.state[:,col]), trr.probability)
@@ -297,13 +297,13 @@ function partTree(trr::Tree)
 end
 
 """
-	buildProb!(trr::Tree,probabilities::Array{Float64,2})
+	build_probabilities!(trr::Tree,probabilities::Array{Float64,2})
 
 Returns the probabilities of the nodes without probabilities
 if the array of probabilities is less than the length of parents
 in the stochastic approximation procedure.
 """
-function buildProb!(trr::Tree, probabilities::Array{Float64,2})
+function build_probabilities!(trr::Tree, probabilities::Array{Float64,2})
     leaf, omegas, probaLeaf = leaves(trr)
     if length(probabilities) == length(nodes(trr))
         trr.probability .= probabilities
@@ -325,12 +325,12 @@ function buildProb!(trr::Tree, probabilities::Array{Float64,2})
 end
 
 """
-	treeplot(trr::Tree,fig=1)
+	tree_plot(trr::Tree,fig=1)
 
 Returns the plot of the input tree annotated with density of
 probabilities of reaching the leaf nodes in the tree.
 """
-function treeplot(trr::Tree, fig= 1)
+function tree_plot(trr::Tree, fig= 1)
     if !isempty(fig)
         figure(fig)
     end
@@ -373,11 +373,11 @@ function treeplot(trr::Tree, fig= 1)
 end
 
 """
-	plotD(newtree::Tree)
+	plot_hd(newtree::Tree)
 
 returns a plots of trees in higher dimensions.
 """
-function plotD(newtree::Tree)
+function plot_hd(newtree::Tree)
     fig = figure(figsize = (10,6))
     stg = stage(newtree)
     for rw = 1:size(newtree.state,2)

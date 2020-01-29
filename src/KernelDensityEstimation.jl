@@ -3,7 +3,7 @@ using Distributions, Statistics, Random
 rng = MersenneTwister(01012019);
 
 """
-    KernelScenarios(data::Union{Array{Int64,2},Array{Float64,2}}, kernelDistribution = Logistic; Markovian::Bool = true)
+    kernel_scenarios(data::Union{Array{Int64,2},Array{Float64,2}}, kernelDistribution = Logistic; Markovian::Bool = true)
 
 Returns an instance of a closure of the conditional density estimation method.
 
@@ -18,7 +18,7 @@ To get a Markov trajectory from above,
 `KernelScenarios(data,kernelDistribution;Markovian=true)()` gives the result for
 Markovian samples, which is used to generate a scenario lattice.
 """
-function KernelScenarios(data::Union{Array{Int64,2},Array{Float64,2}}, kernelDistribution = Logistic; Markovian::Bool = true)
+function kernel_scenarios(data::Union{Array{Int64,2},Array{Float64,2}}, kernelDistribution = Logistic; Markovian::Bool = true)
     function closure()
         N , T = size(data)                                                  # Dimensions of the data
         d = 1

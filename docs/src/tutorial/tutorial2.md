@@ -19,14 +19,14 @@ The above tree basically is not optimal since we just randomly fill the states o
 
 The above tree is in 1-state dimension.
 
-The following shows the procedure to plot trees in 2 or higher dimension. We will employ the use of the function `partTree()` which partitions the main tree into sub-trees of different states. For example, if the main tree is in 2 dimension, this function will return an array with two trees where the only difference is the states of the nodes of the trees. Then, we can plot each of this trees and display. Alternatively, you can use the function `plotD` which plots the trees in any dimension without partition.
+The following shows the procedure to plot trees in 2 or higher dimension. We will employ the use of the function `part_tree()` which partitions the main tree into sub-trees of different states. For example, if the main tree is in 2 dimension, this function will return an array with two trees where the only difference is the states of the nodes of the trees. Then, we can plot each of this trees and display. Alternatively, you can use the function `plot_hd` which plots the trees in any dimension without partition.
 
 ```julia
 julia> example2 = Tree([1,2,2], 2);
-julia> example2Trees = partTree(example2);
-julia> treeplot(example2Trees[1])
+julia> example2Trees = part_tree(example2);
+julia> tree_plot(example2Trees[1])
 julia> savefig("example21.png")
-julia> treeplot(example2Trees[2])
+julia> tree_plot(example2Trees[2])
 julia> savefig("example21.png")
 ```
 
@@ -68,7 +68,7 @@ julia> stage(example1)
 2
 ```
 
-The above example shows that we have 1 node in stage 0, 2 nodes in stage 1 and 4 nodes in stage 2. Totally, these scenario tree has 3 stages if you count from 1. The height of this scenario therefore is 3. 
+The above example shows that we have 1 node in stage 0, 2 nodes in stage 1 and 4 nodes in stage 2. Totally, these scenario tree has 3 stages if you count from 1. The height of this scenario therefore is 3.
 
 ### Root of the tree
 
@@ -105,19 +105,19 @@ From the above, it is clear that the sum of the conditional probabilities to rea
 
 ### Plotting the tree
 
-One of the most important things in programming is visualization. In this package, we can plot a scenario tree in 1D with the `treeplot` function and with the `plotD` function for a scenario tree in D dimension.
+One of the most important things in programming is visualization. In this package, we can plot a scenario tree in 1D with the `tree_plot` function and with the `plot_hd` function for a scenario tree in D dimension.
 
 !!! info
     You need to install the [PyPlot.jl](https://github.com/JuliaPy/PyPlot.jl) package for this plots.
 
 !!! warning
     Matplotlib is required at the moment so that you can be able to do the plots.
-    In the future, we are thinking of changing into a lighter backend for plots.
+    In the future, we are thinking of changing into a lighter back-end for plots.
 
 For example, we can plot a default tree already in the package and then the figure can be saved with the function `savefig()`. These trees can be accessed through an identifier which is just a number. These identifiers are `0, 301, 302, 303, 304, 305, 306, 307, 401, 402, 4022, 404, 405`. Therefore, for these examples, you can just access them through their identifier. For example, `Tree(402)` returns tree with the identifier 402 in our examples. You can have a look at these trees and plot them just to get a glimpse on how scenario trees are and then you can also have a look at their characteristics as explained in the above example.
 
 ```julia
-julia> treeplot(Tree(402));
+julia> tree_plot(Tree(402));
 julia> savefig("Tree402.png");
 ```
 
@@ -126,10 +126,10 @@ julia> savefig("Tree402.png");
 We can plot a tree in 2 dimension as follows:
 
 ```julia
-julia> pt = partTree(Tree4022));
-julia> treeplot(pt[1])
+julia> pt = part_tree(Tree4022));
+julia> tree_plot(pt[1])
 julia> savefig("Tree40221.png")
-julia> treeplot(pt[2])
+julia> tree_plot(pt[2])
 julia> savefig("Tree40222.png")
 ```
 | [![Tree of state 1 ](../assets/Tree40221.png)](../assets/Tree40221.png)  | [![Tree of state 2](../assets/Tree40222.png)](../assets/Tree40222.png) |

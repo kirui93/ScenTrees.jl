@@ -54,9 +54,9 @@ We use the concept of function closures to implement the above process. The moti
 
 Most of the times when you load the data into Julia, it loads it as a `DataFrame` type. But we have wrote the function in a manner that the user should provide a Matrix of either floats or integers. In the following procedure, we use the function `Matrix` to convert the loaded dataframe into a matrix which is the right type of input into the function.
 
-The function `KernelScenarios(data::Union{Array{Int64,2},Array{Float64,2}}, kernelDistribution = Logistic; Markovian = true)` takes a ``(N \times T)`` dimensional data and the distribution of the kernel you want to employ. The $N$ rows of the data are the number of trajectories in the initial data and the $T$ columns is the number of stages in in each trajectory of the data. We also let the user to specify whether the process he/she is creating is a Markovian process or not. We are aware that scenario lattices are natural discretization of Markovian process. Hence the user should create samples for a scenario tree for the condition `Markovian = false` and scenario lattices for the condition `Markovian = true`.
+The function `kernel_scenarios(data::Union{Array{Int64,2},Array{Float64,2}}, kernelDistribution = Logistic; Markovian = true)` takes a ``(N \times T)`` dimensional data and the distribution of the kernel you want to employ. The $N$ rows of the data are the number of trajectories in the initial data and the $T$ columns is the number of stages in in each trajectory of the data. We also let the user to specify whether the process he/she is creating is a Markovian process or not. We are aware that scenario lattices are natural discretization of Markovian process. Hence the user should create samples for a scenario tree for the condition `Markovian = false` and scenario lattices for the condition `Markovian = true`.
 
-Since `TreeApproximation!` and `LatticeApproximation` function needs a process function for generating samples that doesn't take any inputs, we employ the concept of function closures inside the above function. The function `KernelScenarios(data, kernelDistribution; Markovian = true)` is a get-field type of a function closure and so is sufficient to be a function required for stochastic approximation process.
+Since `tree_approximation!` and `lattice_approximation` function needs a process function for generating samples that doesn't take any inputs, we employ the concept of function closures inside the above function. The function `kernel_scenarios(data, kernelDistribution; Markovian = true)` is a get-field type of a function closure and so is sufficient to be a function required for stochastic approximation process.
 
 To confirm the above statement, consider a ``1000 \times 5`` dimensional data from random walk. What is important to be said is that we use the package [`CSV`.jl](https://github.com/JuliaData/CSV.jl) to read the data into Julia and since we need the data in matrix form, we use the function `Matrix` from the package [`DataFrames.jl`](https://github.com/JuliaData/DataFrames.jl) to convert the dataframe into an array in two dimension which is then the input of our function.
 
@@ -64,11 +64,11 @@ To confirm the above statement, consider a ``1000 \times 5`` dimensional data fr
 julia> using ScenTrees, CSV, Distributions
 julia> data = CSV.read(".../RandomDataWalk.csv")
 julia> Rdw = Matrix(data)
-julia> Kdt = KernelScenarios(Rwd,Logistic;Markovian=true)
+julia> Kdt = kernel_scenarios(Rwd,Logistic;Markovian=true)
 (::getfield(ScenTrees,Symbol("#closure#52")){Array{Float64,2},
 Int64,Int64,Array{Float64,1},Array{Float64,1},Array{Float64,1}})
 (generic function with 1 method)
-julia> ExampleTraj = KernelScenarios(Rwd, Logistic; Markovian = true)()
+julia> ExampleTraj = kernel_scenarios(Rwd, Logistic; Markovian = true)()
 [2.9313, -2.0964, 3.7671, 2.1476, 0.9424]
 ```
 As in `ExampleTraj` above, this function returns is a new sample according to the distribution of the density at the current stage and dependent on the history of all the data points.
@@ -80,9 +80,9 @@ We use the above data to approximate a scenario lattice in `5` stages with a bra
 Using the above data, the conditional density estimation method and lattice approximation process we can generate a scenario lattice with a branching structure `[1,3,4,5,6]` and `100,000` iterations as follows.
 
 ```julia
-julia> KernExample = LatticeApproximation([1,3,4,5,6],
-KernelScenarios(Rwd, Logistic; Markovian = true), 100000, 2);
-julia> PlotLattice(KernExample)
+julia> KernExample = lattice_approximation([1,3,4,5,6],
+kernel_scenarios(Rwd, Logistic; Markovian = true), 100000, 2);
+julia> plot_lattice(KernExample)
 ```
 The following is the resultant lattice from the above approximation. The algorithm returns the multistage distance of the scenario lattice as `dist = 1.1718`.
 
@@ -93,9 +93,9 @@ The following is the resultant lattice from the above approximation. The algorit
 Using the same procedure, we can generate a binary scenario tree with `100,000` iterations as follows.
 
 ```julia
-julia> KernTree = TreeApproximation!(Tree([1,2,2,2],1),
-KernelScenarios(gsdata, Logistic; Markovian = false), 100000, 2, 2);
-julia> treeplot(KernTree)
+julia> KernTree = tree_approximation!(Tree([1,2,2,2],1),
+kernel_scenarios(gsdata, Logistic; Markovian = false), 100000, 2, 2);
+julia> tree_plot(KernTree)
 ```
 The following figure shows the resultant scenario tree. The algorithm returns the multistage distance of the scenario lattice as `dist = 0.2753`.
 

@@ -62,7 +62,7 @@ julia> data = Matrix(df);
 The following shows an example of a non-Markovian trajectory generated from the data using conditional density estimation by employing the Logistic distribution for the kernels.
 
 ```julia
-julia> Example = KernelScenarios(data, Logistic; Markovian = false)()
+julia> Example = kernel_scenarios(data, Logistic; Markovian = false)()
 [1.5595,0.8150,1.5058,2.6475,4.6137]
 ```
 The generated data has a length equal to the number of columns of the original data. These generated trajectories are the ones we will use to approximate a scenario tree and a scenario lattice in the following sections.
@@ -72,9 +72,10 @@ The generated data has a length equal to the number of columns of the original d
 We want to approximate the above data using a scenario tree with a branching vector ``(1,3,3,3,2)`` and ``1,000,000`` iterations as follows.
 
 ```julia
-julia> kernTree = TreeApproximation!(Tree([1,3,3,3,2],1),
-                  KernelScenarios(data, Logistic; Markovian = false),100000,2,2);
-julia> treeplot(kernTree)
+julia> kernTree = tree_approximation!(Tree([1,3,3,3,2],1),
+                  kernel_scenarios(data, Logistic; Markovian = false),
+                  100000,2,2);
+julia> tree_plot(kernTree)
 julia> savefig("rwdataTree.pdf")
 ```
 
@@ -87,9 +88,10 @@ The number of possible trajectories in the scenario tree equals the number of le
 Consider a scenario lattice with a branching vector $(1,3,4,5,6)$. Clearly, this scenario lattice has $5$ stages as shown by the number of elements in the branching vector, which is equal to number of columns in the data. We consider $1,000,000$ iterations for the stochastic approximation algorithm and ``r=2`` parameter for the multistage distance. To generate this scenario lattice, we need Markovian trajectories and therefore we set `Markovian = true` to specify that the trajectories to be generated are Markovian, which is different for scenario trees.
 
 ```julia
-julia> rwdataLattice = LatticeApproximation([1,3,4,5,6],
-                       KernelScenarios(data, Logistic; Markovian=true), 1000000, 2);
-julia> PlotLattice(rwdataLattice)
+julia> rwdataLattice = lattice_approximation([1,3,4,5,6],
+                       kernel_scenarios(data, Logistic; Markovian=true),
+                      1000000, 2);
+julia> plot_lattice(rwdataLattice)
 julia> savefig("rwdataLattice.pdf")
 ```
 

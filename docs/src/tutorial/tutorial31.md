@@ -37,20 +37,20 @@ It is important to create a function that generates samples that are dependent o
 The following shows sample trajectories of our example functions above:
 
 ```julia
-julia> GaussianSamplePath1D() # 4 stages, 1 dimension
+julia> gaussian_path1D() # 4 stages, 1 dimension
 [0.0, -0.1566, -1.5676, -1.2084]
 
-julia> GaussianSamplePath1D()
+julia> gaussian_path1D()
 # 2nd run - same starting value, different other values (randomness)
 [0.0, -2.1779, -2.4299, -1.3796]
 
-julia> GaussianSamplePath2D() # 4 stages, 2 dimension
+julia> gaussian_path2D() # 4 stages, 2 dimension
 [1.0, 0.6968, 2.2257, 3.3988 ; 0.0, -0.3676, -0.1558, -0.2629]
 
-julia> RunningMaximum1D()
+julia> running_maximum1D()
 [0.0, 0.0, 0.5574, 0.9278]
 
-julia> RunningMaximum2D()
+julia> running_maximum2D()
 [0.0, 2.7430, 2.3931, -0.7218; 0.0, 0.4331, 0.4331, 0.3281]
 
 julia> path() # example of stock prices

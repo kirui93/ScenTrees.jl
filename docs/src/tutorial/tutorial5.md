@@ -27,7 +27,7 @@ The above table can be represented in a plot as follows:
 
 ![Multistage distance for trees of different heights](../assets/diffHeights.png)
 
-The above plot can be obtained by calling the function `bushinessNesDistance()` from the package.
+The above plot can be obtained by calling the function `bushiness_nesdistance()` from the package.
 
 Generally, the approximating quality of a scenario tree increases with increasing height of the tree and increasing bushiness of the tree.
 

@@ -13,8 +13,8 @@ In a scenario lattice, the total number of nodes is equal to the total number of
 Consider the scenario lattice below with branching structure `1x2x3x4x5`:
 
 ```julia
-julia> ExampleLattice = LatticeApproximation([1,2,3,4,5],GaussianSamplePath,1000000,2);
-julia> PlotLattice(ExampleLattice)
+julia> ExampleLattice = lattice_approximation([1,2,3,4,5],gaussian_path1D,1000000,2);
+julia> plot_lattice(ExampleLattice)
 ```
 
 ![Example of a scenario lattice](../assets/ExampleLattice.png)

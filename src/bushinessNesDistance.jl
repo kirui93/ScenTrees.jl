@@ -1,7 +1,7 @@
 using PyPlot
 
 """
-    bushinessNesDistance()
+    bushiness_nesdistance()
 
 This function returns a plot showing the multistage distance of trees of different height.
 
@@ -10,7 +10,7 @@ distance is calculated.
 
 These results are from one of the examples we worked on.
 """
-function bushinessNesDistance()
+function bushiness_nesdistance()
     bushns = [3, 4, 5, 6, 7, 8]
     nstdistance = [ 0.24868 0.16772 0.12339 0.09586 0.07725 0.06408;
                     0.21781 0.12874 0.08541 0.0611 0.04575 0.03653;

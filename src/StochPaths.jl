@@ -4,31 +4,31 @@ using Distributions, Random
 rng = MersenneTwister(01012019);
 
 """
-	GaussianSamplePath1D()
+	gaussian_path1D()
 
 Returns a '4x1' dimensional array of Gaussian random walk
 """
-function GaussianSamplePath1D()
+function gaussian_path1D()
     return vcat(0.0, cumsum(randn(rng, 3, 1), dims = 1)) #4 stages
 end
 
 """
-	GaussianSamplePath2D()
+	gaussian_path2D()
 
 Returns a '4x2' dimensional array of Gaussian random walk
 """
-function GaussianSamplePath2D()
+function gaussian_path2D()
     gsmatrix = randn(rng, 4, 2) * [1.0 0.0 ; 0.9 0.3] #will create an (dimension x nstages) matrix
     gsmatrix[1,:] .= 0.0
     return cumsum(gsmatrix .+ [1.0 0.0], dims = 1)
 end
 
 """
-	RunningMaximum1D()
+	running_maximum1D()
 
 Returns a '4x1' dimensional array of Running Maximum process.
 """
-function RunningMaximum1D()
+function running_maximum1D()
     rmatrix = vcat(0.0, cumsum(randn(rng, 3, 1), dims = 1))
     for i = 2 : 4
         rmatrix[i] = max.(rmatrix[i-1], rmatrix[i])
@@ -37,11 +37,11 @@ function RunningMaximum1D()
 end
 
 """
-	RunningMaximum1D()
+	running_maximum2D()
 
 Returns a '4x2' dimensional array of Running Maximum process.
 """
-function RunningMaximum2D()
+function running_maximum2D()
     rmatrix = vcat(0.0, cumsum(randn(rng, 3, 1), dims = 1))
     rmatrix2D = zeros(4, 2)
     rmatrix2D[:,1] .= vec(rmatrix)

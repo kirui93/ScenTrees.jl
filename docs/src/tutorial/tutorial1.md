@@ -94,16 +94,16 @@ This method is not very important because we only need it to produce the results
 
 Since we have the basics of the scenario tree and the scenario lattice and since we created `ScenTrees.jl` with an intention of being user-friendly, we present the exported functions that are visible to the user i.e., that are public, and the user can call these functions depending on what he/she wants to achieve with this package:
 
-1. Tree (associated are: nodes, stage, height, leaves, root, partTree, buildProb!),
-2. TreeApproximation!
+1. Tree (associated are: nodes, stage, height, leaves, root, part_tree, build_probabilities!),
+2. tree_approximation!
 3. Lattice,
-4. LatticeApproximation,
-5. KernelScenarios (for conditional density estimation method)
-6. Plotting utilities (these functions include: treeplot, plotD and PlotLattice),
-7. Examples of process functions (GaussianSamplePath1D, GaussianSamplePath2D, RunningMaximum1D, RunningMaximum2D, path) and,
-8. bushinessNesDistance (returns a graph showing how different factors affects the multistage distance.)
+4. lattice_approximation,
+5. kernel_scenarios (for conditional density estimation method)
+6. Plotting utilities (these functions include: tree_plot, plot_hd and plot_lattice),
+7. Examples of process functions (gaussian_path1D, gaussian_path2D, running_maximum1D, running_maximum2D, path) and,
+8. bushiness_nesdistance (returns a graph showing how different factors affects the multistage distance.)
 
-- The most important functions in this module are `TreeApproximation!()` and `LatticeApproximation()` since these are the two functions which are used to approximate scenario trees and scenario lattices respectively.
+- The most important functions in this module are `tree_approximation!()` and `lattice_approximation()` since these are the two functions which are used to approximate scenario trees and scenario lattices respectively.
 
 - The other important function is the `Tree(bstructure, dimension)` function which gives the basic starting structure of a scenario tree.
 

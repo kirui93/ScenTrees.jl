@@ -2,7 +2,7 @@
 using LinearAlgebra: norm, transpose
 
 """
-	TreeApproximation!(newtree::Tree, path::Function, nIterations::Int64, p::Int64=2, r::Int64=2)
+	tree_approximation!(newtree::Tree, path::Function, nIterations::Int64, p::Int64=2, r::Int64=2)
 
 Returns a valuated probability scenario tree approximating the input stochastic process.
 
@@ -13,7 +13,7 @@ nIterations - number of iterations for stochastic approximation procedure,
 p - choice of norm (default p = 2 (Euclidean distance)), and,
 r - transportation distance parameter
 """
-function TreeApproximation!(newtree::Tree, path::Function, nIterations::Int64, p::Int64=2, r::Int64=2)
+function tree_approximation!(newtree::Tree, path::Function, nIterations::Int64, p::Int64=2, r::Int64=2)
     leaf, omegas, probaLeaf = leaves(newtree)      # leaves, indexes and probabilities of the leaves of the tree
     dm = size(newtree.state, 2)                    # dm = dimension of the states of the nodes of the tree.
     T = height(newtree)                            # height of the tree = number of stages - 1
@@ -72,6 +72,6 @@ function TreeApproximation!(newtree::Tree, path::Function, nIterations::Int64, p
     probabilities  = map(plf -> plf / sum(probaLeaf), probaLeaf) #divide every element by the sum of all elements
     t_dist = (d * hcat(probabilities) / nIterations) .^ (1 / r)
     newtree.name = "$(newtree.name) with d=$(t_dist) at $(nIterations) iterations"
-    newtree.probability .= buildProb!(newtree, hcat(probabilities)) #build the probabilities of this tree
+    newtree.probability .= build_probabilities!(newtree, hcat(probabilities)) #build the probabilities of this tree
     return newtree
 end
