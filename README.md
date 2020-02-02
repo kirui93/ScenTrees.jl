@@ -1,12 +1,9 @@
-<a name="logo"/>
-<div align="center">
-<img src="docs/src/assets/logo.png" height="130"></img>
-</a>
-</div>
 
-| **Build and Test Status**         | **Coverage**                          | **Documentation**             |
-|:---------------------------------:|:-------------------------------------:|:-----------------------------:|
-|[![Build and Test Status](https://travis-ci.com/kirui93/ScenTrees.jl.svg?branch=master)](https://travis-ci.com/kirui93/ScenTrees.jl) | [![Coverage](https://codecov.io/gh/kirui93/ScenTrees.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/kirui93/ScenTrees.jl) | [![Documentation](https://img.shields.io/badge/dos-latest-blue.svg)](https://kirui93.github.io/ScenTrees.jl/latest/)|
+[![Travis status](https://travis-ci.com/kirui93/ScenTrees.jl.svg?branch=master)](https://travis-ci.com/kirui93/ScenTrees.jl)
+[![Codecov](https://codecov.io/gh/kirui93/ScenTrees.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/kirui93/ScenTrees.jl)
+[![Coverage Status](https://coveralls.io/repos/github/kirui93/ScenTrees.jl/badge.svg?branch=master)](https://coveralls.io/github/kirui93/ScenTrees.jl?branch=master)
+[![](https://img.shields.io/badge/docs-latest-blue.svg)](https://kirui93.github.io/ScenTrees.jl/latest/)
+[![](https://img.shields.io/badge/docs-stable-blue.svg)](https://kirui93.github.io/ScenTrees.jl/stable/)
 
 # ScenTrees.jl
 
@@ -37,7 +34,7 @@ To use `ScenTrees.jl`, you need to have Julia >= v1.0. This package was develope
 
 ## Documentation
 
-To access the documentation just click on this [link](https://kirui93.github.io/ScenTrees.jl/latest/). Here you can get the description of the various functions in the package and also different examples for the different features.
+The STABLE documentation of ScenTrees.jl is available [here](https://kirui93.github.io/ScenTrees.jl/stable/). Here you can get the description of the various functions in the package and also different examples for the different features.
 
 ## Example of Usage
 
