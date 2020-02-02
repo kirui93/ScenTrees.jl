@@ -329,6 +329,11 @@ end
 
 Returns the plot of the input tree annotated with density of
 probabilities of reaching the leaf nodes in the tree.
+Args:
+trr - A scenario tree.
+fig - Specifies the size of the image you want to be returned, default = 1. 
+Using the matplotlib version, fig usually takes a tuple. For example, fig = (8,6) produces an image with length = 8 and width = 6.
+The user is not obliged to give this specifications as already there is a default value.
 """
 function tree_plot(trr::Tree, fig= 1)
     if !isempty(fig)
