@@ -43,7 +43,7 @@ To assess the quality of this approximation, a distance between the initial dist
 
 2. Generation of scenarios based on limited data using conditional density estimation. In the case of a limited data with an unknown distribution, we employ conditional density estimation to generate new and different samples based on the these available trajectories. The newly generated samples are able to capture the necessary and important characteristics in the original data as well as patterns in the original data. These samples can thus be used in the stochastic approximation procedure to generate scenario trees or scenario lattices.^[Tutorial41: https://kirui93.github.io/ScenTrees.jl/latest/tutorial/tutorial41/]
 
-Implementation details and various examples to demonstrate different methods can be found in the package's documentation.^[Documentation: https://kirui93.github.io/ScenTrees.jl/latest]
+Implementation details and various examples to demonstrate different methods can be found in the package's documentation.^[Documentation: https://kirui93.github.io/ScenTrees.jl/stable/]
 
 The following section provides a typical example on how to use ``ScenTrees.jl`` to generate scenario trees and scenario lattices by combining stochastic approximation procedure and conditional density estimation procedure.
 
