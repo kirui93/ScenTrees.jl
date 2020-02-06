@@ -27,7 +27,7 @@ bibliography: paper.bib
 
 # Summary
 
-Stochastic processes have random and uncertain outcomes. Decisions for stochastic problems involving such processes must be made at the different stages of the problem. Mathematical problems with such uncertain parameters, described by an underlying probability distribution, are sometimes intractable to solve. For algorithmic treatment, such programs should be approximated by simpler ones, in the same manner as functions are represented as vectors on finite grids on digital computers. This approximation procedure is referred to as <nobr>``scenario generation.`` </nobr>
+Stochastic processes have random and uncertain outcomes. Decisions for stochastic problems involving such processes must be made at the different stages of the problem. Mathematical problems with such uncertain parameters, described by an underlying probability distribution, are sometimes intractable to solve. For algorithmic treatment, such programs should be approximated by simpler ones, in the same manner as functions are represented as vectors on finite grids on digital computers. In most applications, these underlying distributions are approximated by discrete distributions with a finite number of scenarios, or possible realizations, for the random variables. This approximation procedure is often called ``scenario generation.``
 
 There is a vast literature describing different methods of scenario generation. Many authors including @Hoyland2001, @Pflug2001, @KovacevicPichler, @PflugPichlerDynScenarioGen and @PflugPichler2016 have addressed different approximation techniques for stochastic processes. But still there is no open-source implementation of the various algorithms in the public domain.
 
