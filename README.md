@@ -4,6 +4,8 @@
 [![Coverage Status](https://coveralls.io/repos/github/kirui93/ScenTrees.jl/badge.svg?branch=master)](https://coveralls.io/github/kirui93/ScenTrees.jl?branch=master)
 [![](https://img.shields.io/badge/docs-latest-blue.svg)](https://kirui93.github.io/ScenTrees.jl/latest/)
 [![](https://img.shields.io/badge/docs-stable-blue.svg)](https://kirui93.github.io/ScenTrees.jl/stable/)
+[![Zenodo](https://zenodo.org/badge/DOI/10.5281/zenodo.3672205.svg)](https://doi.org/10.5281/zenodo.3672205)
+[![JOSS](https://joss.theoj.org/papers/10.21105/joss.01912/status.svg)](https://doi.org/10.21105/joss.01912)
 
 # ScenTrees.jl
 
