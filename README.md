@@ -95,8 +95,22 @@ julia> plot_lattice(kernelLattice)
 As in [CONTRIBUTING.md](https://github.com/kirui93/ScenTrees.jl/blob/master/CONTRIBUTING.md), if you believe that you have found any bugs or if you need help or any questions regarding the library and any suggestions, please feel free to file a [new Github issue](https://github.com/kirui93/ScenTrees.jl/issues/new). You can also raise an issue or a pull request which fixes the issue as long as it doesn't affect performance.
 
 ## Citing ScenTrees.jl
-To be added.
 
+We ask that you please cite the following [paper](https://joss.theoj.org/papers/10.21105/joss.01912) if you use `ScenTrees.jl`:
+```
+@article{Kirui2020,
+        author = {Kipngeno Kirui and Alois Pichler and Georg Ch. Pflug},
+        title = {ScenTrees.jl: A Julia Package for Generating Scenario Trees and Scenario Lattices for Multistage Stochastic Programming},
+        journal = {Journal of Open Source Software},
+        publisher = {The Open Journal},
+        year = {2020},
+        volume = {5},
+        number = {46},
+        pages = {1912},
+        doi = {10.21105/joss.01912},
+        url = {https://doi.org/10.21105/joss.01912}
+}
+```
 ## References
 
 + Pflug, Georg Ch., and Alois Pichler, 2012. *A distance for Multistage Stochastic Optimization Models*. SIAM Journal on Optimization 22(1) Doi: https://doi.org/10.1137/110825054
