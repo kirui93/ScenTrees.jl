@@ -15,12 +15,12 @@ Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 XLSX = "fdbf4ff8-1666-58a4-91e7-1b58723a45e0"
 
 [compat]
-julia = "1.0"
-Distributions = "0.23.1"
-DataFrames = "0.21.0"
+julia = "1"
+Distributions = "0.23"
+DataFrames = "0.23"
 PyPlot = "2.9.0"
-CSV = "0.6.2"
-XLSX = "0.6.1"
+CSV = "0.7"
+XLSX = "0.7"
 
 [extras]
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
