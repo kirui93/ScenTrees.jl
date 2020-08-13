@@ -17,7 +17,7 @@ XLSX = "fdbf4ff8-1666-58a4-91e7-1b58723a45e0"
 [compat]
 julia = "1"
 Distributions = "0.23"
-DataFrames = "0.23"
+DataFrames = "0.21"
 PyPlot = "2.9.0"
 CSV = "0.7"
 XLSX = "0.7"
