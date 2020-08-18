@@ -89,12 +89,15 @@ Each of these scenario trees have a multistage distance of `0.25142` from the or
 
 As mentioned before, some of the process that you may want to approximate are Markovian data processes. These processes can only be approximated by a scenario lattice. All the nodes in the same stage in a lattice have the same children nodes.
 
-To approximate a Markovian data process, we use the function `lattice_approximation(bstructure, path, nIterations, r = 2)`. The following are the description of the inputs of the function:
+To approximate a Markovian data process, we use the function `lattice_approximation(bstructure, path, nIterations, r = 2, dim = 1)`.
+
+The following are the description of the inputs of the function:
 
 - Branching structure of the scenario lattice,
 - Function that generates samples from the stochastic process you want to approximate and,
 - Number of iterations to be performed, and,
 - Multistage parameter, `r` ( default, `r = 2`)
+- Dimension which you are working on, `dim` (default, `dim = 1`)
 
 Lattice Approximation follows the same stochastic approximation process as for the scenario tree. The only difference is that, in each stage of a lattice, we find the closest lattice entry and use the sample generated to improve it. At the beginning, the lattice is not stable but with more and more iterations, the scenario lattice converges in probability and the resulting lattice can then be used for decision making process.
 
@@ -105,7 +108,7 @@ All the probabilities in each stage of the lattice must sum up to 1.
 Consider the following example. We want to approximate a Gaussian random walk of 4 stages in one dimension with a scenario lattice with the branching structure of `1x3x4x5` and 1,000,000 iterations.
 
 ```julia
-julia> sol4 = lattice_approximation([1,3,4,5], gaussian_path1D, 1000000, 2 );
+julia> sol4 = lattice_approximation([1,3,4,5], gaussian_path1D, 1000000, 2, 1);
 ```
 The result of the above approximation is a scenario lattice which represents the stochastic process in the best way. The distance between the scenario tree and the original process is `0.8388`. This scenario lattice can thus be used for decision making process under uncertainty.
 

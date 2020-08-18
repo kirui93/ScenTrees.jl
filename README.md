@@ -1,5 +1,5 @@
 
-[![Travis status](https://travis-ci.com/kirui93/ScenTrees.jl.svg?branch=master)](https://travis-ci.com/kirui93/ScenTrees.jl)
+[![Travis status](https://travis-ci.org/kirui93/ScenTrees.jl.svg?branch=master)](https://travis-ci.org/kirui93/ScenTrees.jl)
 [![Codecov](https://codecov.io/gh/kirui93/ScenTrees.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/kirui93/ScenTrees.jl)
 [![Coverage Status](https://coveralls.io/repos/github/kirui93/ScenTrees.jl/badge.svg?branch=master)](https://coveralls.io/github/kirui93/ScenTrees.jl?branch=master)
 [![](https://img.shields.io/badge/docs-latest-blue.svg)](https://kirui93.github.io/ScenTrees.jl/latest/)
@@ -55,7 +55,7 @@ julia> tree_plot(gstree)
 
 ```julia
 julia> using ScenTrees
-julia> rmlattice = lattice_approximation([1,2,3,4],running_maximum1D,100000);
+julia> rmlattice = lattice_approximation([1,2,3,4],running_maximum1D,100000,2,1);
 julia> plot_lattice(rmlattice)
 ```
 ![Scenario Lattice](docs/src/assets/rmlattice.png)
@@ -82,7 +82,7 @@ To use the above samples for scenario trees or scenario lattice generation:
 ```julia
 julia> kerneltree = tree_approximation!(Tree([1,2,2,2],1),kernel_scenarios(gsdata,Logistic;Markovian=false),100000,2,2);
 julia> tree_plot(kerneltree)
-julia> kernelLattice = lattice_approximation([1,3,4,5],kernel_scenarios(gsdata,Logistic;Markovian=true),100000,2);
+julia> kernelLattice = lattice_approximation([1,3,4,5],kernel_scenarios(gsdata,Logistic;Markovian=true),100000,2,1);
 julia> plot_lattice(kernelLattice)
 ```
 
@@ -92,7 +92,7 @@ julia> plot_lattice(kernelLattice)
 
 ## Contributing to ScenTrees.jl
 
-As in [CONTRIBUTING.md](https://github.com/kirui93/ScenTrees.jl/blob/master/CONTRIBUTING.md), if you believe that you have found any bugs or if you need help or any questions regarding the library and any suggestions, please feel free to file a [new Github issue](https://github.com/kirui93/ScenTrees.jl/issues/new). You can also raise an issue or a pull request which fixes the issue as long as it doesn't affect performance.
+As in [CONTRIBUTING.md](https://github.com/kirui93/ScenTrees.jl/blob/master/CONTRIBUTING.md), if you believe that you have found any bugs or if you need help or any questions regarding the library and any suggestions, please feel free to file a [new GitHub issue](https://github.com/kirui93/ScenTrees.jl/issues/new). You can also raise an issue or a pull request which fixes the issue as long as it doesn't affect performance.
 
 ## Citing ScenTrees.jl
 
@@ -113,8 +113,8 @@ We ask that you please cite the following [paper](https://joss.theoj.org/papers/
 ```
 ## References
 
-+ Pflug, Georg Ch., and Alois Pichler, 2012. *A distance for Multistage Stochastic Optimization Models*. SIAM Journal on Optimization 22(1) Doi: https://doi.org/10.1137/110825054
++ Pflug, Georg Ch., and Alois Pichler, 2012. *A Distance for Multistage Stochastic Optimization Models*. SIAM Journal on Optimization 22(1) Doi: https://doi.org/10.1137/110825054
 
-+ Pflug, Georg Ch., and Alois Pichler,2015. *Dynamic Generation of Scenario Trees*. Computational Optimizatio and Applications 62(3): Doi: https://doi.org/10.1007/s10589-015-9758-0
++ Pflug, Georg Ch., and Alois Pichler,2015. *Dynamic Generation of Scenario Trees*. Computational Optimization and Applications 62(3): Doi: https://doi.org/10.1007/s10589-015-9758-0
 
-+ Pflug, Georg Ch., and Alois Pichler,2016. *From Empirical Observations to Tree Models for Stochastic Optimization : Convergence Properties : Convergence of the Smoothed Empirical Process in Nested Distnce.* SIAM Journal on Optimization 26(3). Society for Industrial and Applied Mathematics (SIAM). Doi: https://doi.org/10.1137/15M1043376.
++ Pflug, Georg Ch., and Alois Pichler,2016. *From Empirical Observations to Tree Models for Stochastic Optimization : Convergence Properties : Convergence of the Smoothed Empirical Process in Nested Distance.* SIAM Journal on Optimization 26(3). Society for Industrial and Applied Mathematics (SIAM). Doi: https://doi.org/10.1137/15M1043376.

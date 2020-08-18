@@ -40,7 +40,7 @@ And in general, we can generate a tree in any `d` state dimension.
 
 The above tree can described by the following functions: _nodes_, _stages_, _height_, _leaves_ and the _root_ of the tree.
 
-Each tree has stages starting from ``0`` where the root node is.
+Each tree has stages starting from ``1`` where the root node is.
 
 ### Nodes of the tree
 

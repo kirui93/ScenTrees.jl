@@ -81,7 +81,7 @@ Using the above data, the conditional density estimation method and lattice appr
 
 ```julia
 julia> KernExample = lattice_approximation([1,3,4,5,6],
-kernel_scenarios(Rwd, Logistic; Markovian = true), 100000, 2);
+kernel_scenarios(Rwd, Logistic; Markovian = true), 100000, 2, 1);
 julia> plot_lattice(KernExample)
 ```
 The following is the resultant lattice from the above approximation. The algorithm returns the multistage distance of the scenario lattice as `dist = 1.1718`.
