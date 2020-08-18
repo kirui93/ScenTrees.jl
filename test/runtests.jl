@@ -96,7 +96,7 @@ using CSV, DataFrames, XLSX
         @test round.(sum.(lat2[2].probability), digits = 1)  == [1.0, 1.0, 1.0, 1.0]
     end
     @testset "ScenTrees.jl - Test Example Data" begin
-        data = CSV.read("data5.csv")
+        data = CSV.read("data5.csv",DataFrame) # check the new way of loading data
         gsData = Matrix(data)
         df = DataFrame(XLSX.readtable("Mappe1.xlsx", "Sheet1")...)
         df1 = Matrix(df)
@@ -104,7 +104,7 @@ using CSV, DataFrames, XLSX
         df2 = DataFrame(XLSX.readtable("Mappe1.xlsx", "Sheet2")...)
         df22 = Matrix(df2)
         df22 = convert(Array{Float64,2},df22)
-        RandomWalkData = CSV.read("RandomDataWalk.csv")
+        RandomWalkData = CSV.read("RandomDataWalk.csv",DataFrame)
         RWData = Matrix(RandomWalkData)
 
         @test size(gsData) ==(100,10)
@@ -115,7 +115,7 @@ using CSV, DataFrames, XLSX
         sd1 = zeros(5)
         sd2 = zeros(7)
 
-        for t = 1:size(RWData,2)
+        for t = 1 : size(RWData,2)
             sd1[t] = std(RWData[:,t])
         end
 

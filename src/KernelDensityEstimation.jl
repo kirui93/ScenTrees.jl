@@ -20,13 +20,13 @@ Markovian samples, which is used to generate a scenario lattice.
 """
 function kernel_scenarios(data::Union{Array{Int64,2},Array{Float64,2}}, kernelDistribution = Logistic; Markovian::Bool = true)
     function closure()
-        N , T = size(data)                                                  # Dimensions of the data
+        N , T = size(data)                             # Dimensions of the data
         d = 1
-        w = fill(1.0, N)                                                   # initialize the weights
-        x = Array{Float64,1}(undef, T)                                     # trajectory to be created
+        w = fill(1.0, N)                               # initialize the weights
+        x = Array{Float64,2}(undef, T , 1)             # trajectory to be created
         for t = 1 : T
-            w = w / sum(w)                                                # normalized weights
-            Nt = sum(w)^2 / sum(w.^2)                                     # effective sample size
+            w = w / sum(w)                             # normalized weights
+            Nt = sum(w)^2 / sum(w.^2)                  # effective sample size
             σt = sqrt(sum(w .* ((data[:,t] .- sum(w .* data[:,t])).^2)))  # effective standard devistion
             ht = σt * Nt^(-1 / (d + 4)) + eps()
             # Composition method comes in here
