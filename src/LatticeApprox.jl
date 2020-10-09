@@ -47,7 +47,7 @@ function lattice_approximation(bstructure::Array{Int64,1}, path::Function, nIter
                 dist[i] += min_dist^2  # Euclidean distance for the paths
                 probabilities[t][last_index[i], new_index, i] += 1.0  # increase the counter for the nodes
                 # use stochastic approximation algorithm to calculate for the new states of the nodes in the lattice.
-                states[t][new_index, :, i] = states[t][new_index, :, i] - r * (min_dist)^(r-1) * (states[t][new_index, :, i] .- Z[t,i]) / ((30000 + n))
+                states[t][new_index, :, i] = states[t][new_index, :, i] - r * (min_dist)^(r-1) * (states[t][new_index, :, i] .- Z[t,i]) / ((Z[1] + 30 + n))
                 last_index[i] = new_index
             end
         end
