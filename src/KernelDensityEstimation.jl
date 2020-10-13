@@ -8,8 +8,8 @@ rng = MersenneTwister(01012019);
 Returns an instance of a closure of the conditional density estimation method.
 
 Args:
-data - a matrix of data in 2 dimension (NxT) where N is the number of trajectories and T is the number of stages.
-kernelDistribution - the distribution of the kernel functions. Default is Logistic distribution.
+- data - a matrix of data in 2 dimension (NxT) where N is the number of trajectories and T is the number of stages.
+- kernelDistribution - the distribution of the kernel functions. Default is Logistic distribution.
 
 An optional keyword `Markovian` is passed to handle weights
 for Markovian trajectories or non-Markovian ones.

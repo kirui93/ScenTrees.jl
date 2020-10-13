@@ -13,11 +13,11 @@ end
 Returns a valuated approximated lattice for the stochastic process provided in any dimension. The default dimension is dim = 1 for a lattice in 1 dimension.
 
 Args:
-bstructure - Branching structure of the scenario lattice e.g., bstructure = [1,2,3,4,5] represents a 5-staged lattice
-path - Function generating samples from a known distribution with length equal to the length of bstructure of the lattice.
-nIterations - Number of iterations to be performed.
-r - Parameter for the transportation distance.
-dim - dimension of the lattice to be generated. This depends entirely on the dimension of the samples generated.
+- bstructure - Branching structure of the scenario lattice e.g., bstructure = [1,2,3,4,5] represents a 5-staged lattice
+- path - Function generating samples from a known distribution with length equal to the length of bstructure of the lattice.
+- nIterations - Number of iterations to be performed.
+- r - Parameter for the transportation distance.
+- dim - dimension of the lattice to be generated. This depends entirely on the dimension of the samples generated.
 """
 function lattice_approximation(bstructure::Array{Int64,1}, path::Function, nIterations::Int64, r::Int64 = 2, dim::Int64 = 1)
     tdist = zeros(dim)         # multistage distance

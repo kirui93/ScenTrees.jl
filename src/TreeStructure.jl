@@ -30,8 +30,8 @@ mutable struct Tree
     	Tree(identifier::Int64)
 
     Returns some examples of predefined trees.
-    These are (0, 302, 303, 304, 305, 306, 307, 402, 404, 405).
-    You can call any of the above tree and plot to see the properties of the tree.
+    - These are (0, 302, 303, 304, 305, 306, 307, 402, 404, 405).
+    - You can call any of the above tree and plot to see the properties of the tree.
     """
     function Tree(identifier::Int64)
         self= new()
@@ -117,8 +117,8 @@ mutable struct Tree
     Returns a tree according to the specified branching vector and the dimension.
 
     Args:
-    bstructure - the branching structure of the scenario tree.
-    dimension - describes how many values (states) in each node.
+    - bstructure - the branching structure of the scenario tree.
+    - dimension - describes how many values (states) in each node.
 
     The branching vector must start with 1 for the root node.
     """
@@ -158,8 +158,8 @@ end
 Returns the stage of each node in the tree.
 
 Args:
-trr - an instance of a Tree.
-node - the number of node in the scenario tree you want to know its stage.
+- trr - an instance of a Tree.
+- node - the number of node in the scenario tree you want to know its stage.
 """
 function stage(trr::Tree, node = Int64[])
     if isempty(node)
@@ -185,7 +185,7 @@ end
 Returns the height of the tree which is just the maximum number of the stages of each node.
 
 Args:
-trr - an instance of a Tree.
+- trr - an instance of a Tree.
 """
 function height(trr::Tree)
     return maximum(stage(trr))
@@ -197,8 +197,8 @@ end
 Returns the leaf nodes, their indexes and the conditional probabilities.
 
 Args:
-trr - an instance of a Tree.
-node - a node in the tree you want to its children.
+- trr - an instance of a Tree.
+- node - a node in the tree you want to its children.
 """
 function leaves(trr::Tree, node = Int64[])
     nodes = 1 : length(trr.parent)
@@ -234,8 +234,8 @@ end
 Returns the nodes in the tree, generally the range of the nodes in the tree.
 
 Args:
-trr - an instance of a Tree.
-t  - stage in the tree.
+- trr - an instance of a Tree.
+- t  - stage in the tree.
 
 Example : nodes(trr,2) - gives all nodes at stage 2.
 """
@@ -254,10 +254,11 @@ end
 Returns the root of the tree if the node is not specified.
 
 Args:
-trr - an instance of Tree.
-nodes - node in the tree you want to know the sequence from the root.
+- trr - an instance of Tree.
+- nodes - node in the tree you want to know the sequence from the root.
 
 If `nodes` is not specified, it returns the root of the tree.
+
 If `nodes` is specified, it returns a sequence of nodes from the root to the specified node.
 """
 function root(trr::Tree, nodes = Int64[])
@@ -285,7 +286,7 @@ end
 Returns a vector of trees in d-dimension.
 
 Args:
-trr - an instance of Tree.
+- trr - an instance of Tree.
 """
 function part_tree(trr::Tree)
     trees = Tree[]
@@ -330,8 +331,9 @@ end
 Returns the plot of the input tree annotated with density of
 probabilities of reaching the leaf nodes in the tree.
 Args:
-trr - A scenario tree.
-fig - Specifies the size of the image you want to be returned, default = 1. 
+- trr - A scenario tree.
+- fig - Specifies the size of the image you want to be returned, default = 1.
+
 Using the matplotlib version, fig usually takes a tuple. For example, fig = (8,6) produces an image with length = 8 and width = 6.
 The user is not obliged to give this specifications as already there is a default value.
 """
@@ -380,7 +382,7 @@ end
 """
 	plot_hd(newtree::Tree)
 
-returns a plots of trees in higher dimensions.
+Returns a plots of trees in higher dimensions.
 """
 function plot_hd(newtree::Tree)
     fig = figure(figsize = (10,6))

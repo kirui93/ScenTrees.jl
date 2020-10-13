@@ -7,11 +7,15 @@ using LinearAlgebra: norm, transpose
 Returns a valuated probability scenario tree approximating the input stochastic process.
 
 Args:
-newtree - Tree with a certain branching structure,
-path - function generating samples from the stochastic process to be approximated,
-nIterations - number of iterations for stochastic approximation procedure,
-p - choice of norm (default p = 2 (Euclidean distance)), and,
-r - transportation distance parameter
+- *newtree* - Tree with a certain branching structure,
+
+- *path* - function generating samples from the stochastic process to be approximated,
+
+- *nIterations* - number of iterations for stochastic approximation procedure,
+
+- *p* - choice of norm (default p = 2 (Euclidean distance)), and,
+
+- *r* - transportation distance parameter
 """
 function tree_approximation!(newtree::Tree, path::Function, nIterations::Int64, p::Int64=2, r::Int64=2)
     leaf, omegas, probaLeaf = leaves(newtree)      # leaves, indexes and probabilities of the leaves of the tree
