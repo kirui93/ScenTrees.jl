@@ -5,7 +5,7 @@ os:
   
 julia:
   - 1.0
-  - 1.5
+  #- 1.5
   - nightly
 
 after_success:
@@ -14,10 +14,9 @@ after_success:
 branches:
  only:
    - master
-codecov: true
-coveralls: true
-notifications:
-  email: false  
+   - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
+#codecov: true
+#coveralls: true 
 env:
   - PYTHON=""
 jobs:
@@ -32,5 +31,7 @@ jobs:
         - julia --project=docs/ -e 'using Pkg; Pkg.develop(PackageSpec(path=pwd())); Pkg.instantiate()'
         - julia --project=docs/ -e 'using Pkg; Pkg.add("Documenter"); using Documenter; include("docs/make.jl")'
       after_success: skip
-      
-      
+notifications:
+  email: false
+git:
+depth: 99999999   
