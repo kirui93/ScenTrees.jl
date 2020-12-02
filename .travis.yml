@@ -14,9 +14,15 @@ after_success:
 branches:
  only:
    - master
-   - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
-#codecov: true
-#coveralls: true 
+   
+notifications:
+  email: false
+git:
+depth: 99999999
+
+codecov: true
+coveralls: true
+
 env:
   - PYTHON=""
 jobs:
@@ -30,8 +36,4 @@ jobs:
       script:
         - julia --project=docs/ -e 'using Pkg; Pkg.develop(PackageSpec(path=pwd())); Pkg.instantiate()'
         - julia --project=docs/ -e 'using Pkg; Pkg.add("Documenter"); using Documenter; include("docs/make.jl")'
-      after_success: skip
-notifications:
-  email: false
-git:
-depth: 99999999   
+      after_success: skip   
