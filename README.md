@@ -1,5 +1,5 @@
 
-[![Travis status](https://travis-ci.org/kirui93/ScenTrees.jl.svg?branch=master)](https://travis-ci.org/kirui93/ScenTrees.jl)
+[![Travis status](https://travis-ci.com/kirui93/ScenTrees.jl.svg?branch=master)](https://travis-ci.org/kirui93/ScenTrees.jl)
 [![Codecov](https://codecov.io/gh/kirui93/ScenTrees.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/kirui93/ScenTrees.jl)
 [![Coverage Status](https://coveralls.io/repos/github/kirui93/ScenTrees.jl/badge.svg?branch=master)](https://coveralls.io/github/kirui93/ScenTrees.jl?branch=master)
 [![](https://img.shields.io/badge/docs-latest-blue.svg)](https://kirui93.github.io/ScenTrees.jl/latest/)
