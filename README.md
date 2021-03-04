@@ -9,6 +9,8 @@
 
 # ScenTrees.jl
 
+Note: See also the active fork at https://github.com/aloispichler/ScenTrees.jl.
+
 `ScenTrees.jl` is a Julia package for generating and improving scenario trees and scenario lattices for multistage stochastic optimization problems using _stochastic approximation_. It is totally written in the Julia programming language. This package provides functions for generating scenario trees and scenario lattices from stochastic processes and stochastic data.
 
 We provide two important features at the moment:
@@ -99,8 +101,8 @@ As in [CONTRIBUTING.md](https://github.com/kirui93/ScenTrees.jl/blob/master/CONT
 We ask that you please cite the following [paper](https://joss.theoj.org/papers/10.21105/joss.01912) if you use `ScenTrees.jl`:
 ```
 @article{Kirui2020,
-        author = {Kipngeno Kirui and Alois Pichler and Georg Ch. Pflug},
-        title = {ScenTrees.jl: A Julia Package for Generating Scenario Trees and Scenario Lattices for Multistage Stochastic Programming},
+        author = {Kirui, Kipngeno and Pichler, Alois and Pflug, Georg {\relax Ch}.},
+        title = {ScenTrees.jl: A {J}ulia Package for Generating Scenario Trees and Scenario Lattices for Multistage Stochastic Programming},
         journal = {Journal of Open Source Software},
         publisher = {The Open Journal},
         year = {2020},
