@@ -25,6 +25,6 @@ deploydocs(
 	target = "build",
 	devbranch = "master",
     	devurl = "dev",
-	versions = ["stable" => "v^", "v#.#", devurl => devurl]
+	versions = ["stable" => "v^", "v#.#", devurl => devurl],
 	push_preview = false
 )
