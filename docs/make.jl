@@ -20,7 +20,7 @@ makedocs(
 		]
 )
 
-deploydocs(
+deploydocs( 
 	repo = "github.com/kirui93/ScenTrees.jl.git",
 	target = "build"
 )
