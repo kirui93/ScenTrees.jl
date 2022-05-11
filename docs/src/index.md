@@ -6,6 +6,8 @@ CurrentModule = ScenTrees
 
 We present `ScenTrees.jl` package for generating and improving scenario trees and scenario lattices for multistage stochastic optimization problems using stochastic optimization.
 
+Note: See also the active fork at https://github.com/aloispichler/ScenTrees.jl.
+
 ## Main features of the package
 
 1. We provide algorithms for generating and improving scenario trees and scenario lattices for multistage stochastic optimization problems using _stochastic approximation_. In this package, we use a fixed number of trajectories of a stochastic process to generate and improve a scenario tree or a scenario lattice. The quality of approximation between the stochastic process and the scenario tree/scenario lattice is measured using a multistage (process) distance. The multistage distance suits well to measure the distance between stochastic processes because it takes notice of the effect of evolution of the process over time (cf. [Georg Ch. Pflug and Alois Pichler(2012)](https://doi.org/10.1137/110825054) for more on distances for multistage stochastic optimization models and the multistage distance). The resulting scenario tree/lattice from the stochastic approximation process represents the stochastic process in the best possible way and so can be used for decision making process.
