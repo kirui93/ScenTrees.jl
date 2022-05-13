@@ -15,7 +15,7 @@ after_success:
   
 branches:
   only:
-    - main
+    - master
     - /^release-.*$/
     - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
    
