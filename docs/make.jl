@@ -22,7 +22,5 @@ makedocs(
 
 deploydocs( 
 	repo = "github.com/kirui93/ScenTrees.jl.git",
-	target = "build",
-	push_preview = true,
-    	versions = ["v2" => "v^", "v#.#", "dev" => "dev"]
+	push_preview = true
 )
