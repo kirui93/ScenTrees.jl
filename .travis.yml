@@ -28,7 +28,7 @@ codecov: true
 coveralls: true
 
 env:
-  - PYTHON="pythoncommand"
+  - PYTHON=""
 jobs:
   fast_finish: true
   allow_failures:
