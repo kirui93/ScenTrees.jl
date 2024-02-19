@@ -26,9 +26,12 @@ depth: 99999999
 
 codecov: true
 coveralls: true
-
+env:
+  - PYTHON=""
 matrix:
-  - PYTHON="pythoncommand"
+  - PYTHON=Conda-python
+before_install:
+  - julia -e 'ENV["PYTHON"]=""; Pkg.add("Conda"); using Conda;  Conda.add("python==2.7.13"); Conda.add("matplotlib==2.0.1"); Conda.add("basemap"); Pkg.add("PyCall"); Pkg.build("PyCall"); Pkg.add("PyPlot");
 jobs:
   fast_finish: true
   allow_failures:
